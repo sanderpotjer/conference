@@ -1,0 +1,63 @@
+.conference .search button.add-on {
+    height: inherit !important;
+    padding-top: 6px;
+    padding-bottom: 4px;
+}
+
+.conference .search .searchinput {
+	width: 200px;
+}
+
+.conference .status button {
+    height: inherit !important;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+.conference .status .icon-unpublish.icon-white:before,
+.conference .status .icon-publish.icon-white:before{
+	color: #fff;
+}
+
+.conference .badge .icon-checkmark:before,
+.conference .badge .icon-delete:before {
+	color: #fff;
+	position: relative;
+	top:1px;
+}
+
+
+/*
+.icon-48-conference { background: transparent url(../images/conference-48.png) no-repeat !important; }
+
+
+div.conference-clear { clear: left; }
+label.conference-label { min-width: 250px; background-color: rgba(0,0,0,0.1); padding: 2px; margin-right: 10px; }
+label.conference-label-main { font-weight: bold; font-size: 120%; }
+
+#image_preview_empty {
+	width: 200px;
+	height: 200px;
+}
+
+#image_preview_img img {
+	width: 200px;
+}
+
+.thumbnail {
+	background: #fff;
+	margin-bottom: 5px;
+}
+
+
+
+.conference [class^="icon-"], 
+.conference [class*=" icon-"] {
+	background-image: none;
+}
+
+
+.icon-delete:before, .icon-remove:before, .icon-cancel-2:before {
+    content: "I";
+}
+*/

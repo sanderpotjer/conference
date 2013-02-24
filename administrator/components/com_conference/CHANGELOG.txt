@@ -1,0 +1,15 @@
+Changelog for Conference Schedule by Sander Potjer
+http://www.sanderpotjer.nl
+-------------------------------------------------------------------
+
+Legend:
+* -> Security Fix
+# -> Issue Fix
+$ -> Language fix or change
++ -> Addition
+^ -> Change
+- -> Removed
+! -> Note
+
+-------------------- 1.0.0 Release [XX-Feb-2013] ------------------
+!-> Initial release of Conference Schedule
