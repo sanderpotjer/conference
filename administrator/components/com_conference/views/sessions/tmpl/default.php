@@ -56,7 +56,9 @@ $this->loadHelper('format');
 					<th class="center" width="7%">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_VIDEO') ?>
 					</th>
-					
+					<th width="7%" class="nowrap">
+						<?php echo JHtml::_('grid.sort', 'JGLOBAL_FIELD_MODIFIED_LABEL', 'modified_on', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
+					</th>
 				</tr>
 				<tr>
 					<td></td>
@@ -78,6 +80,7 @@ $this->loadHelper('format');
 					<td>
 						<?php echo ConferenceHelperSelect::days($this->getModel()->getState('day',''), 'day', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
 					</td>
+					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -163,6 +166,13 @@ $this->loadHelper('format');
 						<?php else:?>
 						<span class="badge badge-important"><span class="icon-delete"></span></span>
 						<?php endif;?>
+					</td>
+					<td class="nowrap">
+						<?php if($item->modified_on == '0000-00-00 00:00:00'): ?>
+							&mdash;
+						<?php else: ?>
+							<?php echo JHtml::_('date',$item->modified_on, JText::_('DATE_FORMAT_LC4')); ?>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<?php endforeach; ?>
