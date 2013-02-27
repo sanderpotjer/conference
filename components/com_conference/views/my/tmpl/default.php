@@ -93,7 +93,9 @@ if(empty($speaker->conference_speaker_id)) {
 					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_LEVEL') ?></th>
 					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION') ?></th>
 					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_SLIDES') ?></th>
+					<?php if(JFactory::getUser()->authorise('core.edit.own', 'com_conference')) :?>
 					<th class="center"></th>
+					<?php endif;?>
 				</tr>
 			</thead>
 			<tbody>
@@ -138,9 +140,11 @@ if(empty($speaker->conference_speaker_id)) {
 							<span class="badge badge-important"><span class="icon-delete"></span></span>
 						<?php endif;?>
 					</td>
+					<?php if(JFactory::getUser()->authorise('core.edit.own', 'com_conference')) :?>
 					<td class="center">
 						<a class="btn btn-small" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&task=edit&id='.$session->conference_session_id)?>"><span class="icon-pencil"></span> <?php echo JText::_('COM_CONFERENCE_MY_EDIT') ?></a>
 					</td>
+					<?php endif;?>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>

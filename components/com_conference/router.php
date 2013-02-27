@@ -281,8 +281,7 @@ function ConferenceParseRoute(&$segments)
 				$dbquery = $db->getQuery(true)
 					->select('conference_session_id')
 					->from($db->qn('#__conference_sessions'))
-					->where($db->qn('slug').' = '.$db->q($segments[0]))
-					->where($db->qn('enabled').' = 1');
+					->where($db->qn('slug').' = '.$db->q($segments[0]));
 				$db->setQuery($dbquery);
 				$id = $db->loadResult();
 				$query['id'] = $id;

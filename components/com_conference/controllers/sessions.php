@@ -63,9 +63,7 @@ class ConferenceControllerSessions extends FOFController
 	protected function onBeforeEdit()
 	{
 		$session = $this->getThisModel()->getItem();
-		$speaker = FOFModel::getTmpInstance('Speakers', 'ConferenceModel')
-			->id($session->conference_speaker_id)
-			->getFirstItem();
+		$speaker = FOFModel::getTmpInstance('Speakers', 'ConferenceModel')->getThisModel()->getItem($session->conference_speaker_id);
 
 		if($speaker->user_id == JFactory::getUser()->id) {
 			return true;
