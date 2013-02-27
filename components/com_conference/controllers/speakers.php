@@ -87,9 +87,9 @@ class ConferenceControllerSpeakers extends FOFController
 	{	
 		$userid = FOFInput::getInt('user_id', null, $this->input);
 
-		if(!$userid) {
+		if((!$userid) || ($userid == 0)) {
 			$user = $this->createUser();
-			$this->input['user_id'] = $user->id;
+			$this->input->set('user_id', $user->id);
 		}
 
 		$file = JRequest::getVar('image', '', 'files', 'array');
@@ -157,11 +157,9 @@ class ConferenceControllerSpeakers extends FOFController
 		jimport( 'joomla.user.user' );
 		// CREATE A NEW USER
 		$params = array(
-			'name'			=> $this->input['title'],
-			'username'		=> $this->input['email'],
-			'email'			=> $this->input['email'],
-			'password'		=> $this->input['password'],
-			'password2'		=> $this->input['password2']
+			'name'			=> FOFInput::getInt('title', null, $this->input),
+			'username'		=> FOFInput::getInt('email', null, $this->input),
+			'email'			=> FOFInput::getInt('email', null, $this->input)
 		);
 		
 		$user = clone(JFactory::getUser());
@@ -193,7 +191,10 @@ class ConferenceControllerSpeakers extends FOFController
 		$userIsSaved = false;
 		$user->bind($params);
 		$userIsSaved = $user->save();
-		$this->sendActivationEmail($user, $params);
+		
+		if($userIsSaved) {
+			$this->sendActivationEmail($user, $params);
+		}
 		
 		return $user;
 	}
