@@ -63,7 +63,7 @@ if($itemId != 0) {
 							<input type="text" name="title" id="title" class="span" value="<?php echo $this->item->title?>" required="required"/>
 						</div>
 					</div>
-					<?php if(ConferenceHelperParams::getParam('email',1)): ?>
+					<?php if(!JFactory::getUser()->id):?>
 					<div class="control-group">
 						<label for="email" class="control-label">
 							<?php echo JText::_('JGLOBAL_EMAIL')?>

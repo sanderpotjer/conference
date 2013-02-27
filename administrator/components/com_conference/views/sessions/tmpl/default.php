@@ -124,14 +124,14 @@ $this->loadHelper('format');
 						<?php echo JHTML::_('jgrid.published', $item->enabled, $i); ?>
 					</td>
 					<td align="left">					
-						<a href="index.php?option=com_conference&view=session&id=<?php echo $item->conference_session_id ?>" class="conferenceitem">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id) ?>" class="conferenceitem">
 							<strong><?php echo $this->escape($item->title) ?></strong>
 						</a>
 					</td>
 					<td>
 						<?php $speakers = ConferenceHelperFormat::speakers($item->conference_speaker_id); ?>
 						<?php foreach($speakers as $speaker) :?>
-							<a href="index.php?option=com_conference&view=speaker&id=<?php echo $speaker->conference_speaker_id ?>"><?php echo(trim($speaker->title));?></a><br/>
+							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=speaker&id='.$speaker->conference_speaker_id) ?>"><?php echo(trim($speaker->title));?></a><br/>
 						<?php endforeach;?>
 					</td>
 					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
@@ -142,23 +142,23 @@ $this->loadHelper('format');
 					<?php endif;?>
 					<td class="center">
 						<?php if($item->conference_level_id):?>
-						<a href="index.php?option=com_conference&view=level&id=<?php echo $item->conference_level_id ?>">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=level&id='.$item->conference_level_id) ?>">
 							<span class="label <?php echo $item->level_label ?>"><?php echo $this->escape($item->level) ?></span>
 						</a>
 						<?php endif;?>
 					</td>
 					<td>
-						<a href="index.php?option=com_conference&view=room&id=<?php echo $item->conference_room_id ?>">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=room&id='.$item->conference_room_id) ?>">
 							<?php echo $this->escape($item->room)?>
 						</a>
 					</td>
 					<td>
 						<?php if($item->day):?>
-						<a href="index.php?option=com_conference&view=day&id=<?php echo $item->day_id ?>">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=day&id='.$item->day_id) ?>">
 							<?php echo $this->escape($item->day)?>
 						</a><br/>
 						<span aria-hidden="true" class="icon-clock"></span> 
-						<a href="index.php?option=com_conference&view=slot&id=<?php echo $item->conference_slot_id ?>">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=slot&id='.$item->conference_slot_id) ?>">
 							<?php echo JHtml::_('date', $item->start_time,'H:i')?> - <?php echo JHtml::_('date', $item->end_time, 'H:i')?>
 						</a>
 						<?php endif;?>

@@ -9,6 +9,7 @@
 defined('_JEXEC') or die;
 
 // Load the helpers
+$this->loadHelper('params');
 $this->loadHelper('select');
 $this->loadHelper('format');
 ?>
@@ -37,17 +38,33 @@ $this->loadHelper('format');
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_NAME', 'title', $this->lists->order_Dir, $this->lists->order) ?>
 					</th>
 					<th width="20%">
-						<?php echo JText::_('JGLOBAL_EMAIL') ?>
+						<?php echo JText::_('JGLOBAL_USERNAME') ?>
 					</th>
-					<th class="center" width="7%">
-						<?php echo JText::_('COM_CONFERENCE_FIELD_FACEBOOK') ?>
-					</th>
+					<?php if(ConferenceHelperParams::getParam('twitter',0)): ?>
 					<th class="center" width="7%">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_TWITTER') ?>
 					</th>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('facebook',0)): ?>
+					<th class="center" width="7%">
+						<?php echo JText::_('COM_CONFERENCE_FIELD_FACEBOOK') ?>
+					</th>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('googleplus',0)): ?>
+					<th class="center" width="7%">
+						<?php echo JText::_('COM_CONFERENCE_FIELD_GOOGLEPLUS') ?>
+					</th>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('linkedin',0)): ?>
+					<th class="center" width="7%">
+						<?php echo JText::_('COM_CONFERENCE_FIELD_LINKEDIN') ?>
+					</th>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('website',0)): ?>
 					<th class="center" width="7%">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_WEBSITE') ?>
 					</th>
+					<?php endif;?>
 					<th class="center" width="7%">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_BIO') ?>
 					</th>
@@ -70,9 +87,21 @@ $this->loadHelper('format');
 						<?php echo ConferenceHelperFormat::search($this->escape($this->getModel()->getState('title',''))); ?>
 					</td>
 					<td></td>
+					<?php if(ConferenceHelperParams::getParam('twitter',0)): ?>
 					<td></td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('facebook',0)): ?>
 					<td></td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('googleplus',0)): ?>
 					<td></td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('linkedin',0)): ?>
+					<td></td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('website',0)): ?>
+					<td></td>
+					<?php endif;?>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -106,20 +135,14 @@ $this->loadHelper('format');
 						<?php echo JHTML::_('jgrid.published', $item->enabled, $i); ?>
 					</td>
 					<td align="left">						
-						<a href="index.php?option=com_conference&view=speaker&id=<?php echo $item->conference_speaker_id ?>" class="conferenceitem">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=speaker&id='.$item->conference_speaker_id) ?>" class="conferenceitem">
 							<strong><?php echo $this->escape($item->title) ?></strong>
 						</a>
 					</td>
 					<td>
-						<a href="mailto:<?php echo $this->escape($item->email) ?>"><?php echo $this->escape($item->email) ?></a>
+						<a href="<?php echo JRoute::_('index.php?option=com_users&task=user.edit&id='.$item->user_id)?>"><?php echo JFactory::getUser($item->user_id)->username ?></a>
 					</td>
-					<td class="center">
-						<?php if($item->facebook): ?>
-						<span class="badge badge-success"><i class="icon-checkmark"></i></span>
-						<?php else:?>
-						<span class="badge badge-important"><i class="icon-delete"></i></span>
-						<?php endif;?>
-					</td>
+					<?php if(ConferenceHelperParams::getParam('twitter',0)): ?>
 					<td class="center">
 						<?php if($item->twitter): ?>
 						<span class="badge badge-success"><i class="icon-checkmark"></i></span>
@@ -127,6 +150,35 @@ $this->loadHelper('format');
 						<span class="badge badge-important"><i class="icon-delete"></i></span>
 						<?php endif;?>
 					</td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('facebook',0)): ?>
+					<td class="center">
+						<?php if($item->facebook): ?>
+						<span class="badge badge-success"><i class="icon-checkmark"></i></span>
+						<?php else:?>
+						<span class="badge badge-important"><i class="icon-delete"></i></span>
+						<?php endif;?>
+					</td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('googleplus',0)): ?>
+					<td class="center">
+						<?php if($item->googleplus): ?>
+						<span class="badge badge-success"><i class="icon-checkmark"></i></span>
+						<?php else:?>
+						<span class="badge badge-important"><i class="icon-delete"></i></span>
+						<?php endif;?>
+					</td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('linkedin',0)): ?>
+					<td class="center">
+						<?php if($item->linkedin): ?>
+						<span class="badge badge-success"><i class="icon-checkmark"></i></span>
+						<?php else:?>
+						<span class="badge badge-important"><i class="icon-delete"></i></span>
+						<?php endif;?>
+					</td>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('website',0)): ?>
 					<td class="center">
 						<?php if($item->website): ?>
 						<span class="badge badge-success"><i class="icon-checkmark"></i></span>
@@ -134,6 +186,7 @@ $this->loadHelper('format');
 						<span class="badge badge-important"><i class="icon-delete"></i></span>
 						<?php endif;?>
 					</td>
+					<?php endif;?>
 					<td class="center">
 						<?php if($item->bio): ?>
 						<span class="badge badge-success"><i class="icon-checkmark"></i></span>
@@ -149,7 +202,7 @@ $this->loadHelper('format');
 						<?php endif;?>
 					</td>
 					<td class="center">
-						<a href="index.php?option=com_conference&view=sessions&speaker=<?php echo $item->conference_speaker_id ?>&level=&room=&slot=&day=">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=sessions&speaker='.$item->conference_speaker_id.'&level=&room=&slot=&day=')?>">
 						<?php
 							echo FOFModel::getTmpInstance('Sessions','ConferenceModel')
 								->speaker($item->conference_speaker_id)

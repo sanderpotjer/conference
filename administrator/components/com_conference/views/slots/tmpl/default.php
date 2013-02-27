@@ -94,7 +94,7 @@ $this->loadHelper('format');
 						<?php echo JHTML::_('jgrid.published', $item->enabled, $i); ?>
 					</td>
 					<td align="left">						
-						<a href="index.php?option=com_conference&view=slot&id=<?php echo $item->conference_slot_id ?>" class="conferenceitem">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=slot&id='.$item->conference_slot_id) ?>" class="conferenceitem">
 							<strong><?php echo $this->escape($item->day) ?></strong>
 						</a>
 					</td>
@@ -111,7 +111,7 @@ $this->loadHelper('format');
 						<?php if($item->general): ?>General<?php endif;?>
 					</td>
 					<td class="center">
-						<a href="index.php?option=com_conference&view=sessions&speaker=&level=&room=&slot=<?php echo $item->conference_slot_id ?>&day=">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=sessions&speaker=&level=&room=&slot='.$item->conference_slot_id.'&day=')?>">
 						<?php
 							echo FOFModel::getTmpInstance('Sessions','ConferenceModel')
 								->slot($item->conference_slot_id)
