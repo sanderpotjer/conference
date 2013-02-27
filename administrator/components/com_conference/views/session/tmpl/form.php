@@ -44,6 +44,16 @@ $editor = JFactory::getEditor();
 						<?php echo ConferenceHelperSelect::speakers(explode(',',$this->item->conference_speaker_id)); ?>
 					</div>
 				</div>
+				<?php if(ConferenceHelperParams::getParam('status',0)): ?>
+				<div class="control-group">
+					<label for="language" class="control-label">
+						<?php echo JText::_('COM_CONFERENCE_FIELD_STATUS'); ?>
+					</label>
+					<div class="controls">
+						<?php echo ConferenceHelperSelect::status($this->item->status); ?>
+					</div>
+				</div>
+				<?php endif;?>
 				<div class="control-group">
 					<label for="conference_level_id" class="control-label">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_LEVEL'); ?>

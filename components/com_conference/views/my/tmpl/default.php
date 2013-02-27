@@ -9,6 +9,7 @@
 defined('_JEXEC') or die;
 
 $this->loadHelper('params');
+$this->loadHelper('format');
 
 $speaker = $this->speaker;
 
@@ -85,10 +86,13 @@ if(empty($speaker->conference_speaker_id)) {
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
+					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_STATUS') ?></th>
+					<?php endif;?>
 					<th><?php echo JText::_('COM_CONFERENCE_FIELD_TITLE') ?></th>
-					<th class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_LEVEL') ?></th>
-					<th class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION') ?></th>
-					<th class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_SLIDES') ?></th>
+					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_LEVEL') ?></th>
+					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION') ?></th>
+					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_SLIDES') ?></th>
 					<th class="center"></th>
 				</tr>
 			</thead>
@@ -102,7 +106,19 @@ if(empty($speaker->conference_speaker_id)) {
 			<?php endif; ?>
 			<?php foreach($this->sessions as $session):?>
 				<tr>
-					<td><?php echo($session->title) ?></td>
+					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
+					<td class="center">
+						<?php $status = ConferenceHelperFormat::status($session->status); ?>
+						<span class="label <?php echo $status[2] ?>"><?php echo $status[1] ?></span>
+					</td>
+					<?php endif;?>
+					<td>
+						<?php if($session->listview): ?>
+							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
+						<?php else:?>
+							<?php echo $session->title ?>
+						<?php endif;?>
+					</td>
 					<td class="center">
 						<span class="label <?php echo $session->level_label ?>">
 							<?php echo $session->level ?>

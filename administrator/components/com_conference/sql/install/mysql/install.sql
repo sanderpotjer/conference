@@ -72,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `#__conference_sessions` (
   `conference_day_id` bigint(20) unsigned NOT NULL,
   `conference_slot_id` bigint(20) unsigned NOT NULL,
   `language` varchar(255) NOT NULL,
+  `status` tinyint(3) NOT NULL,
   PRIMARY KEY (`conference_session_id`)
 ) DEFAULT CHARSET=utf8;
 

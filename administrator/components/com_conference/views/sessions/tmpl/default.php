@@ -9,6 +9,7 @@
 defined('_JEXEC') or die;
 
 // Load the helpers
+$this->loadHelper('params');
 $this->loadHelper('select');
 $this->loadHelper('format');
 ?>
@@ -35,10 +36,15 @@ $this->loadHelper('format');
 					<th>
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order) ?>
 					</th>
-					<th width="10%">
+					<th width="8%">
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_SPEAKER', 'conference_speaker_id', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
 					</th>
-					<th width="10%">
+					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
+					<th width="8%">
+						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_STATUS', 'conference_status_id', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
+					</th>
+					<?php endif;?>
+					<th width="8%">
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_LEVEL', 'conference_level_id', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
 					</th>
 					<th width="10%">
@@ -71,14 +77,19 @@ $this->loadHelper('format');
 					<td>
 						<?php echo ConferenceHelperSelect::speakers($this->getModel()->getState('speaker',''), 'speaker', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
 					</td>
+					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
+					<td>
+						<?php echo ConferenceHelperSelect::status($this->getModel()->getState('status',''), 'status', array('onchange'=>'this.form.submit();', 'class'=>'input-small')) ?>
+					</td>
+					<?php endif;?>
 					<td>
 						<?php echo ConferenceHelperSelect::levels($this->getModel()->getState('level',''), 'level', array('onchange'=>'this.form.submit();', 'class'=>'input-small')) ?>
 					</td>
 					<td>
-						<?php echo ConferenceHelperSelect::rooms($this->getModel()->getState('room',''), 'room', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
+						<?php echo ConferenceHelperSelect::rooms($this->getModel()->getState('room',''), 'room', array('onchange'=>'this.form.submit();', 'class'=>'input-small')) ?>
 					</td>
 					<td>
-						<?php echo ConferenceHelperSelect::days($this->getModel()->getState('day',''), 'day', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
+						<?php echo ConferenceHelperSelect::days($this->getModel()->getState('day',''), 'day', array('onchange'=>'this.form.submit();', 'class'=>'input-small')) ?>
 					</td>
 					<td></td>
 					<td></td>
@@ -123,6 +134,12 @@ $this->loadHelper('format');
 							<a href="index.php?option=com_conference&view=speaker&id=<?php echo $speaker->conference_speaker_id ?>"><?php echo(trim($speaker->title));?></a><br/>
 						<?php endforeach;?>
 					</td>
+					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
+					<td class="center">
+						<?php $status = ConferenceHelperFormat::status($item->status); ?>
+						<span class="label <?php echo $status[2] ?>"><?php echo $status[1] ?></span>
+					</td>
+					<?php endif;?>
 					<td class="center">
 						<?php if($item->conference_level_id):?>
 						<a href="index.php?option=com_conference&view=level&id=<?php echo $item->conference_level_id ?>">

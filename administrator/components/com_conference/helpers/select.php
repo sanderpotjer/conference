@@ -75,6 +75,23 @@ class ConferenceHelperSelect
 
 		return self::genericlist($options, $name, $attribs, $selected, $name);
 	}
+	
+	public static function status($selected = null, $name = 'status', $attribs = array('class' => 'chosen'))
+	{
+		$status = JComponentHelper::getParams('com_conference')->get('statusoptions');
+		$status = explode("\n", $status);
+		foreach($status as $state) {
+			$list[] = explode("=", $state);
+		}
+		
+		$options = array();
+		$options[] = JHTML::_('select.option','',JText::_('COM_CONFERENCE_SELECT_STATUS'));
+		foreach($list as $item) {
+			$options[] = JHTML::_('select.option',$item[0],$item[1]);
+		}
+
+		return self::genericlist($options, $name, $attribs, $selected, $name);
+	}
 
 	/**
 	 * Shows a speakers	 */

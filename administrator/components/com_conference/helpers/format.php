@@ -74,4 +74,21 @@ class ConferenceHelperFormat
 		
 		return $ret;
 	}
+	
+	public static function status($status_id)
+	{	
+		$status = JComponentHelper::getParams('com_conference')->get('statusoptions');
+		$status = explode("\n", $status);
+		foreach($status as $state) {
+			$list[] = explode("=", $state);
+		}
+		
+		foreach($list as $item) {
+			if($status_id == $item[0]) {
+				$status = $item;
+			}
+		}
+	
+		return $status;
+	}
 }

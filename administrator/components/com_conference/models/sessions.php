@@ -22,6 +22,7 @@ class ConferenceModelSessions extends FOFModel
 			'day'			=> $this->getState('day',null,'int'),
 			'slot'			=> $this->getState('slot',null,'int'),
 			'listview'		=> $this->getState('listview',null,'int'),
+			'status'		=> $this->getState('status',null,'int'),
 			'enabled'		=> $enabled,
 		);
 	}
@@ -112,6 +113,13 @@ class ConferenceModelSessions extends FOFModel
 			$query->where(
 				$db->qn('tbl').'.'.$db->qn('conference_slot_id').' = '.
 					$db->q($state->slot)
+			);
+		}
+		
+		if(is_numeric($state->status) && ($state->status > 0)) {
+			$query->where(
+				$db->qn('tbl').'.'.$db->qn('status').' = '.
+					$db->q($state->status)
 			);
 		}
 		
