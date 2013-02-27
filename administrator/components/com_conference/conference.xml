@@ -51,6 +51,7 @@
 	<!-- Media files -->
 	<media destination="com_conference" folder="media">
 		<folder>css</folder>
+		<folder>fonts</folder>
 		<folder>images</folder>
 		<folder>js</folder>
 	</media>
