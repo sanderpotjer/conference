@@ -99,7 +99,7 @@ if(empty($speaker->conference_speaker_id)) {
 			<tbody>
 			<?php if(empty($this->sessions)): ?>
 			<tr>
-				<td colspan="5" class="center">
+				<td colspan="6" class="center">
 				<?php echo JText::_('COM_CONFERENCE_NORECORDS') ?>
 				</td>
 			</tr>
