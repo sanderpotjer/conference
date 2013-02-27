@@ -30,6 +30,17 @@
 	<fieldset name="speakers"
 		label="COM_CONFERENCE_TITLE_SPEAKERS">
 		<field
+			name="email"
+			type="radio"
+			class="btn-group"
+			default="1"
+			label="JGLOBAL_EMAIL">
+			<option
+				value="0">JNO</option>
+			<option
+				value="1">JYES</option>
+		</field>
+		<field
 			name="twitter"
 			type="radio"
 			class="btn-group"

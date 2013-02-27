@@ -63,6 +63,7 @@ if($itemId != 0) {
 							<input type="text" name="title" id="title" class="span" value="<?php echo $this->item->title?>" required="required"/>
 						</div>
 					</div>
+					<?php if(ConferenceHelperParams::getParam('email',1)): ?>
 					<div class="control-group">
 						<label for="email" class="control-label">
 							<?php echo JText::_('JGLOBAL_EMAIL')?>
@@ -71,7 +72,8 @@ if($itemId != 0) {
 							<input type="text" name="email" id="email" class="span" placeholder="mail@website.com" value="<?php echo $this->item->email?>" required="required"/>
 							<span class="help-block"><?php echo JText::_('COM_CONFERENCE_FIELD_EMAIL_DESC')?></span>
 						</div>
-					</div>					
+					</div>
+					<?php endif;?>
 					<div class="control-group">
 						<label for="speakernotes" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_NOTES')?>
