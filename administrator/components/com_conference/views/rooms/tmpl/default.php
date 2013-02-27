@@ -40,7 +40,7 @@ $this->loadHelper('format');
 						<?php echo JText::_('COM_CONFERENCE_FIELD_TYPE') ?>
 					</th>
 					<th class="center" width="12%">
-						<?php echo JText::_('COM_CONFERENCE_FIELD_SESSIONS') ?>
+						<?php echo JText::_('COM_CONFERENCE_TITLE_SESSIONS') ?>
 					</th>
 				</tr>
 				<tr>

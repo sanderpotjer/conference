@@ -55,7 +55,7 @@ $this->loadHelper('format');
 						<?php echo JText::_('COM_CONFERENCE_FIELD_IMAGE') ?>
 					</th>
 					<th class="center" width="7%">
-						<?php echo JText::_('COM_CONFERENCE_FIELD_SESSIONS') ?>
+						<?php echo JText::_('COM_CONFERENCE_TITLE_SESSIONS') ?>
 					</th>
 				</tr>
 				<tr>
