@@ -60,7 +60,7 @@ $script[] = '	}';
 // Add the script to the document head.
 JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
-$this->loadHelper('cparams');
+$this->loadHelper('params');
 $this->loadHelper('select');
 $this->loadHelper('format');
 
@@ -108,6 +108,8 @@ $editor = JFactory::getEditor();
 						<input type="text" name="email" id="email" class="span" placeholder="mail@website.com" value="<?php echo $this->item->email?>"/>
 					</div>
 				</div>
+				<hr>
+				<?php if(ConferenceHelperParams::getParam('twitter',1)): ?>
 				<div class="control-group">
 					<label for="twitter" class="control-label">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_TWITTER')?>
@@ -119,6 +121,8 @@ $editor = JFactory::getEditor();
 						</div>
 					</div>
 				</div>
+				<?php endif;?>
+				<?php if(ConferenceHelperParams::getParam('facebook',1)): ?>
 				<div class="control-group">
 					<label for="facebook" class="control-label">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_FACEBOOK')?>
@@ -130,6 +134,8 @@ $editor = JFactory::getEditor();
 						</div>
 					</div>
 				</div>
+				<?php endif;?>
+				<?php if(ConferenceHelperParams::getParam('googleplus',1)): ?>
 				<div class="control-group">
 					<label for="googleplus" class="control-label">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_GOOGLEPLUS')?>
@@ -141,6 +147,21 @@ $editor = JFactory::getEditor();
 						</div>
 					</div>
 				</div>
+				<?php endif;?>
+				<?php if(ConferenceHelperParams::getParam('linkedin',1)): ?>
+				<div class="control-group">
+					<label for="googleplus" class="control-label">
+						<?php echo JText::_('COM_CONFERENCE_FIELD_LINKEDIN')?>
+					</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on">http://www.linkedin.com/in/</span>
+							<input type="text" name="linkedin" id="linkedin" class="span" placeholder="username" value="<?php echo $this->item->linkedin?>"/>
+						</div>
+					</div>
+				</div>
+				<?php endif;?>
+				<?php if(ConferenceHelperParams::getParam('website',1)): ?>
 				<div class="control-group">
 					<label for="website" class="control-label">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_WEBSITE')?>
@@ -152,6 +173,8 @@ $editor = JFactory::getEditor();
 						</div>
 					</div>
 				</div>
+				<?php endif;?>
+				<hr>
 				<div class="control-group">
 					<label for="bio" class="control-label">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_BIO')?>
@@ -160,6 +183,7 @@ $editor = JFactory::getEditor();
 						<?php echo $editor->display( 'bio',  $this->item->bio, '100%', '150', '50', '10', false ) ; ?>
 					</div>
 				</div>
+				<hr>
 				<div class="control-group">
 					<label for="image" class="control-label">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_IMAGE')?>

@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `#__conference_speakers` (
   `facebook` varchar(255) NOT NULL,
   `twitter` varchar(255) NOT NULL,
   `googleplus` varchar(255) NOT NULL,
+  `linkedin` varchar(255) NOT NULL,
   `website` varchar(255) NOT NULL,
   `speakernotes` mediumtext NOT NULL,
   `notes` mediumtext NOT NULL,

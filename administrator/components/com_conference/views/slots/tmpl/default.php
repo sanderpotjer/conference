@@ -93,21 +93,19 @@ $this->loadHelper('format');
 					<td class="center">
 						<?php echo JHTML::_('jgrid.published', $item->enabled, $i); ?>
 					</td>
-					<td align="left">
-						<span class="editlinktip hasTip" title="<?php echo JText::_('COM_JOOMLADAY_ITEM_EDIT_TOOLTIP')?> <?php echo $this->escape($item->title); ?>::<?php echo $this->escape(substr(strip_tags($item->description), 0, 300)).'...'; ?>">
-							<a href="index.php?option=com_conference&view=slot&id=<?php echo $item->conference_slot_id ?>" class="conferenceitem">
-								<strong><?php echo $this->escape($item->day) ?></strong>
-							</a>
-						</span>
+					<td align="left">						
+						<a href="index.php?option=com_conference&view=slot&id=<?php echo $item->conference_slot_id ?>" class="conferenceitem">
+							<strong><?php echo $this->escape($item->day) ?></strong>
+						</a>
 					</td>
 					<td>
 						<?php echo JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC')); ?>
 					</td>
 					<td class="center">
-						<?php echo JHtml::_('date', $item->start_time, JText::_('H:i')); ?>
+						<?php echo JHtml::_('date', $item->start_time, 'H:i'); ?>
 					</td>
 					<td class="center">
-						<?php echo JHtml::_('date', $item->end_time, JText::_('H:i')); ?>
+						<?php echo JHtml::_('date', $item->end_time, 'H:i'); ?>
 					</td>
 					<td class="center">
 						<?php if($item->general): ?>General<?php endif;?>

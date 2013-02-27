@@ -53,7 +53,6 @@ class ConferenceControllerMy extends FOFController
 				
 			$this->getThisView()->assign('sessions', $sessions);
 
-			// If no tickets are shown even though I do have tickets, use a limitstart of 0
 			if($this->getThisModel()->getTotal() && !count($this->getThisModel()->getItemList()) ) {
 				$this->getThisModel()->limitstart(0);
 			}

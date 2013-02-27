@@ -8,8 +8,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('cparams');
-$this->loadHelper('modules');
 $this->loadHelper('format');
 $this->loadHelper('message');
 
@@ -20,14 +18,11 @@ if($itemId != 0) {
 } else {
 	$actionURL = 'index.php';
 }
-
-$filter_status = $this->getModel()->getState('status','');
-
 ?>
 
 <div class="conference">
 	<div class="row-fluid">
-		<h1>Presentaties</h1>
+		<h1><?php echo JText::_('COM_CONFERENCE_TITLE_SESSIONS')?></h1>
 	</div>
 	<?php if(!empty($this->items)) foreach($this->items as $item):?>
 	<div class="well well-small spreker">
@@ -35,7 +30,7 @@ $filter_status = $this->getModel()->getState('status','');
 			<div class="span4">
 				<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>" class="thumbnail">
 					<?php if($item->speakerimage):?>
-						<img style="width: 200px; height: 200px;" src="<?php echo $item->speakerimage?>">
+						<img src="<?php echo $item->speakerimage?>">
 					<?php else:?>
 						<img src="http://placehold.it/200x200">
 					<?php endif;?>
@@ -44,7 +39,7 @@ $filter_status = $this->getModel()->getState('status','');
 			<div class="span8">
 				<h3><a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo $this->escape($item->title)?></a></h3>
 				<?php echo(substr($item->description,0, strpos($item->description, "</p>")+4));?>
-				<a class="btn btn-mini pull-right" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>">Read more</a>
+				<a class="btn btn-small pull-right" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo JText::_('COM_CONFERENCE_READ_MORE') ?> <?php echo $this->escape($item->title)?></a>
 			</div>
 		</div>
 	</div>
@@ -54,7 +49,6 @@ $filter_status = $this->getModel()->getState('status','');
 		<form id="conference-pagination" name="conference-pagination" action="<?php echo $actionURL ?>" method="post">
 			<input type="hidden" name="option" value="com_conference" />
 			<input type="hidden" name="view" value="speakers" />
-			<input type="hidden" name="status" value="<?php echo $filter_status; ?>" id="ats_filter_status" />
 			<?php if ($this->pageparams->get('show_pagination',1)) : ?>
 				<?php if($this->pagination->get('pages.total') > 1): ?>
 				<div class="pagination">

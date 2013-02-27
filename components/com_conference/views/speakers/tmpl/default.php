@@ -8,8 +8,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('cparams');
-$this->loadHelper('modules');
 $this->loadHelper('format');
 $this->loadHelper('message');
 
@@ -20,14 +18,11 @@ if($itemId != 0) {
 } else {
 	$actionURL = 'index.php';
 }
-
-$filter_status = $this->getModel()->getState('status','');
-
 ?>
 
 <div class="conference">
 	<div class="row-fluid">
-		<h1>Sprekers</h1>
+		<h1><?php echo JText::_('COM_CONFERENCE_TITLE_SPEAKERS')?></h1>
 	</div>
 	<?php if(!empty($this->items)) foreach($this->items as $item):?>
 	<div class="well well-small spreker">
@@ -54,7 +49,6 @@ $filter_status = $this->getModel()->getState('status','');
 		<form id="conference-pagination" name="conference-pagination" action="<?php echo $actionURL ?>" method="post">
 			<input type="hidden" name="option" value="com_conference" />
 			<input type="hidden" name="view" value="speakers" />
-			<input type="hidden" name="status" value="<?php echo $filter_status; ?>" id="ats_filter_status" />
 			<?php if ($this->pageparams->get('show_pagination',1)) : ?>
 				<?php if($this->pagination->get('pages.total') > 1): ?>
 				<div class="pagination">

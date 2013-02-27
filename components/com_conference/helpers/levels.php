@@ -8,18 +8,8 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-/**
- * Avatar display helper class
- */
 class ConferenceHelperLevels
 {
-	/**
-	 * Uses the ATS plugins to fetch ana avatar for the user
-	 * 
-	 * @param JUser $user The user for which to fetch an avatar for
-	 * @param int $size The size (in pixels), defaults to 64
-	 * @return string The URL to the avatar image
-	 */
 	public static function sessions($conference_level_id)
 	{		
 		$sessions = FOFModel::getTmpInstance('Sessions', 'ConferenceModel')

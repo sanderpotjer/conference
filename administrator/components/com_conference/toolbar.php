@@ -23,11 +23,10 @@ class ConferenceToolbar extends FOFToolbar
 		return $views;
 	}
 	
-	public function onItemsBrowse()
+	public function onBrowse()
 	{
 		parent::onBrowse();
-		
-		JToolBarHelper::divider();
+
 		JToolBarHelper::preferences('com_conference');
 	}
 }

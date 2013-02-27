@@ -145,7 +145,7 @@ $this->loadHelper('format');
 						<?php endif;?>
 					</td>
 					<td class="center">
-						<a href="index.php?option=com_conference&view=sessions&speaker=<?php echo $item->conference_speaker_id ?>&level=&room=&time=&day=">
+						<a href="index.php?option=com_conference&view=sessions&speaker=<?php echo $item->conference_speaker_id ?>&level=&room=&slot=&day=">
 						<?php
 							echo FOFModel::getTmpInstance('Sessions','ConferenceModel')
 								->speaker($item->conference_speaker_id)

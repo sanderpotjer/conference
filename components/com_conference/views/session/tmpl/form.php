@@ -8,7 +8,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('cparams');
+$this->loadHelper('params');
 $this->loadHelper('select');
 $this->loadHelper('format');
 $this->loadHelper('speaker');
@@ -74,14 +74,17 @@ if($itemId != 0) {
 							
 						</div>
 					</div>
-					<!--<div class="control-group">
+					<?php if(ConferenceHelperParams::getParam('language',0)): ?>
+					<div class="control-group">
 						<label for="language" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_LANGUAGE'); ?>
 						</label>
 						<div class="controls">
 							<?php echo ConferenceHelperSelect::language($this->item->language); ?>
 						</div>
-					</div>-->
+					</div>
+					<?php endif;?>
+					<hr>
 					<div class="control-group">
 						<label for="description" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION'); ?>

@@ -61,10 +61,17 @@ class ConferenceHelperSelect
 	
 	public static function language($selected = null, $name = 'language', $attribs = array('class' => 'chosen'))
 	{
+		$languages = JComponentHelper::getParams('com_conference')->get('languages');
+		$languages = explode("\n", $languages);
+		foreach($languages as $language) {
+			$list[] = explode("=", $language);
+		}
+		
 		$options = array();
 		$options[] = JHTML::_('select.option','',JText::_('COM_CONFERENCE_SELECT_LANGUAGE'));
-		$options[] = JHTML::_('select.option','nl',JText::_('Nederlands'));
-		$options[] = JHTML::_('select.option','en',JText::_('English'));
+		foreach($list as $item) {
+			$options[] = JHTML::_('select.option',$item[0],$item[1]);
+		}
 
 		return self::genericlist($options, $name, $attribs, $selected, $name);
 	}
@@ -171,7 +178,7 @@ class ConferenceHelperSelect
 			{
 				if ($day->conference_day_id == $item->conference_day_id)	
 				{
-					$options[] = JHTML::_('select.option',$item->conference_slot_id, $day->title.': '.JHtml::_('date', $item->start_time, JText::_('H:i')).' - '.JHtml::_('date', $item->end_time, JText::_('H:i')));
+					$options[] = JHTML::_('select.option',$item->conference_slot_id, $day->title.': '.JHtml::_('date', $item->start_time, 'H:i').' - '.JHtml::_('date', $item->end_time, 'H:i'));
 				}
 			}
 			$options[] = JHTML::_('select.optgroup', $day->title);

@@ -8,7 +8,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('cparams');
 $this->loadHelper('select');
 $this->loadHelper('format');
 

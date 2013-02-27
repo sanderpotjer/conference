@@ -13,14 +13,14 @@ require_once JPATH_SITE.'/components/com_conference/helpers/router.php';
 /**
  * Which views does this router handle?
  */
-global $atsHandleViews;
-$atsHandleViews = array(
-	'my', 'session', 'sessions', 'speaker', 'speakers', 'levels'
+global $conferenceHandleViews;
+$conferenceHandleViews = array(
+	'my', 'session', 'sessions', 'speaker', 'speakers', 'levels', 'days'
 );
 
 function ConferenceBuildRoute(&$query)
 {
-	global $atsHandleViews;
+	global $conferenceHandleViews;
 	$segments = array();
 	
 	// We need to find out if the menu item link has a view param
@@ -45,7 +45,7 @@ function ConferenceBuildRoute(&$query)
 	$newView = array_key_exists('view', $query) ? $query['view'] : $menuView;
 	
 	// We can only handle specific views. Is it one of them?
-	if(!in_array($newView, $atsHandleViews)) {
+	if(!in_array($newView, $conferenceHandleViews)) {
 		if($Itemid) $query['Itemid'] = $Itemid;
 		return array();
 	}
@@ -56,56 +56,6 @@ function ConferenceBuildRoute(&$query)
 	// @todo Build the URL
 	switch($newView)
 	{
-		case 'tickets':
-			// Fetch the category ID
-			$catID = ConferenceHelperRouter::getAndPop($query, 'category', 0);
-			
-			// Do I have to look for a new Item ID?
-			$found = false;
-			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-			$qoptions = array(
-				'option'	=> 'com_conference',
-				'view'		=> 'tickets',
-			);
-			$params = array(
-				'category'	=> $catID
-			);
-			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions, $params);
-			if(!$found) {
-				$qoptions2 = array_merge($qoptions, array('category' => $catID));
-				$found = ConferenceHelperRouter::checkMenu($menu, $qoptions2);
-			}
-			if(!$found) {
-				// Try to find a menu item ID directly for this category
-				$item = ConferenceHelperRouter::findMenu($qoptions, $params);
-				
-				// Or, try to find a manual link
-				if(is_null($item)) {
-					$item = ConferenceHelperRouter::findMenu($qoptions2);
-				}
-				
-				if(!is_null($item)) {
-					$Itemid = $item->id;
-					$found = true;
-				}
-				
-			}
-
-			// Get and append the category alias path, if the category wasn't found
-			if(!$found)
-			{
-				$db = JFactory::getDbo();
-				$q = $db->getQuery(true)
-					->select($db->qn('path'))
-					->from($db->qn('#__categories'))
-					->where($db->qn('id').' = '.$db->quote($catID))
-					->where($db->qn('extension').' = '.$db->quote('com_ats'));
-				$db->setQuery($q);
-				$path = $db->loadResult();
-				$pathParts = explode('/', $path);
-				foreach($pathParts as $p) $segments[] = $p;
-			}
-			break;
 			
 		case 'speaker':
 			$speakerID = ConferenceHelperRouter::getAndPop($query, 'id', 0);
@@ -214,6 +164,28 @@ function ConferenceBuildRoute(&$query)
 			}
 			
 			break;
+		
+		case 'days':
+			// Do I have to look for a new Item ID?
+			$found = false;
+			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
+			$qoptions = array(
+				'option'	=> 'com_conference',
+				'view'		=> 'days',
+			);
+			
+			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
+			if(!$found) {
+				// Try to find a menu item ID directly for this category
+				$item = ConferenceHelperRouter::findMenu($qoptions);
+				
+				if(!is_null($item)) {
+					$Itemid = $item->id;
+					$found = true;
+				}
+			}
+			
+			break;
 	}
 	
 	// Process the Itemid
@@ -232,11 +204,9 @@ function ConferenceBuildRoute(&$query)
 	
 	// If the menu's view is different to the new view, add the view name to the URL
 	if(!empty($newView) && ($newView != $menuView)) {
-		// Only append the view name if the $menuView is not categories, OR if the
-		// $menuView is categories and the $newView IS NOT 'ticket' or 'tickets'
 		if((($menuView != 'speakers') && ($menuView != 'sessions')) || empty($menuView) ) {
 			array_unshift($segments, $newView);
-		} elseif(!in_array($newView, array('speaker','speakers','session','sessions','levels'))) {
+		} elseif(!in_array($newView, array('speaker','speakers','session','sessions','levels','days'))) {
 			array_unshift($segments, $newView);
 		}
 	}
@@ -249,7 +219,7 @@ function ConferenceParseRoute(&$segments)
 {
 	$query = array();
 	
-	global $atsHandleViews;
+	global $conferenceHandleViews;
 	
 	// Fetch the default query from the active menu item
 	$mObject = JFactory::getApplication()->getMenu()->getActive();
@@ -266,18 +236,14 @@ function ConferenceParseRoute(&$segments)
 	if(empty($segments)) return $query;
 	
 	// Do not process a view I know jack shit about
-	if(!in_array($view, $atsHandleViews)) return $query;
-	
-	// Initialise
-	$ticketID = null;
-	$catID = null;
+	if(!in_array($view, $conferenceHandleViews)) return $query;
 	
 	// If we have segments and we're in a no-parameters view, we have to deal
 	// with a different view than the one listed in the menu.
 	if(in_array($view, array('my'))) {
 		$view = array_shift($segments);
 	}
-	// Otherwise, do I have a new ticket view?
+
 	else {
 		$lastSegment = array_pop($segments);
 		if($lastSegment == 'new') {
@@ -287,9 +253,7 @@ function ConferenceParseRoute(&$segments)
 		}
 	}
 	
-	// If this is a categories or tickets view, we have to check the last
-	// segment to figure out if it's really a "ticket" view.
-	if(in_array($view, array('sessions','session','speakers','speaker','levels'))) {
+	if(in_array($view, array('sessions','session','speakers','speaker','levels','days'))) {
 		
 		switch($view)
 		{

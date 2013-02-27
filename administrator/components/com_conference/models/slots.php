@@ -16,6 +16,7 @@ class ConferenceModelSlots extends FOFModel
 		
 		return (object)array(
 			'day'			=> $this->getState('day',null,'int'),
+			'id'			=> $this->getState('id',null,'int'),
 			'enabled'		=> $enabled,
 		);
 	}
@@ -66,6 +67,13 @@ class ConferenceModelSlots extends FOFModel
 			$query->where(
 				$db->qn('tbl').'.'.$db->qn('conference_day_id').' = '.
 					$db->q($state->day)
+			);
+		}
+		
+		if(is_numeric($state->id) && ($state->id > 0)) {
+			$query->where(
+				$db->qn('tbl').'.'.$db->qn('conference_slot_id').' = '.
+					$db->q($state->id)
 			);
 		}
 		

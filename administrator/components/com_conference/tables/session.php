@@ -14,18 +14,18 @@ class ConferenceTableSession extends FOFTable
 	
 		$result = true;
 		
-		// Make sure assigned subscriptions really do exist and normalize the list
+		// Make sure assigned speaker really exists and normalize the list
 		if(!empty($this->conference_speaker_id)) {
 			if(is_array($this->conference_speaker_id)) {
-				$subs = $this->conference_speaker_id;
+				$sprs = $this->conference_speaker_id;
 			} else {
-				$subs = explode(',', $this->conference_speaker_id);
+				$sprs = explode(',', $this->conference_speaker_id);
 			}
-			if(empty($subs)) {
+			if(empty($sprs)) {
 				$this->conference_speaker_id = '';
 			} else {
-				$subscriptions = array();
-				foreach($subs as $id) {
+				$speakers = array();
+				foreach($sprs as $id) {
 					$subObject = FOFModel::getTmpInstance('Speakers','ConferenceModel')
 						->setId($id)
 						->getItem();
@@ -35,9 +35,9 @@ class ConferenceTableSession extends FOFTable
 							$id = $subObject->conference_speaker_id;
 						}
 					}
-					if(!is_null($id)) $subscriptions[] = $id;
+					if(!is_null($id)) $speakers[] = $id;
 				}
-				$this->conference_speaker_id = implode(',', $subscriptions);
+				$this->conference_speaker_id = implode(',', $speakers);
 			}
 		}
 		

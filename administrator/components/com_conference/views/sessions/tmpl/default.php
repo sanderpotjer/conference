@@ -117,29 +117,29 @@ $this->loadHelper('format');
 					<td>
 						<?php $speakers = ConferenceHelperFormat::speakers($item->conference_speaker_id); ?>
 						<?php foreach($speakers as $speaker) :?>
-							<a href="index.php?option=com_conference&view=speaker&id=<?php echo $speaker->conference_speaker_id ?>" class="subslevel"><?php echo(trim($speaker->title));?></a><br/>
+							<a href="index.php?option=com_conference&view=speaker&id=<?php echo $speaker->conference_speaker_id ?>"><?php echo(trim($speaker->title));?></a><br/>
 						<?php endforeach;?>
 					</td>
 					<td class="center">
 						<?php if($item->conference_level_id):?>
-						<a href="index.php?option=com_conference&view=level&id=<?php echo $item->conference_level_id ?>" class="subslevel">
+						<a href="index.php?option=com_conference&view=level&id=<?php echo $item->conference_level_id ?>">
 							<span class="label <?php echo $item->level_label ?>"><?php echo $this->escape($item->level) ?></span>
 						</a>
 						<?php endif;?>
 					</td>
 					<td>
-						<a href="index.php?option=com_conference&view=room&id=<?php echo $item->conference_room_id ?>" class="subslevel">
+						<a href="index.php?option=com_conference&view=room&id=<?php echo $item->conference_room_id ?>">
 							<?php echo $this->escape($item->room)?>
 						</a>
 					</td>
 					<td>
 						<?php if($item->day):?>
-						<a href="index.php?option=com_conference&view=day&id=<?php echo $item->day_id ?>" class="subslevel">
+						<a href="index.php?option=com_conference&view=day&id=<?php echo $item->day_id ?>">
 							<?php echo $this->escape($item->day)?>
 						</a><br/>
 						<span aria-hidden="true" class="icon-clock"></span> 
-						<a href="index.php?option=com_conference&view=time&id=<?php echo $item->conference_time_id ?>" class="subslevel">
-							<?php echo JHtml::_('date', $item->start_time, JText::_('H:i'))?> - <?php echo JHtml::_('date', $item->end_time, JText::_('H:i'))?>
+						<a href="index.php?option=com_conference&view=slot&id=<?php echo $item->conference_slot_id ?>">
+							<?php echo JHtml::_('date', $item->start_time,'H:i')?> - <?php echo JHtml::_('date', $item->end_time, 'H:i')?>
 						</a>
 						<?php endif;?>
 					</td>

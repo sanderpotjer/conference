@@ -8,7 +8,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('cparams');
+$this->loadHelper('params');
 $this->loadHelper('select');
 $this->loadHelper('format');
 
@@ -81,9 +81,8 @@ if($itemId != 0) {
 							<span class="help-block"><?php echo JText::_('COM_CONFERENCE_FIELD_NOTES_DESC')?></span>
 						</div>
 					</div>
-					
-					
 					<hr>
+					<?php if(ConferenceHelperParams::getParam('twitter',1)): ?>
 					<div class="control-group">
 						<label for="twitter" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_TWITTER')?>
@@ -95,6 +94,8 @@ if($itemId != 0) {
 							</div>
 						</div>
 					</div>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('facebook',1)): ?>
 					<div class="control-group">
 						<label for="facebook" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_FACEBOOK')?>
@@ -106,6 +107,8 @@ if($itemId != 0) {
 							</div>
 						</div>
 					</div>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('googleplus',1)): ?>
 					<div class="control-group">
 						<label for="googleplus" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_GOOGLEPLUS')?>
@@ -117,6 +120,21 @@ if($itemId != 0) {
 							</div>
 						</div>
 					</div>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('linkedin',1)): ?>
+					<div class="control-group">
+						<label for="googleplus" class="control-label">
+							<?php echo JText::_('COM_CONFERENCE_FIELD_LINKEDIN')?>
+						</label>
+						<div class="controls">
+							<div class="input-prepend">
+								<span class="add-on">http://www.linkedin.com/in/</span>
+								<input type="text" name="linkedin" id="linkedin" class="span" placeholder="username" value="<?php echo $this->item->linkedin?>"/>
+							</div>
+						</div>
+					</div>
+					<?php endif;?>
+					<?php if(ConferenceHelperParams::getParam('website',1)): ?>
 					<div class="control-group">
 						<label for="website" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_WEBSITE')?>
@@ -128,6 +146,7 @@ if($itemId != 0) {
 							</div>
 						</div>
 					</div>
+					<?php endif;?>
 					<hr>
 					<div class="control-group">
 						<label for="bio" class="control-label">
@@ -137,7 +156,7 @@ if($itemId != 0) {
 							<?php echo $editor->display( 'bio',  $this->item->bio, '100%', '300', '50', '10', false ) ; ?>
 						</div>
 					</div>
-					
+					<hr>
 					<div class="control-group">
 						<label for="image" class="control-label">
 							<?php echo JText::_('COM_CONFERENCE_FIELD_IMAGE')?>
@@ -148,8 +167,6 @@ if($itemId != 0) {
 						</div>
 					</div>
 				</div>
-		
-				
 			</div>
 		</div>
 	</form>

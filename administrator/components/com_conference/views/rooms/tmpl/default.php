@@ -82,11 +82,9 @@ $this->loadHelper('format');
 						<?php echo JHTML::_('jgrid.published', $item->enabled, $i); ?>
 					</td>
 					<td align="left">
-						<span class="editlinktip hasTip" title="<?php echo JText::_('COM_JOOMLADAY_ITEM_EDIT_TOOLTIP')?> <?php echo $this->escape($item->title); ?>::<?php echo $this->escape(substr(strip_tags($item->description), 0, 300)).'...'; ?>">
-							<a href="index.php?option=com_conference&view=room&id=<?php echo $item->conference_room_id ?>" class="conferenceitem">
-								<strong><?php echo $this->escape($item->title) ?></strong>
-							</a>
-						</span>
+						<a href="index.php?option=com_conference&view=room&id=<?php echo $item->conference_room_id ?>" class="conferenceitem">
+							<strong><?php echo $this->escape($item->title) ?></strong>
+						</a>						
 					</td>
 					<td class="center">
 						<?php if($item->type == 1) {
@@ -96,7 +94,7 @@ $this->loadHelper('format');
 						}?>
 					</td>
 					<td class="center">
-						<a href="index.php?option=com_conference&view=sessions&speaker=&level=&room=<?php echo $item->conference_room_id ?>&time=&day=">
+						<a href="index.php?option=com_conference&view=sessions&speaker=&level=&room=<?php echo $item->conference_room_id ?>&slot=&day=">
 						<?php
 							echo FOFModel::getTmpInstance('Sessions','ConferenceModel')
 								->room($item->conference_room_id)

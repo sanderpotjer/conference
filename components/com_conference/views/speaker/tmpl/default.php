@@ -8,7 +8,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('cparams');
+$this->loadHelper('params');
 $this->loadHelper('modules');
 $this->loadHelper('format');
 
@@ -28,16 +28,19 @@ $this->loadHelper('format');
 					<?php endif;?>
 				</span>
 				<div class="speakersocial">
-					<?php if($this->item->twitter):?>
+					<?php if(($this->item->twitter) && (ConferenceHelperParams::getParam('twitter'))):?>
 						<a class="btn btn-small btn-block" target="_blank" href="http://twitter.com/<?php echo $this->item->twitter?>"><span class="icon conference-twitter"></span> <?php echo $this->item->twitter?></a>
 					<?php endif;?>
-					<?php if($this->item->facebook):?>
+					<?php if(($this->item->facebook) && (ConferenceHelperParams::getParam('facebook'))):?>
 						<a class="btn btn-small btn-block" target="_blank" href="http://facebook.com/<?php echo $this->item->facebook?>"><span class="icon conference-facebook"></span> <?php echo $this->item->facebook?></a>
 					<?php endif;?>
-					<?php if($this->item->googleplus):?>
+					<?php if(($this->item->googleplus) && (ConferenceHelperParams::getParam('googleplus'))):?>
 						<a class="btn btn-small btn-block" target="_blank" href="http://plus.google.com/<?php echo $this->item->googleplus?>"><span class="icon conference-google-plus"></span> <?php echo $this->item->title?></a>
 					<?php endif;?>
-					<?php if($this->item->website):?>
+					<?php if(($this->item->linkedin) && (ConferenceHelperParams::getParam('linkedin'))):?>
+						<a class="btn btn-small btn-block" target="_blank" href="http://www.linkedin.com/in/<?php echo $this->item->linkedin?>"><span class="icon conference-linkedin"></span> <?php echo $this->item->linkedin?></a>
+					<?php endif;?>
+					<?php if(($this->item->website) && (ConferenceHelperParams::getParam('twitter'))):?>
 						<a class="btn btn-small btn-block" target="_blank" href="http://<?php echo $this->item->website?>"><span class="icon conference-earth"></span> <?php echo $this->item->website?></a>
 					<?php endif;?>
 				</div>
@@ -45,7 +48,7 @@ $this->loadHelper('format');
 			<div class="span8">
 				<?php echo ($this->item->bio)?>
 				<?php if($this->sessions):?>
-				<h4>Presentaties</h4>
+				<h4><?php echo JText::_('COM_CONFERENCE_TITLE_SESSIONS')?></h4>
 				<table class="table table-striped">
 				<tbody>
 					<?php foreach($this->sessions as $session):?>
