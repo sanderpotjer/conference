@@ -18,7 +18,15 @@ if($this->item->conference_speaker_id) {
 ?>
 <div class="conference">
 	<div class="row-fluid">
-		<h1><?php echo $this->escape($this->item->title)?></h1>
+		<h1>
+			<?php echo $this->escape($this->item->title)?>
+			<?php if($this->item->conference_level_id):?>
+			<?php $level = ConferenceHelperSession::level($this->item->conference_level_id);?>
+			<span class="label <?php echo $level->label ?>">
+				<?php echo $level->title ?>
+			</span>
+			<?php endif;?>
+		</h1>
 	</div>
 	<div class="well well-small">
 		<div class="row-fluid">

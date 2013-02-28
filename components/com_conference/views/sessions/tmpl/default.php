@@ -37,7 +37,14 @@ if($itemId != 0) {
 				</a>
 			</div>
 			<div class="span8">
-				<h3><a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo $this->escape($item->title)?></a></h3>
+				<h3>
+					<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo $this->escape($item->title)?></a>
+					<?php if($item->level):?>
+					<span class="label <?php echo $item->level_label ?>">
+						<?php echo $item->level ?>
+					</span>
+					<?php endif;?>
+				</h3>
 				<?php echo(substr($item->description,0, strpos($item->description, "</p>")+4));?>
 				<a class="btn btn-small pull-right" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo JText::_('COM_CONFERENCE_READ_MORE') ?> <?php echo $this->escape($item->title)?></a>
 			</div>
