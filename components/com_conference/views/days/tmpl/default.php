@@ -53,7 +53,12 @@ $this->loadHelper('schedule');
 							<td colspan="<?php echo(count($rooms));?>">
 								<?php if(isset($this->sessions[$slot->conference_slot_id][ConferenceHelperSchedule::generalroom()])) :?>
 								<?php $session = $this->sessions[$slot->conference_slot_id][ConferenceHelperSchedule::generalroom()];?>
-								<?php echo $session->title ?>
+								<?php if($session->listview): ?>
+									<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
+								<?php else:?>
+									<?php echo $session->title ?>
+								<?php endif;?>
+								
 								<?php endif;?>
 							</td>
 						</tr>
