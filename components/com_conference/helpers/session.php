@@ -19,6 +19,15 @@ class ConferenceHelperSession
 		return $item;
 	}
 	
+	public static function speaker($id)
+	{		
+		$item = FOFModel::getTmpInstance('Speakers', 'ConferenceModel')
+			->id($id)
+			->getFirstItem();
+			
+		return $item->title;
+	}
+	
 	public static function slot($id)
 	{		
 		$slot = FOFModel::getTmpInstance('Slots', 'ConferenceModel')

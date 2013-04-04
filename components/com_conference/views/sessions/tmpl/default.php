@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 
 $this->loadHelper('format');
 $this->loadHelper('message');
+$this->loadHelper('session');
 
 // Get the Itemid
 $itemId = FOFInput::getInt('Itemid',0,$this->input);
@@ -45,6 +46,7 @@ if($itemId != 0) {
 					</span>
 					<?php endif;?>
 				</h3>
+				<h4><span class="icon-user"></span> <?php echo(ConferenceHelperSession::speaker($item->conference_speaker_id));?></h4>
 				<?php echo(substr($item->description,0, strpos($item->description, "</p>")+4));?>
 				<a class="btn btn-small pull-right" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo JText::_('COM_CONFERENCE_READ_MORE') ?> <?php echo $this->escape($item->title)?></a>
 			</div>

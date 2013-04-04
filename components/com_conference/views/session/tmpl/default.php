@@ -22,7 +22,7 @@ if($this->item->conference_speaker_id) {
 			<?php echo $this->escape($this->item->title)?>
 			<?php if($this->item->conference_level_id):?>
 			<?php $level = ConferenceHelperSession::level($this->item->conference_level_id);?>
-			<span class="label <?php echo $level->label ?>">
+			&nbsp;<span class="label <?php echo $level->label ?>">
 				<?php echo $level->title ?>
 			</span>
 			<?php endif;?>
