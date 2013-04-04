@@ -40,7 +40,7 @@ if($itemId != 0) {
 				<h3>
 					<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo $this->escape($item->title)?></a>
 					<?php if($item->level):?>
-					<span class="label <?php echo $item->level_label ?>">
+					&nbsp;<span class="label <?php echo $item->level_label ?>">
 						<?php echo $item->level ?>
 					</span>
 					<?php endif;?>
