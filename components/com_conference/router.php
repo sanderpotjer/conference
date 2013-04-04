@@ -65,17 +65,24 @@ function ConferenceBuildRoute(&$query)
 					->getItem();
 				// Append the Speaker slug
 				$segments[] = $speaker->slug;
+				
+				// Do I have to look for a new Item ID?
+				$found = false;
+				$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
+				$qoptions = array(
+					'option'	=> 'com_conference',
+					'view'		=> 'speakers',
+				);
 			} else {
-				$segments[] = 'new';
-			}
-			
-			// Do I have to look for a new Item ID?
-			$found = false;
-			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-			$qoptions = array(
-				'option'	=> 'com_conference',
-				'view'		=> 'speakers',
-			);
+				// Do I have to look for a new Item ID?
+				$found = false;
+				$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
+				$qoptions = array(
+					'option'	=> 'com_conference',
+					'view'		=> 'speakers',
+					'layout'	=> 'form',
+				);
+			}			
 			
 			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
 			if(!$found) {
