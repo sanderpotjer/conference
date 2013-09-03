@@ -28,6 +28,7 @@ administrator/components/com_poll/*
 administrator/components/com_redirect/*
 administrator/components/com_search/*
 administrator/components/com_sections/*
+administrator/components/com_tags/*
 administrator/components/com_templates/*
 administrator/components/com_trash/*
 administrator/components/com_users/*
@@ -65,6 +66,7 @@ administrator/language/*/*.com_newsfeeds.*
 administrator/language/*/*.com_plugins.*
 administrator/language/*/*.com_redirect.*
 administrator/language/*/*.com_search.*
+administrator/language/*/*.com_tags.*
 administrator/language/*/*.com_templates.*
 administrator/language/*/*.com_users.*
 administrator/language/*/*.com_weblinks.*
@@ -110,6 +112,7 @@ administrator/language/*/*.plg_finder_contacts.*
 administrator/language/*/*.plg_finder_content.*
 administrator/language/*/*.plg_finder_newsfeeds.*
 administrator/language/*/*.plg_finder_weblinks.*
+administrator/language/*/*.plg_finder_tags.*
 administrator/language/*/*.plg_quickicon_extensionupdate.*
 administrator/language/*/*.plg_quickicon_joomlaupdate.*
 administrator/language/*/*.plg_search_categories.*
@@ -176,6 +179,7 @@ components/com_media/*
 components/com_newsfeeds/*
 components/com_poll/*
 components/com_search/*
+components/com_tags/*
 components/com_user/*
 components/com_users/*
 components/com_weblinks/*
@@ -211,6 +215,7 @@ language/*/*.com_user.*
 language/*/*.com_users.*
 language/*/*.com_weblinks.*
 language/*/*.com_wrapper.*
+language/*/*.com_tags.*
 language/*/*.files_joomla.*
 language/*/*.finder_cli.*
 language/*/*.ignore.php
@@ -299,6 +304,9 @@ language/*/*.tpl_ja_purity.*
 language/*/*.tpl_protostar.*
 language/*/*.tpl_protostar.*
 language/*/*.tpl_rhuk_milkyway.*
+language/*/*.lib_idna_convert.*
+language/*/*.mod_tags_popular.*
+language/*/*.mod_tags_similar.*
 language/*/*.xml
 language/*/index.html
 language/index.html
@@ -320,10 +328,13 @@ layouts/index.html
 layouts/joomla/index.html
 layouts/joomla/sidebars/index.html
 layouts/joomla/sidebars/submenu.php
+layouts/joomla/*
+layouts/libraries/*
 libraries/bitfolge/*
 libraries/cms.php
 libraries/cms/*
 libraries/compat/*
+libraries/idna_convert/*
 libraries/domit/*
 libraries/fof/*
 libraries/geshi/*
@@ -393,6 +404,8 @@ modules/mod_search/*
 modules/mod_sections/*
 modules/mod_stats/*
 modules/mod_syndicate/*
+modules/mod_tags_popular/*
+modules/mod_tags_similar/*
 modules/mod_users_latest/*
 modules/mod_weblinks/*
 modules/mod_whosonline/*
@@ -472,6 +485,7 @@ plugins/finder/content/*
 plugins/finder/index.html
 plugins/finder/newsfeeds/*
 plugins/finder/weblinks/*
+plugins/finder/tags/*
 plugins/index.html
 plugins/quickicon/extensionupdate/*
 plugins/quickicon/index.html
@@ -538,6 +552,7 @@ plugins/xmlrpc/index.html
 plugins/xmlrpc/joomla.php
 README.txt
 robots.txt
+robots.txt.dist
 templates/atomic/*
 templates/beez/*
 templates/beez3/*
