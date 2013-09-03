@@ -8,6 +8,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+include_once JPATH_LIBRARIES.'/fof/include.php';
 require_once JPATH_SITE.'/components/com_conference/helpers/router.php';
 
 /**
@@ -254,7 +255,7 @@ function ConferenceParseRoute(&$segments)
 	else {
 		$lastSegment = array_pop($segments);
 		if($lastSegment == 'new') {
-		//	$view = 'speaker';
+			$view = 'speaker';
 		} else {
 			$segments[] = $lastSegment;
 		}
