@@ -170,3 +170,24 @@ you can use the generic selector below, but it's slower:
 .btn:hover .conference-linkedin {
 	color: #3F9DC8;
 }
+
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+	.conference.schedule table th, 
+	.conference.schedule table td {
+		display: block;
+	} 
+	
+	.info .visible-phone {
+		display: inline !important;
+	}
+	
+	.roomname {
+		float: left;
+		padding-right: 10px;
+	}
+	
+	.conference.schedule .speaker {
+	    border-top: none !important;
+	}
+}

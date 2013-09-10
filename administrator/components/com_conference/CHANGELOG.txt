@@ -11,5 +11,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
--------------------- 1.0.0 Release [XX-Feb-2013] ------------------
-!-> Initial release of Conference Schedule
+-------------------- 0.9.3 Release [4-sep-2013] ------------------
+^ -> Bring in line with latest FOF releases
+# -> Fix issue with router file
++ -> Responsive schedule grid

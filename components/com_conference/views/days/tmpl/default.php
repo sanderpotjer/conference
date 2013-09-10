@@ -36,7 +36,7 @@ $this->loadHelper('schedule');
 					$rooms = ConferenceHelperSchedule::rooms(); 
 				?>
 				<table class="table table-bordered table-striped">
-					<thead>
+					<thead class="hidden-phone">
 						<tr>
 							<th width="10%"></th>
 							<?php if(!empty($rooms)) foreach($rooms as $room):?>
@@ -49,8 +49,11 @@ $this->loadHelper('schedule');
 						<?php if(!empty($slots)) foreach($slots as $slot):?>
 						<?php if($slot->general):?>
 						<tr class="info">
-							<td><?php echo JHtml::_('date', $slot->start_time ,'H:i'); ?></td>
+							<td class="hidden-phone"><?php echo JHtml::_('date', $slot->start_time ,'H:i'); ?></td>
 							<td colspan="<?php echo(count($rooms));?>">
+								<span class="visible-phone">
+									<?php echo JHtml::_('date', $slot->start_time ,'H:i'); ?>: 
+								</span>
 								<?php if(isset($this->sessions[$slot->conference_slot_id][ConferenceHelperSchedule::generalroom()])) :?>
 								<?php $session = $this->sessions[$slot->conference_slot_id][ConferenceHelperSchedule::generalroom()];?>
 								<?php if($session->listview): ?>
@@ -66,9 +69,12 @@ $this->loadHelper('schedule');
 						<tr>
 							<td><?php echo JHtml::_('date', $slot->start_time ,'H:i'); ?></td>
 							<?php if(!empty($rooms)) foreach($rooms as $room):?>
-							<td>
-								<?php if(isset($this->sessions[$slot->conference_slot_id][$room->conference_room_id])) :?>
+							<?php if(isset($this->sessions[$slot->conference_slot_id][$room->conference_room_id])) :?>
+								<td>
 								<?php $session = $this->sessions[$slot->conference_slot_id][$room->conference_room_id];?>
+									<span class="visible-phone roomname">
+										<?php echo $session->room ?>
+									</span>
 									<?php if($session->level):?>
 									<a href="<?php echo JRoute::_('index.php?option=com_conference&view=levels')?>"><span class="label <?php echo $session->level_label ?>">
 										<?php echo $session->level ?>
@@ -76,6 +82,9 @@ $this->loadHelper('schedule');
 									<?php endif;?>
 								<div class="session">
 									<?php if($session->listview): ?>
+										<?php if($session->slides): ?>
+											<span class="icon-grid-view" rel="tooltip"  data-original-title="<?php echo JText::_('COM_CONFERENCE_SLIDES_AVAILABLE')?>"></span>
+										<?php endif;?>
 										<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
 									<?php else:?>
 										<?php echo $session->title ?>
@@ -104,8 +113,10 @@ $this->loadHelper('schedule');
 									</div>
 									<?php endif;?>
 								<?php endif;?>
-								<?php endif;?>
 							</td>
+							<?php else:?>
+							<td class="hidden-phone"></td>
+							<?php endif;?>
 							<?php endforeach;?>
 						</tr>
 						<?php endif;?>
@@ -117,3 +128,9 @@ $this->loadHelper('schedule');
 		</div>	
 	</div>
 </div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    jQuery("[rel=tooltip]").tooltip();
+  });
+</script>
