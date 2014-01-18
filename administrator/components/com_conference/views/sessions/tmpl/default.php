@@ -35,10 +35,10 @@ $this->loadHelper('format');
 					</th>
 					<th>
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order) ?>
-					</th>
-					<th width="8%">
+						/
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_SPEAKER', 'conference_speaker_id', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
 					</th>
+			
 					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
 					<th width="8%">
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_STATUS', 'conference_status_id', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
@@ -73,10 +73,9 @@ $this->loadHelper('format');
 					</td>
 					<td>
 						<?php echo ConferenceHelperFormat::search($this->escape($this->getModel()->getState('title',''))); ?>
-					</td>
-					<td>
 						<?php echo ConferenceHelperSelect::speakers($this->getModel()->getState('speaker',''), 'speaker', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
 					</td>
+					
 					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
 					<td>
 						<?php echo ConferenceHelperSelect::status($this->getModel()->getState('status',''), 'status', array('onchange'=>'this.form.submit();', 'class'=>'input-small')) ?>
@@ -127,8 +126,7 @@ $this->loadHelper('format');
 						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id) ?>" class="conferenceitem">
 							<strong><?php echo $this->escape($item->title) ?></strong>
 						</a>
-					</td>
-					<td>
+						<br/><?php echo JText::_('COM_CONFERENCE_FIELD_SPEAKER'); ?>:
 						<?php $speakers = ConferenceHelperFormat::speakers($item->conference_speaker_id); ?>
 						<?php foreach($speakers as $speaker) :?>
 							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=speaker&id='.$speaker->conference_speaker_id) ?>"><?php echo(trim($speaker->title));?></a><br/>
