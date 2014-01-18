@@ -16,9 +16,16 @@ class ConferenceDispatcher extends FOFDispatcher
 		$result = parent::onBeforeDispatch();
 		
 		if($result) {
-			// Load js & css
-			$doc = JFactory::getDocument();
-			$doc->addStyleSheet(JURI::root(true).'/media/com_conference/css/backend.css');
+			if (!JFactory::getUser()->authorise('core.manage', 'com_conference'))
+			{
+				JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+				return false;
+			}
+			
+			// Load Akeeba Strapper
+			include_once JPATH_ROOT . '/media/akeeba_strapper/strapper.php';
+			AkeebaStrapper::bootstrap();
+			AkeebaStrapper::addCSSfile('media://com_conference/css/backend.css');
 
 			JHTML::_('formbehavior.chosen', 'select');
 		}
