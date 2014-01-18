@@ -6,11 +6,14 @@ administrator/components/com_admin/*
 administrator/components/com_akeeba/*
 administrator/components/com_banners/*
 administrator/components/com_cache/*
+administrator/components/com_ajax/*
+administrator/components/com_contenthistory/*
 administrator/components/com_categories/*
 administrator/components/com_checkin/*
 administrator/components/com_config/*
 administrator/components/com_contact/*
 administrator/components/com_content/*
+administrator/components/com_postinstall/*
 administrator/components/com_cpanel/*
 administrator/components/com_finder/*
 administrator/components/com_frontpage/*
@@ -50,6 +53,10 @@ administrator/language/*/*.com_cache.*
 administrator/language/*/*.com_categories.*
 administrator/language/*/*.com_checkin.*
 administrator/language/*/*.com_config.*
+administrator/language/*/*.com_ajax.*
+administrator/language/*/*.com_config.*
+administrator/language/*/*.com_contenthistory.*
+administrator/language/*/*.com_postinstall.*
 administrator/language/*/*.com_contact.*
 administrator/language/*/*.com_content.*
 administrator/language/*/*.com_cpanel.*
@@ -135,6 +142,10 @@ administrator/language/*/*.plg_system_sef.*
 administrator/language/*/*.plg_user_contactcreator.*
 administrator/language/*/*.plg_user_joomla.*
 administrator/language/*/*.plg_user_profile.*
+administrator/language/*/*.plg_authentication_cookie.*
+administrator/language/*/*.plg_installer_webinstaller.*
+administrator/language/*/*.plg_twofactorauth_totp.*
+administrator/language/*/*.plg_twofactorauth_yubikey.*
 administrator/language/*/*.tpl_bluestork.*
 administrator/language/*/*.tpl_hathor.*
 administrator/language/*/*.tpl_isis.*
@@ -174,6 +185,8 @@ build/*
 cache/*
 CHANGELOG.php
 cli/*
+components/com_ajax/*
+components/com_config/*
 components/com_banners/*
 components/com_contact/*
 components/com_content/*
@@ -181,6 +194,7 @@ components/com_finder/*
 components/com_mailto/*
 components/com_media/*
 components/com_newsfeeds/*
+components/com_contenthistory/*
 components/com_poll/*
 components/com_search/*
 components/com_tags/*
@@ -217,6 +231,8 @@ language/*/*.com_newsfeeds.*
 language/*/*.com_poll.*
 language/*/*.com_search.*
 language/*/*.com_user.*
+language/*/*.com_ajax.*
+language/*/*.com_config.*
 language/*/*.com_users.*
 language/*/*.com_weblinks.*
 language/*/*.com_wrapper.*
@@ -299,6 +315,7 @@ language/*/*.plg_search_weblinks.*
 language/*/*.plg_system_debug.*
 language/*/*.tpl_atomic.*
 language/*/*.tpl_atomic.*
+language/*/*.lib_fof.*
 language/*/*.tpl_beez.*
 language/*/*.tpl_beez3.*
 language/*/*.tpl_beez3.*
@@ -343,7 +360,9 @@ libraries/compat/*
 libraries/idna_convert/*
 libraries/domit/*
 libraries/fof/*
+libraries/phpass/*
 libraries/geshi/*
+libraries/framework/*
 libraries/import.legacy.php
 libraries/import.php
 libraries/index.html
@@ -368,6 +387,8 @@ logs/*
 media/cms/css/*
 media/cms/index.html
 media/com_finder/*
+media/com_banners/*
+media/com_contenthistory/*
 media/com_joomlaupdate/*
 media/contacts/*
 media/editors/*
@@ -426,6 +447,7 @@ plugins/authentication/example/*
 plugins/authentication/gmail.php
 plugins/authentication/gmail.xml
 plugins/authentication/gmail/*
+plugins/authentication/cookie/*
 plugins/authentication/index.html
 plugins/authentication/joomla.php
 plugins/authentication/joomla/*
@@ -539,6 +561,9 @@ plugins/system/mtupgrade.php
 plugins/system/mtupgrade.xml
 plugins/system/mtupgrade/*
 plugins/system/p3p/*
+plugins/twofactorauth/index.html
+plugins/twofactorauth/totp/*
+plugins/twofactorauth/yubikey/*
 plugins/system/redirect/*
 plugins/system/remember.php
 plugins/system/remember.xml
