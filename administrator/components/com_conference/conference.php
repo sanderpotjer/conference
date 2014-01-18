@@ -16,4 +16,5 @@ if(!defined('FOF_INCLUDED')) {
 	return;
 }
 
-FOFDispatcher::getTmpInstance('com_conference')->dispatch();
+// Dispatch
+FOFDispatcher::getAnInstance('com_conference')->dispatch();
