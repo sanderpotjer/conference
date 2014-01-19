@@ -75,6 +75,32 @@ class ConferenceHelperFormat
 		return $ret;
 	}
 	
+	public static function events($ids)
+	{		
+		if(!is_array($ids)) {
+			$ids = explode(',', $ids);
+		}
+		
+		static $events;
+		
+		if(empty($events)) {
+			$eventList = FOFModel::getTmpInstance('Events','ConferenceModel')
+				->getItemList(true);
+			if(!empty($eventList)) foreach($eventList as $event) {
+				$events[$event->conference_event_id] = $event;
+			}
+		}
+
+		$ret = array();
+		foreach($ids as $id) {
+			if(array_key_exists($id, $events)) {
+				$ret[$id] = $events[$id];
+			}
+		}
+		
+		return $ret;
+	}
+	
 	public static function status($status_id)
 	{	
 		$status = JComponentHelper::getParams('com_conference')->get('statusoptions');

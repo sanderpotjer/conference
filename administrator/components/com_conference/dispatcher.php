@@ -26,6 +26,7 @@ class ConferenceDispatcher extends FOFDispatcher
 			include_once JPATH_ROOT . '/media/akeeba_strapper/strapper.php';
 			AkeebaStrapper::bootstrap();
 			AkeebaStrapper::addCSSfile('media://com_conference/css/backend.css');
+			AkeebaStrapper::addCSSfile('media://com_conference/css/frontend.css');
 
 			JHTML::_('formbehavior.chosen', 'select');
 		}
