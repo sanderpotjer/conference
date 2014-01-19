@@ -94,7 +94,8 @@ class ConferenceHelperSelect
 	}
 
 	/**
-	 * Shows a speakers	 */
+	 * Shows a speakers	 
+	 */
 	public static function speakers($selected = null, $name = 'conference_speaker_id[]', $attribs = array('multiple' => 'multiple', 'class' => 'chosen'))
 	{
 		$list = FOFModel::getTmpInstance('Speakers','ConferenceModel')
@@ -154,6 +155,50 @@ class ConferenceHelperSelect
 		}
 
 		return self::genericlist($options, $id, $attribs, $selected, $id);
+	}
+	
+	/**
+	 * Drop down list of events
+	 */
+	public static function events($selected = null, $id = 'conference_event_id', $attribs = array('class' => 'chosen'))
+	{
+		$model = FOFModel::getTmpInstance('Events','ConferenceModel');
+		$items = $model->savestate(0)->limit(0)->limitstart(0)->getItemList();
+		
+		$options = array();
+		
+		$options[] = JHTML::_('select.option','',JText::_('COM_CONFERENCE_SELECT_EVENT'));
+
+		if(count($items)) foreach($items as $item)
+		{
+			$options[] = JHTML::_('select.option',$item->conference_event_id, $item->title);
+		}
+
+		return self::genericlist($options, $id, $attribs, $selected, $id);
+	}
+	
+	/**
+	 * Shows multiple events	 
+	 */
+	public static function multi_events($selected = null, $name = 'conference_event_id[]', $attribs = array('multiple' => 'multiple', 'class' => 'chosen'))
+	{
+		$list = FOFModel::getTmpInstance('Events','ConferenceModel')
+			->savestate(0)
+			->filter_order('ordering')
+			->filter_order_Dir('ASC')
+			->limit(0)
+			->offset(0)
+			->getList();
+		
+		$options   = array();
+		
+		$options[] = JHTML::_('select.option','',JText::_('COM_CONFERENCE_SELECT_EVENT'));
+	
+		foreach($list as $item) {
+			$options[] = JHTML::_('select.option',$item->conference_event_id,$item->title);
+		}
+		
+		return self::genericlist($options, $name, $attribs, $selected, $name);
 	}
 	
 	/**

@@ -16,7 +16,7 @@ $this->loadHelper('format');
 <div class="conference">
 	<form name="adminForm" id="adminForm" action="index.php" method="post">
 		<input type="hidden" name="option" id="option" value="com_conference" />
-		<input type="hidden" name="view" id="view" value="days" />
+		<input type="hidden" name="view" id="view" value="events" />
 		<input type="hidden" name="task" id="task" value="browse" />
 		<input type="hidden" name="boxchecked" id="boxchecked" value="0" />
 		<input type="hidden" name="hidemainmenu" id="hidemainmenu" value="0" />
@@ -36,12 +36,6 @@ $this->loadHelper('format');
 					<th>
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order) ?>
 					</th>
-					<th width="20%">
-						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_EVENT', 'conference_event_id', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
-					</th>
-					<th width="20%">
-						<?php echo JHTML::_('grid.sort', 'JDATE', 'date', $this->lists->order_Dir, $this->lists->order) ?>
-					</th>
 					<th class="center" width="12%">
 						<?php echo JText::_('COM_CONFERENCE_TITLE_SESSIONS') ?>
 					</th>
@@ -54,10 +48,6 @@ $this->loadHelper('format');
 					<td>
 						<?php echo ConferenceHelperFormat::search($this->escape($this->getModel()->getState('title',''))); ?>
 					</td>
-					<td>
-						<?php echo ConferenceHelperSelect::events($this->getModel()->getState('event',''), 'event', array('onchange'=>'this.form.submit();')) ?>
-					</td>
-					<td></td>
 					<td></td>
 				</tr>
 			</thead>
@@ -82,31 +72,21 @@ $this->loadHelper('format');
 			?>
 				<tr class="<?php echo 'row'.$m; ?>">
 					<td>
-						<?php echo JHTML::_('grid.id', $i, $item->conference_day_id, $checkedOut); ?>
+						<?php echo JHTML::_('grid.id', $i, $item->conference_event_id, $checkedOut); ?>
 					</td>
 					<td class="center">
 						<?php echo JHTML::_('jgrid.published', $item->enabled, $i); ?>
 					</td>
 					<td align="left">
-						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=day&id='.$item->conference_day_id) ?>" class="conferenceitem">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=event&id='.$item->conference_event_id) ?>" class="conferenceitem">
 							<strong><?php echo $this->escape($item->title) ?></strong>
 						</a>
 					</td>
-					<td>
-						<?php if($item->conference_event_id):?>
-						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=event&id='.$item->conference_event_id) ?>">
-							<?php echo $this->escape($item->event)?>
-						</a>
-						<?php endif; ?>
-					</td>
-					<td>
-						<?php echo JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC')); ?>
-					</td>
 					<td class="center">
-						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=sessions&speaker=&level=&room=&slot=&day='.$item->conference_day_id) ?>">
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=sessions&speaker=&level=&room=&slot=&event='.$item->conference_event_id) ?>">
 						<?php
 							echo FOFModel::getTmpInstance('Sessions','ConferenceModel')
-								->day($item->conference_day_id)
+								->event($item->conference_event_id)
 								->getTotal();
 						?> <?php echo  JText::_('COM_CONFERENCE_TABLE_SESSIONS') ?>
 						</a>

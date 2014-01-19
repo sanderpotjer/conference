@@ -13,12 +13,13 @@ class ConferenceToolbar extends FOFToolbar
 	protected function getMyViews()
 	{
 		$views = array(
-			'sessions',
-			'speakers',
+			'events',
+			'days',
+			'slots',
 			'levels',
 			'rooms',
-			'days',
-			'slots'
+			'sessions',
+			'speakers',
 		);
 		return $views;
 	}

@@ -23,6 +23,7 @@ class ConferenceModelSessions extends FOFModel
 			'slot'			=> $this->getState('slot',null,'int'),
 			'listview'		=> $this->getState('listview',null,'int'),
 			'status'		=> $this->getState('status',null,'int'),
+			'event'			=> $this->getState('event',null,'int'),
 			'enabled'		=> $enabled,
 		);
 	}
@@ -43,6 +44,8 @@ class ConferenceModelSessions extends FOFModel
 			$db->qn('t').'.'.$db->qn('conference_day_id').' AS '.$db->qn('day_id'),
 			$db->qn('s').'.'.$db->qn('image').' AS '.$db->qn('speakerimage'),
 			$db->qn('s').'.'.$db->qn('user_id').' AS '.$db->qn('user_id'),
+			$db->qn('e').'.'.$db->qn('title').' AS '.$db->qn('event'),
+			$db->qn('e').'.'.$db->qn('conference_event_id').' AS '.$db->qn('conference_event_id'),
 		));
 		
 		$order = $this->getState('filter_order', 'conference_session_id', 'cmd');
@@ -72,6 +75,9 @@ class ConferenceModelSessions extends FOFModel
 			->join('LEFT OUTER', $db->qn('#__conference_days').' AS '.$db->qn('d').' ON '.
 					$db->qn('d').'.'.$db->qn('conference_day_id').' = '.
 					$db->qn('t').'.'.$db->qn('conference_day_id'))
+			->join('LEFT OUTER', $db->qn('#__conference_events').' AS '.$db->qn('e').' ON '.
+					$db->qn('d').'.'.$db->qn('conference_event_id').' = '.
+					$db->qn('e').'.'.$db->qn('conference_event_id'))
 		;	
 		
 	}
@@ -113,6 +119,13 @@ class ConferenceModelSessions extends FOFModel
 			$query->where(
 				$db->qn('tbl').'.'.$db->qn('conference_slot_id').' = '.
 					$db->q($state->slot)
+			);
+		}
+		
+		if(is_numeric($state->event) && ($state->event > 0)) {
+			$query->where(
+				$db->qn('e').'.'.$db->qn('conference_event_id').' = '.
+					$db->q($state->event)
 			);
 		}
 		

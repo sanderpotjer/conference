@@ -13,11 +13,14 @@ class ConferenceControllerSpeakers extends FOFController
 	public function onBeforeRead() {			
 		$params = JFactory::getApplication()->getPageParameters('com_conference');
 		$this->getThisView()->assign('pageparams',		$params);
+		
+		$eventid = $params->get('eventid', 0);
 					
 		$sessions = FOFModel::getTmpInstance('Sessions', 'ConferenceModel')
 			->limit(0)
 			->limitstart(0)
 			->enabled(1)
+			->event($eventid)
 			->speaker($this->getThisModel()->getItem()->conference_speaker_id)
 			->getList();
 
@@ -41,10 +44,16 @@ class ConferenceControllerSpeakers extends FOFController
 			if(!in_array($orderby, array('conference_speaker_id','ordering','title','due'))) {
 				$orderby = 'ordering';
 			}
+			
+			// Get the event ID
+			$params = JFactory::getApplication()->getPageParameters('com_conference');
+			$eventid = $params->get('eventid', 0);
+			
 			// Apply ordering and filter only the enabled items
 			$this->getThisModel()
 				->filter_order($orderby)
 				->enabled(1)
+				->conference_event_id($eventid)
 				->filter_order('title')
 				->filter_order_Dir('ASC');
 				

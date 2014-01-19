@@ -37,6 +37,9 @@ $this->loadHelper('format');
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_DAY', 'day', $this->lists->order_Dir, $this->lists->order) ?>
 					</th>
 					<th>
+						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_EVENT', 'event', $this->lists->order_Dir, $this->lists->order) ?>
+					</th>
+					<th>
 						<?php echo JHTML::_('grid.sort', 'JDATE', 'day', $this->lists->order_Dir, $this->lists->order) ?>
 					</th>
 					<th class="center" width="12%">
@@ -59,6 +62,9 @@ $this->loadHelper('format');
 					</td>
 					<td>
 						<?php echo ConferenceHelperSelect::days($this->getModel()->getState('day',''), 'day', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
+					</td>
+					<td>
+						<?php echo ConferenceHelperSelect::events($this->getModel()->getState('event',''), 'event', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
 					</td>
 					<td></td>
 					<td></td>
@@ -96,6 +102,11 @@ $this->loadHelper('format');
 					<td align="left">						
 						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=slot&id='.$item->conference_slot_id) ?>" class="conferenceitem">
 							<strong><?php echo $this->escape($item->day) ?></strong>
+						</a>
+					</td>
+					<td align="left">						
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=event&id='.$item->conference_event_id) ?>" class="conferenceitem">
+							<strong><?php echo $this->escape($item->event) ?></strong>
 						</a>
 					</td>
 					<td>

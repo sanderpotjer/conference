@@ -41,10 +41,16 @@ class ConferenceControllerDays extends FOFController
 			if(!in_array($orderby, array('conference_session_id','ordering','title','due'))) {
 				$orderby = 'ordering';
 			}
+			
+			// Get the event ID
+			$params = JFactory::getApplication()->getPageParameters('com_conference');
+			$eventid = $params->get('eventid', 0);
+			
 			// Apply ordering and filter only the enabled items
 			$this->getThisModel()
 				->filter_order($orderby)
 				->enabled(1)
+				->event($eventid)
 				->filter_order('date')
 				->filter_order_Dir('ASC');
 			

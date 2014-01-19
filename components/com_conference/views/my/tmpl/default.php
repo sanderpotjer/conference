@@ -86,41 +86,42 @@ if(empty($speaker->conference_speaker_id)) {
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th><?php echo JText::_('COM_CONFERENCE_FIELD_EVENT') ?></th>
+					<th><?php echo JText::_('COM_CONFERENCE_FIELD_TITLE') ?></th>
 					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
 					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_STATUS') ?></th>
 					<?php endif;?>
-					<th><?php echo JText::_('COM_CONFERENCE_FIELD_TITLE') ?></th>
 					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_LEVEL') ?></th>
 					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION') ?></th>
 					<th width="10%" class="center"><?php echo JText::_('COM_CONFERENCE_FIELD_SLIDES') ?></th>
-					<?php if(JFactory::getUser()->authorise('core.edit.own', 'com_conference')) :?>
-					<th class="center"></th>
-					<?php endif;?>
 				</tr>
 			</thead>
 			<tbody>
 			<?php if(empty($this->sessions)): ?>
 			<tr>
-				<td colspan="6" class="center">
+				<td colspan="7" class="center">
 				<?php echo JText::_('COM_CONFERENCE_NORECORDS') ?>
 				</td>
 			</tr>
 			<?php endif; ?>
 			<?php foreach($this->sessions as $session):?>
 				<tr>
+					<td>
+						<?php echo $session->event ?>
+					</td>
+					<td>
+						<?php if(JFactory::getUser()->authorise('core.edit.own', 'com_conference')) :?>
+							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&task=edit&id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
+						<?php else:?>
+							<?php echo $session->title ?>
+						<?php endif;?>
+					</td>
 					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
 					<td class="center">
 						<?php $status = ConferenceHelperFormat::status($session->status); ?>
 						<span class="label <?php echo $status[2] ?>"><?php echo $status[1] ?></span>
 					</td>
 					<?php endif;?>
-					<td>
-						<?php if($session->listview): ?>
-							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
-						<?php else:?>
-							<?php echo $session->title ?>
-						<?php endif;?>
-					</td>
 					<td class="center">
 						<span class="label <?php echo $session->level_label ?>">
 							<?php echo $session->level ?>
@@ -140,11 +141,6 @@ if(empty($speaker->conference_speaker_id)) {
 							<span class="badge badge-important"><span class="icon-delete"></span></span>
 						<?php endif;?>
 					</td>
-					<?php if(JFactory::getUser()->authorise('core.edit.own', 'com_conference')) :?>
-					<td class="center">
-						<a class="btn btn-small" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&task=edit&id='.$session->conference_session_id)?>"><span class="icon-pencil"></span> <?php echo JText::_('COM_CONFERENCE_MY_EDIT') ?></a>
-					</td>
-					<?php endif;?>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>

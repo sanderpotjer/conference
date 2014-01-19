@@ -114,6 +114,9 @@ $sortFields = array(
 					<th width="10%">
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_SLOT', 'start_time', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
 					</th>
+					<th>
+						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_EVENT', 'event', $this->lists->order_Dir, $this->lists->order) ?>
+					</th>
 					<th class="center" width="7%">
 						<?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION') ?>
 					</th>
@@ -151,6 +154,9 @@ $sortFields = array(
 					<td>
 						<?php echo ConferenceHelperSelect::days($this->getModel()->getState('day',''), 'day', array('onchange'=>'this.form.submit();', 'class'=>'input-small')) ?>
 					</td>
+					<td>
+						<?php echo ConferenceHelperSelect::events($this->getModel()->getState('event',''), 'event', array('onchange'=>'this.form.submit();', 'class'=>'input-small')) ?>
+					</td>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -187,11 +193,16 @@ $sortFields = array(
 						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id) ?>" class="conferenceitem">
 							<strong><?php echo $this->escape($item->title) ?></strong>
 						</a>
+						<?php if($item->conference_speaker_id):?>
 						<br/><?php echo JText::_('COM_CONFERENCE_FIELD_SPEAKER'); ?>:
 						<?php $speakers = ConferenceHelperFormat::speakers($item->conference_speaker_id); ?>
-						<?php foreach($speakers as $speaker) :?>
-							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=speaker&id='.$speaker->conference_speaker_id) ?>"><?php echo(trim($speaker->title));?></a><br/>
+						<?php $i=0;?>
+						<?php foreach($speakers as $key=>$speaker) :?>
+							<?php if($i > 0):?>,<?php endif;?>
+							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=speaker&id='.$speaker->conference_speaker_id) ?>"><?php echo(trim($speaker->title));?></a>
+							<?php $i++;?>
 						<?php endforeach;?>
+						<?php endif;?>
 					</td>
 					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
 					<td class="center">
@@ -221,6 +232,11 @@ $sortFields = array(
 							<?php echo JHtml::_('date', $item->start_time,'H:i')?> - <?php echo JHtml::_('date', $item->end_time, 'H:i')?>
 						</a>
 						<?php endif;?>
+					</td>
+					<td align="left">						
+						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=event&id='.$item->conference_event_id) ?>" class="conferenceitem">
+							<strong><?php echo $this->escape($item->event) ?></strong>
+						</a>
 					</td>
 					<td class="center">
 						<?php if($item->description): ?>

@@ -18,9 +18,9 @@ $editor = JFactory::getEditor();
 <div class="conference">
 	<form action="index.php" method="post" name="adminForm" id="adminForm" class="form form-horizontal">
 		<input type="hidden" name="option" value="com_conference" />
-		<input type="hidden" name="view" value="day" />
+		<input type="hidden" name="view" value="event" />
 		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="conference_day_id" value="<?php echo $this->item->conference_day_id ?>" />
+		<input type="hidden" name="conference_event_id" value="<?php echo $this->item->conference_event_id ?>" />
 		<input type="hidden" name="<?php echo JFactory::getSession()->getFormToken();?>" value="1" />
 		
 		<!-- Start row -->
@@ -33,22 +33,6 @@ $editor = JFactory::getEditor();
 					</label>
 					<div class="controls">
 						<input type="text" name="title" id="title" class="span" value="<?php echo $this->item->title?>"/>
-					</div>
-				</div>
-				<div class="control-group">
-					<label for="conference_event_id" class="control-label">
-						<?php echo JText::_('COM_CONFERENCE_FIELD_EVENT'); ?>
-					</label>
-					<div class="controls">
-						<?php echo ConferenceHelperSelect::events($this->item->conference_event_id); ?>
-					</div>
-				</div>
-				<div class="control-group">
-					<label for="date" class="control-label">
-						<?php echo JText::_('JDATE'); ?>
-					</label>
-					<div class="controls">
-						<?php echo JHTML::_('calendar', $this->item->date, 'date', 'date','%Y-%m-%d'); ?>
 					</div>
 				</div>
 				<div class="control-group">

@@ -109,6 +109,15 @@ $editor = JFactory::getEditor();
 					</div>
 				</div>
 				<hr>
+				<div class="control-group">
+					<label for="conference_event_id" class="control-label">
+						<?php echo JText::_('COM_CONFERENCE_FIELD_EVENT'); ?>
+					</label>	
+					<div class="controls">
+						<?php echo ConferenceHelperSelect::multi_events(explode(',',$this->item->conference_event_id)); ?>
+					</div>
+				</div>
+				<hr>
 				<?php if(ConferenceHelperParams::getParam('twitter',1)): ?>
 				<div class="control-group">
 					<label for="twitter" class="control-label">
