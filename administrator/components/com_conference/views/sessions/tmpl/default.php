@@ -83,7 +83,7 @@ $sortFields = array(
 			</div>
 		</div>
 		<div class="clearfix"> </div>
-	<?php endif; ?>
+		<?php endif; ?>
 	
 		<table class="adminlist table table-striped">
 			<thead>

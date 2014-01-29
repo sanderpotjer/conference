@@ -13,9 +13,35 @@ $this->loadHelper('params');
 $this->loadHelper('select');
 $this->loadHelper('format');
 
+// Sorting filters
+$sortFields = array(
+	'enabled' 				=> JText::_('JPUBLISHED'),
+	'title'					=> JText::_('COM_CONFERENCE_FIELD_NAME'),
+	'event'					=> JText::_('COM_CONFERENCE_FIELD_EVENT'),
+	'modified_on'			=> JText::_('JGLOBAL_FIELD_MODIFIED_LABEL'),
+);
+
 //JHtml::_('bootstrap.tooltip');
 JHtml::_('bootstrap.popover');
 ?>
+
+<?php if (version_compare(JVERSION, '3.0', 'ge')): ?>
+	<script type="text/javascript">
+		Joomla.orderTable = function() {
+			table = document.getElementById("sortTable");
+			direction = document.getElementById("directionTable");
+			order = table.options[table.selectedIndex].value;
+			if (!order)
+			{
+				dirn = 'asc';
+			}
+			else {
+				dirn = direction.options[direction.selectedIndex].value;
+			}
+			Joomla.tableOrdering(order, dirn);
+		}
+	</script>
+<?php endif; ?>
 
 <div class="conference">
 	<form name="adminForm" id="adminForm" action="index.php" method="post">
@@ -27,7 +53,36 @@ JHtml::_('bootstrap.popover');
 		<input type="hidden" name="filter_order" id="filter_order" value="<?php echo $this->lists->order ?>" />
 		<input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="<?php echo $this->lists->order_Dir ?>" />
 		<input type="hidden" name="<?php echo JFactory::getSession()->getFormToken();?>" value="1" />
-	
+		
+		<?php if(version_compare(JVERSION, '3.0', 'gt')): ?>
+		<div id="filter-bar" class="btn-toolbar">
+			<div class="btn-group pull-right hidden-phone">
+				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC') ?></label>
+				<?php echo $this->getModel()->getPagination()->getLimitBox(); ?>
+			</div>
+			<?php
+			$asc_sel	= ($this->getLists()->order_Dir == 'asc') ? 'selected="selected"' : '';
+			$desc_sel	= ($this->getLists()->order_Dir == 'desc') ? 'selected="selected"' : '';
+			?>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC') ?></label>
+				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC') ?></option>
+					<option value="asc" <?php echo $asc_sel ?>><?php echo JText::_('JGLOBAL_ORDER_ASCENDING') ?></option>
+					<option value="desc" <?php echo $desc_sel ?>><?php echo JText::_('JGLOBAL_ORDER_DESCENDING') ?></option>
+				</select>
+			</div>
+			<div class="btn-group pull-right">
+				<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY') ?></label>
+				<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JGLOBAL_SORT_BY') ?></option>
+					<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $this->getLists()->order) ?>
+				</select>
+			</div>
+		</div>
+		<div class="clearfix"> </div>
+		<?php endif; ?>
+		
 		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
@@ -54,7 +109,7 @@ JHtml::_('bootstrap.popover');
 						<?php echo JText::_('COM_CONFERENCE_TITLE_SESSIONS') ?>
 					</th>
 					<th>
-						<?php echo JText::_('COM_CONFERENCE_FIELD_EVENT') ?>
+						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_EVENT', 'event', $this->lists->order_Dir, $this->lists->order) ?>
 					</th>
 					<th width="7%" class="nowrap">
 						<?php echo JHtml::_('grid.sort', 'JGLOBAL_FIELD_MODIFIED_LABEL', 'modified_on', $this->lists->order_Dir, $this->lists->order, 'browse') ?>
