@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `#__con_conference_events` (
+CREATE TABLE IF NOT EXISTS `#__conference_events` (
   `conference_event_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `slug` varchar(50) NOT NULL,
