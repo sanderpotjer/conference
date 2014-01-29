@@ -2,12 +2,12 @@
 <extension version="2.5" type="component" method="upgrade">
 	<name>COM_CONFERENCE</name>
 	<author>Sander Potjer</author>
-	<creationDate>2013-02-17</creationDate>
+	<creationDate>2014-01-29</creationDate>
 	<copyright>Copyright (C) 2011-2014 Sander Potjer Webdevelopment. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<authorEmail>mail@sanderpotjer.nl</authorEmail>
 	<authorUrl>www.sanderpotjer.nl</authorUrl>
-	<version>0.9.3</version>
+	<version>0.9.5</version>
 	<description>Conference Schedule Manager for Joomla</description>
 
 	<!-- Public front end files -->
@@ -52,7 +52,6 @@
 	<update>
 		<schemas>
 			<schemapath type="mysql">sql/updates/mysql</schemapath>
-			<schemapath type="mysqli">sql/updates/mysql</schemapath>
 		</schemas>
 	</update>
 
