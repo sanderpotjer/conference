@@ -94,6 +94,9 @@ $sortFields = array(
 					<th width="20">
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_STATUS', 'enabled', $this->lists->order_Dir, $this->lists->order); ?>
 					</th>
+					<th width="20">
+						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_SHOW_LIST', 'listview', $this->lists->order_Dir, $this->lists->order); ?>
+					</th>
 					<th>
 						<?php echo JHTML::_('grid.sort', 'COM_CONFERENCE_FIELD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order) ?>
 						/
@@ -135,9 +138,10 @@ $sortFields = array(
 					<td class="center">
 						<?php echo ConferenceHelperFormat::enabled($this->escape($this->getModel()->getState('enabled',''))); ?>
 					</td>
+					<td></td>
 					<td>
 						<?php echo ConferenceHelperFormat::search($this->escape($this->getModel()->getState('title',''))); ?>
-						<?php echo ConferenceHelperSelect::speakers($this->getModel()->getState('speaker',''), 'speaker', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
+						<?php echo ConferenceHelperSelect::speakers($this->getModel()->getState('speaker',''), 'speaker', array('onchange'=>'this.form.submit();', 'class'=>'input-medium'),true) ?>
 					</td>
 					
 					<?php if(ConferenceHelperParams::getParam('status',0)): ?>
@@ -188,6 +192,13 @@ $sortFields = array(
 					</td>
 					<td class="center">
 						<?php echo JHTML::_('jgrid.published', $item->enabled, $i); ?>
+					</td>
+					<td class="center">
+						<?php if($item->listview): ?>
+						<span class="badge badge-success"><span class="icon-checkmark"></span></span>
+						<?php else:?>
+						<span class="badge badge-important"><span class="icon-delete"></span></span>
+						<?php endif;?>
 					</td>
 					<td align="left">					
 						<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id) ?>" class="conferenceitem">

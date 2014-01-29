@@ -96,7 +96,7 @@ class ConferenceHelperSelect
 	/**
 	 * Shows a speakers	 
 	 */
-	public static function speakers($selected = null, $name = 'conference_speaker_id[]', $attribs = array('multiple' => 'multiple', 'class' => 'chosen'))
+	public static function speakers($selected = null, $name = 'conference_speaker_id[]', $attribs = array('multiple' => 'multiple', 'class' => 'chosen'), $showselect = false)
 	{
 		$list = FOFModel::getTmpInstance('Speakers','ConferenceModel')
 			->savestate(0)
@@ -108,7 +108,9 @@ class ConferenceHelperSelect
 		
 		$options   = array();
 		
-		$options[] = JHTML::_('select.option','',JText::_('COM_CONFERENCE_SELECT_SPEAKER'));
+		if($showselect) {
+			$options[] = JHTML::_('select.option','',JText::_('COM_CONFERENCE_SELECT_SPEAKER'));
+		}
 	
 		foreach($list as $item) {
 			$options[] = JHTML::_('select.option',$item->conference_speaker_id,$item->title);
@@ -228,13 +230,13 @@ class ConferenceHelperSelect
 	{
 		$model = FOFModel::getTmpInstance('Days','ConferenceModel');
 		$slotmodel = FOFModel::getTmpInstance('Slots','ConferenceModel');
-		$days = $model->savestate(0)->filter_order('date')->filter_order_Dir('asc')->limit(0)->limitstart(0)->getItemList();
+		$days = $model->savestate(0)->filter_order('date')->filter_order_Dir('asc')->limit(0)->enabled(1)->limitstart(0)->getItemList();
 
 		$options = array();
 		$options[] = JHTML::_('select.option','',JText::_('COM_CONFERENCE_SELECT_SLOT'));
 		foreach($days as $day){
 			$options[] = JHTML::_('select.optgroup', JHtml::_('date', $day->date, JText::_('l, j F Y')));			
-			$items = $slotmodel->savestate(0)->filter_order('start_time')->filter_order_Dir('asc')->limit(0)->limitstart(0)->getItemList();
+			$items = $slotmodel->savestate(0)->filter_order('start_time')->filter_order_Dir('asc')->limit(0)->enabled(1)->limitstart(0)->getItemList();
 		
 			if(count($items)) foreach($items as $item)
 			{

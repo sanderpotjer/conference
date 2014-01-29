@@ -151,6 +151,7 @@ JHtml::_('bootstrap.popover');
 						<?php
 							echo FOFModel::getTmpInstance('Sessions','ConferenceModel')
 								->speaker($item->conference_speaker_id)
+								->enabled(1)
 								->getTotal();
 						?> <?php echo  JText::_('COM_CONFERENCE_TABLE_SESSIONS') ?>
 						</a>
