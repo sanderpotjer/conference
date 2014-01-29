@@ -31,11 +31,7 @@ class Com_ConferenceInstallerScript
 		}
 		
 		// Bugfix for "Can not build admin menus"
-		if(in_array($type, array('install')))
-		{
-			$this->_bugfixDBFunctionReturnedNoError();
-		}
-		elseif ($type != 'discover_install')
+		if ($type != 'discover_install')
 		{
 			$this->_fixSchemaVersion();
 			$this->_fixBrokenSQLUpdates($parent);
