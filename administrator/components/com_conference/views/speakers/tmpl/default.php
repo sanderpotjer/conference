@@ -72,7 +72,9 @@ JHtml::_('bootstrap.popover');
 					<td></td>
 					<td></td>
 					<td></td>
-					<td></td>
+					<td>
+						<?php echo ConferenceHelperSelect::events($this->getModel()->getState('event',''), 'event', array('onchange'=>'this.form.submit();', 'class'=>'input-medium')) ?>
+					</td>
 					<td></td>
 				</tr>
 			</thead>

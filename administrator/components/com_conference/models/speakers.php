@@ -18,6 +18,7 @@ class ConferenceModelSpeakers extends FOFModel
 			'title'			=> $this->getState('title',null,'string'),
 			'speaker'		=> $this->getState('speaker',null,'int'),
 			'id'			=> $this->getState('id',null,'int'),
+			'event'			=> $this->getState('event',null,'int'),
 			'enabled'		=> $enabled,
 		);
 	}
@@ -29,10 +30,7 @@ class ConferenceModelSpeakers extends FOFModel
 
 		$query->select(array(
 			$db->qn('tbl').'.*',
-			//$db->qn('d').'.'.$db->qn('title').' AS '.$db->qn('day'),
-			//$db->qn('d').'.'.$db->qn('date').' AS '.$db->qn('date'),
-			//$db->qn('e').'.'.$db->qn('title').' AS '.$db->qn('event'),
-			//$db->qn('e').'.'.$db->qn('conference_event_id').' AS '.$db->qn('conference_event_id'),
+			$db->qn('e').'.'.$db->qn('title').' AS '.$db->qn('event'),
 		));
 		
 		$order = $this->getState('filter_order', 'conference_speaker_id', 'cmd');
@@ -47,12 +45,9 @@ class ConferenceModelSpeakers extends FOFModel
 		$db = $this->getDbo();
 
 		$query
-			//->join('LEFT OUTER', $db->qn('#__conference_sessions').' AS '.$db->qn('s').' ON '.
-			//		$db->qn('s').'.'.$db->qn('conference_speaker_id').' = '.
-			//		$db->qn('tbl').'.'.$db->qn('conference_speaker_id'))
-			//->join('LEFT OUTER', $db->qn('#__conference_events').' AS '.$db->qn('e').' ON '.
-			//		$db->qn('e').'.'.$db->qn('conference_event_id').' = '.
-			//		$db->qn('s').'.'.$db->qn('conference_event_id'))
+			->join('LEFT OUTER', $db->qn('#__conference_events').' AS '.$db->qn('e').' ON '.
+					$db->qn('e').'.'.$db->qn('conference_event_id').' = '.
+					$db->qn('tbl').'.'.$db->qn('conference_event_id'))
 		;	
 		
 	}
@@ -66,6 +61,17 @@ class ConferenceModelSpeakers extends FOFModel
 			$query->where(
 				$db->qn('tbl').'.'.$db->qn('enabled').' = '.
 					$db->q($state->enabled)
+			);
+		}
+		
+		if(is_numeric($state->event) && ($state->event > 0)) {
+			$query->where(
+				'('.
+				'('.$db->qn('tbl').'.'.$db->qn('conference_event_id').' = '.$db->quote($state->event).') OR'.
+				'('.$db->qn('tbl').'.'.$db->qn('conference_event_id').' LIKE '.$db->quote('%,'.$state->event.',%').') OR'.
+				'('.$db->qn('tbl').'.'.$db->qn('conference_event_id').' LIKE '.$db->quote($state->event.',%').') OR'.
+				'('.$db->qn('tbl').'.'.$db->qn('conference_event_id').' LIKE '.$db->quote('%,'.$state->event).')'.
+				')'
 			);
 		}
 		
