@@ -47,6 +47,14 @@
 			<file driver="mysqli">sql/install/mysql/uninstall.sql</file>
 		</sql>
 	</uninstall>
+	
+	<!-- SQL files to run on update -->
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+			<schemapath type="mysqli">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
 
 	<!-- Media files -->
 	<media destination="com_conference" folder="media">
