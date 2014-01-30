@@ -16,8 +16,8 @@ class ConferenceModelSpeakers extends FOFModel
 		
 		return (object)array(
 			'title'			=> $this->getState('title',null,'string'),
-			'speaker'		=> $this->getState('speaker',null,'int'),
-			'id'			=> $this->getState('id',null,'int'),
+			'speaker'		=> $this->getState('id',null,'int'),
+			'user_id'		=> $this->getState('user_id',null,'int'),
 			'event'			=> $this->getState('event',null,'int'),
 			'enabled'		=> $enabled,
 		);
@@ -79,6 +79,13 @@ class ConferenceModelSpeakers extends FOFModel
 			$query->where(
 				$db->qn('tbl').'.'.$db->qn('conference_speaker_id').' = '.
 					$db->q($state->speaker)
+			);
+		}
+		
+		if(is_numeric($state->user_id) && ($state->user_id > 0)) {
+			$query->where(
+				$db->qn('tbl').'.'.$db->qn('user_id').' = '.
+					$db->q($state->user_id)
 			);
 		}	
 		
