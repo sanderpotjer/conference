@@ -25,7 +25,7 @@ class ConferenceHelperSession
 			->id($id)
 			->getFirstItem();
 			
-		return $item->title;
+		return $item;
 	}
 	
 	public static function slot($id)

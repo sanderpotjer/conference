@@ -26,6 +26,7 @@ if($itemId != 0) {
 		<h1><?php echo JText::_('COM_CONFERENCE_TITLE_SESSIONS')?></h1>
 	</div>
 	<?php if(!empty($this->items)) foreach($this->items as $item):?>
+	<?php $speaker = ConferenceHelperSession::speaker($item->conference_speaker_id); ?>
 	<div class="well well-small spreker">
 		<div class="row-fluid">
 			<div class="span4">
@@ -46,7 +47,7 @@ if($itemId != 0) {
 					</span>
 					<?php endif;?>
 				</h3>
-				<h4><span class="icon-user"></span> <?php echo(ConferenceHelperSession::speaker($item->conference_speaker_id));?></h4>
+				<h4><span class="icon-user"></span> <?php echo $speaker->title; ?></h4>
 				<?php echo(substr($item->description,0, strpos($item->description, "</p>")+4));?>
 				<a class="btn btn-small pull-right" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$item->conference_session_id)?>"><?php echo JText::_('COM_CONFERENCE_READ_MORE') ?> <?php echo $this->escape($item->title)?></a>
 			</div>
