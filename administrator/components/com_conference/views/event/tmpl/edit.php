@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen');
 ?>
-
 <div class="conference">
 	<form action="index.php?option=com_conference&view=event" method="post" name="adminForm" id="adminForm" class="form form-horizontal">
 		<input type="hidden" name="task" value="" />

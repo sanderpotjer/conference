@@ -24,7 +24,7 @@ require_once JPATH_ADMINISTRATOR . '/components/com_conference/helpers/conferenc
 JForm::addFieldPath(JPATH_ADMINISTRATOR . '/components/com_conference/models/fields');
 
 // Core Joomla views
-$views = ['events', 'event', 'days', 'day'];
+$views = ['events', 'event', 'days', 'day', 'slots', 'slot'];
 
 $jinput = JFactory::getApplication()->input;
 $view = $jinput->get('view');

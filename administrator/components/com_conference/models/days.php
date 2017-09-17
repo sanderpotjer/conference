@@ -32,7 +32,7 @@ class ConferenceModelDays extends JModelList
 		{
 			$config['filter_fields'] = array(
 				'ordering', 'days.ordering',
-				'conference_event_id', 'days.conference_event_id',
+				'conference_day_id', 'days.conference_day_id',
 				'title', 'days.title',
 				'enabled', 'days.enabled',
 			);

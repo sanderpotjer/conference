@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Event view.
+ * Slot View.
  *
  * @package     Conference
  * @since       1.0
  */
-class ConferenceViewEvent extends JViewLegacy
+class ConferenceViewSlot extends JViewLegacy
 {
 	/**
 	 * The form with the field
@@ -91,45 +91,45 @@ class ConferenceViewEvent extends JViewLegacy
 		$isNew      = $this->item->conference_event_id === 0;
 		$canDo      = $this->canDo;
 
-		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_EVENTS_EDIT'), 'list-view');
+		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_SLOTS_EDIT'), 'list-view');
 
 		// If a new item, can save the item.  Allow users with edit permissions to apply changes to prevent returning to grid.
 		if ($isNew && $canDo->get('core.create'))
 		{
 			if ($canDo->get('core.edit'))
 			{
-				JToolbarHelper::apply('event.apply');
+				JToolbarHelper::apply('slot.apply');
 			}
 
-			JToolbarHelper::save('event.save');
+			JToolbarHelper::save('slot.save');
 		}
 
 		// If not checked out, can save the item.
 		if (!$isNew && $canDo->get('core.edit'))
 		{
-			JToolbarHelper::apply('event.apply');
-			JToolbarHelper::save('event.save');
+			JToolbarHelper::apply('slot.apply');
+			JToolbarHelper::save('slot.save');
 		}
 
 		// If the user can create new items, allow them to see Save & New
 		if ($canDo->get('core.create'))
 		{
-			JToolbarHelper::save2new('event.save2new');
+			JToolbarHelper::save2new('slot.save2new');
 		}
 
 		// If an existing item, can save to a copy only if we have create rights.
 		if (!$isNew && $canDo->get('core.create'))
 		{
-			JToolbarHelper::save2copy('event.save2copy');
+			JToolbarHelper::save2copy('slot.save2copy');
 		}
 
 		if ($isNew)
 		{
-			JToolbarHelper::cancel('event.cancel');
+			JToolbarHelper::cancel('slot.cancel');
 		}
 		else
 		{
-			JToolbarHelper::cancel('event.cancel', 'JTOOLBAR_CLOSE');
+			JToolbarHelper::cancel('slot.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
 }

@@ -140,7 +140,7 @@ if ($saveOrder)
 	                        {
 		                        if ($item->conference_event_id)
 		                        {
-			                        $url = JRoute::_('index.php?option=com_conference&view=event&id=' . $item->conference_event_id);
+			                        $url = JRoute::_('index.php?option=com_conference&task=event.edit&conference_event_id=' . $item->conference_event_id);
 			                        echo JHtml::_('link', $url, $item->event);
 		                        }
 	                        }
@@ -156,7 +156,7 @@ if ($saveOrder)
                         <td>
 	                        <?php if ($canEdit)
 	                        {
-		                        $url = JRoute::_('index.php?option=com_conference&view=sessions&speaker=&level=&room=&slot=&day=' . $item->conference_day_id);
+		                        $url = JRoute::_('index.php?option=com_conference&task=sessions.edit&speaker=&level=&room=&slot=&day=' . $item->conference_day_id);
 		                        echo JHtml::_('link', $url, $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS'));
 	                        }
 	                        else

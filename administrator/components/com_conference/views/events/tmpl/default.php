@@ -110,7 +110,6 @@ if ($saveOrder)
                         <td class="center">
                             <?php echo JHtml::_('jgrid.published', $item->enabled, $i, 'events.', $canChange); ?>
                         </td>
-
                         <td>
                             <div class="name break-word">
 								<?php if ($canEdit)
