@@ -15,9 +15,9 @@ JHtml::_('formbehavior.chosen');
 ?>
 
 <div class="conference">
-	<form action="index.php?option=com_conference&view=event" method="post" name="adminForm" id="adminForm" class="form form-horizontal">
+    <form action="index.php?option=com_conference&view=day" method="post" name="adminForm" id="adminForm" class="form form-horizontal">
 		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="conference_event_id" value="<?php echo $this->item->conference_event_id ?>" />
+		<input type="hidden" name="conference_day_id" value="<?php echo $this->item->conference_day_id ?>" />
 		<input type="hidden" name="<?php echo JFactory::getSession()->getFormToken();?>" value="1" />
 		
 		<!-- Start row -->
@@ -25,6 +25,8 @@ JHtml::_('formbehavior.chosen');
 			<!-- Start left -->
 			<div class="span7">
 				<?php echo $this->form->renderField('title'); ?>
+				<?php echo $this->form->renderField('conference_event_id'); ?>
+				<?php echo $this->form->renderField('date'); ?>
 				<?php echo $this->form->renderField('description'); ?>
 			</div>
 			<!-- End left -->

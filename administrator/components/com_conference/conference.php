@@ -21,8 +21,10 @@ if(!defined('FOF_INCLUDED')) {
 // Load the helper class for the submenu
 require_once JPATH_ADMINISTRATOR . '/components/com_conference/helpers/conference.php';
 
+JForm::addFieldPath(JPATH_ADMINISTRATOR . '/components/com_conference/models/fields');
+
 // Core Joomla views
-$views = ['events', 'event'];
+$views = ['events', 'event', 'days', 'day'];
 
 $jinput = JFactory::getApplication()->input;
 $view = $jinput->get('view');

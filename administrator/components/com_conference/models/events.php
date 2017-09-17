@@ -30,10 +30,10 @@ class ConferenceModelEvents extends JModelList
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
-				'ordering', 'conference.ordering',
-				'conference_event_id', 'conference.conference_event_id',
-				'title', 'conference.title',
-				'enabled', 'conference.enabled',
+				'ordering', 'events.ordering',
+				'conference_event_id', 'events.conference_event_id',
+				'title', 'events.title',
+				'enabled', 'events.enabled',
 			);
 		}
 
@@ -105,6 +105,7 @@ class ConferenceModelEvents extends JModelList
 						'conference_event_id',
 						'title',
 						'enabled',
+						'ordering',
 					)
 				)
 			);
@@ -170,7 +171,7 @@ class ConferenceModelEvents extends JModelList
 	 *
 	 * @since   1.0.0
 	 */
-	private function getSessionCount($conference_event_id)
+	public function getSessionCount($conference_event_id)
 	{
 		$db = $this->getDbo();
 

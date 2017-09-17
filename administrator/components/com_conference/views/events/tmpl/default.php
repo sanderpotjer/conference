@@ -16,7 +16,7 @@ $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
 
 $loggeduser = JFactory::getUser();
-$saveOrder = $listOrder === 'a.ordering';
+$saveOrder = $listOrder === 'events.ordering';
 
 if ($saveOrder)
 {
@@ -42,13 +42,13 @@ if ($saveOrder)
                 <thead>
                 <tr>
                     <th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('searchtools.sort', '', 'conference.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
+						<?php echo JHtml::_('searchtools.sort', '', 'events.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
                     </th>
                     <th width="20">
                         <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
                     </th>
                     <th width="1%" class="nowrap center">
-		                <?php echo JHtml::_('searchtools.sort', 'JSTATUS', 'conference.enabled', $listDirn, $listOrder); ?>
+		                <?php echo JHtml::_('searchtools.sort', 'JSTATUS', 'events.enabled', $listDirn, $listOrder); ?>
                     </th>
                     <th class="title">
 						<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_TITLE', 'events.title', $listDirn, $listOrder); ?>

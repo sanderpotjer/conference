@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Events model.
+ * Days model.
  *
  * @package     Conference
  * @since       1.0
  */
-class ConferenceViewEvents extends JViewLegacy
+class ConferenceViewDays extends JViewLegacy
 {
 	/**
 	 * The items to display.
@@ -98,7 +98,7 @@ class ConferenceViewEvents extends JViewLegacy
 
 		// Render the sidebar
 		$helper = new ConferenceHelperConference;
-		$helper->addSubmenu('events');
+		$helper->addSubmenu('days');
 		$this->sidebar = JHtmlSidebar::render();
 
 		// Display it all
@@ -114,27 +114,27 @@ class ConferenceViewEvents extends JViewLegacy
 	 */
 	private function toolbar()
 	{
-		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_EVENTS'), 'events');
+		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_DAYS'), 'calendar');
 
 		if ($this->canDo->get('core.create'))
 		{
-			JToolbarHelper::addNew('event.add');
+			JToolbarHelper::addNew('day.add');
 		}
 
 		if ($this->canDo->get('core.edit') || $this->canDo->get('core.edit.own'))
 		{
-			JToolbarHelper::editList('event.edit');
+			JToolbarHelper::editList('day.edit');
 		}
 
 		if ($this->canDo->get('core.edit.state'))
 		{
-			JToolbarHelper::publish('events.publish', 'JTOOLBAR_PUBLISH', true);
-			JToolbarHelper::unpublish('events.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+			JToolbarHelper::publish('days.publish', 'JTOOLBAR_PUBLISH', true);
+			JToolbarHelper::unpublish('days.unpublish', 'JTOOLBAR_UNPUBLISH', true);
 		}
 
 		if ($this->canDo->get('core.delete'))
 		{
-			JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'events.delete');
+			JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'days.delete');
 		}
 	}
 }
