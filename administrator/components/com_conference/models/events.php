@@ -203,6 +203,9 @@ class ConferenceModelEvents extends JModelList
 			case 'level':
 				$query->where($db->quoteName('levels.conference_level_id') . ' = ' . (int) $filterId);
 				break;
+			case 'room':
+				$query->where($db->quoteName('rooms.conference_room_id') . ' = ' . (int) $filterId);
+				break;
 			default:
 				$query->where($db->quoteName('events.conference_event_id') . ' = ' . (int) $filterId);
 				break;

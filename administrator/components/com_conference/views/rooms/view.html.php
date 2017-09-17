@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Slots model.
+ * Rooms model.
  *
  * @package     Conference
  * @since       1.0
  */
-class ConferenceViewSlots extends JViewLegacy
+class ConferenceViewRooms extends JViewLegacy
 {
 	/**
 	 * The items to display.
@@ -98,7 +98,7 @@ class ConferenceViewSlots extends JViewLegacy
 
 		// Render the sidebar
 		$helper = new ConferenceHelperConference;
-		$helper->addSubmenu('slots');
+		$helper->addSubmenu('rooms');
 		$this->sidebar = JHtmlSidebar::render();
 
 		// Display it all
@@ -114,27 +114,27 @@ class ConferenceViewSlots extends JViewLegacy
 	 */
 	private function toolbar()
 	{
-		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_SLOTS'), 'events');
+		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_ROOMS'), 'page');
 
 		if ($this->canDo->get('core.create'))
 		{
-			JToolbarHelper::addNew('slot.add');
+			JToolbarHelper::addNew('room.add');
 		}
 
 		if ($this->canDo->get('core.edit') || $this->canDo->get('core.edit.own'))
 		{
-			JToolbarHelper::editList('slot.edit');
+			JToolbarHelper::editList('room.edit');
 		}
 
 		if ($this->canDo->get('core.edit.state'))
 		{
-			JToolbarHelper::publish('slots.publish', 'JTOOLBAR_PUBLISH', true);
-			JToolbarHelper::unpublish('slots.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+			JToolbarHelper::publish('rooms.publish', 'JTOOLBAR_PUBLISH', true);
+			JToolbarHelper::unpublish('rooms.unpublish', 'JTOOLBAR_UNPUBLISH', true);
 		}
 
 		if ($this->canDo->get('core.delete'))
 		{
-			JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'slots.delete');
+			JToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'rooms.delete');
 		}
 	}
 }
