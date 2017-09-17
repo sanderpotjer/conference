@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Event model.
+ * Level model.
  *
  * @package     Conference
  * @since       1.0
  */
-class ConferenceModelEvent extends JModelAdmin
+class ConferenceModelLevel extends JModelAdmin
 {
 	/**
 	 * Get the form.
@@ -31,7 +31,7 @@ class ConferenceModelEvent extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		$form = $this->loadForm('com_conference.event', 'event', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_conference.level', 'level', array('control' => 'jform', 'load_data' => $loadData));
 
 		if (0 === count($form))
 		{
@@ -53,7 +53,7 @@ class ConferenceModelEvent extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_conference.edit.event.data', array());
+		$data = JFactory::getApplication()->getUserState('com_conference.edit.level.data', array());
 
 		if (0 === count($data))
 		{
@@ -77,7 +77,7 @@ class ConferenceModelEvent extends JModelAdmin
 		// Get the user
 		$user = JFactory::getUser();
 
-		if ($data['conference_event_id'] === 0)
+		if ($data['conference_level_id'] === 0)
 		{
 			$data['created_by'] = $user->id;
 			$data['created_on'] = JFactory::getDate()->toSql();

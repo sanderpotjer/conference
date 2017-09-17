@@ -62,4 +62,32 @@ class ConferenceModelDay extends JModelAdmin
 
 		return $data;
 	}
+
+	/**
+	 * Method to save the form data.
+	 *
+	 * @param   array  $data  The form data.
+	 *
+	 * @return  boolean  True on success, False on error.
+	 *
+	 * @since   1.6
+	 */
+	public function save($data)
+	{
+		// Get the user
+		$user = JFactory::getUser();
+
+		if ($data['conference_day_id'] === 0)
+		{
+			$data['created_by'] = $user->id;
+			$data['created_on'] = JFactory::getDate()->toSql();
+		}
+		else
+		{
+			$data['modified_by'] = $user->id;
+			$data['modified_on'] = JFactory::getDate()->toSql();
+		}
+
+		return parent::save($data);
+	}
 }

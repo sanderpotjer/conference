@@ -165,13 +165,14 @@ class ConferenceModelEvents extends JModelList
 	/**
 	 * Get the number of sessions for each event
 	 *
-	 * @param   int  $conference_event_id  The conferene ID
+	 * @param   int     $filterId  The conferene ID
+	 * @param   string  $field     Type of field to filter on
 	 *
 	 * @return  int  The number of sessions
 	 *
 	 * @since   1.0.0
 	 */
-	public function getSessionCount($conference_event_id)
+	public function getSessionCount($filterId, $field = 'event')
 	{
 		$db = $this->getDbo();
 
@@ -195,8 +196,18 @@ class ConferenceModelEvents extends JModelList
 				$db->quoteName('slots').'.'.$db->quoteName('conference_day_id'))
 			->join('LEFT OUTER', $db->quoteName('#__conference_events').' AS '.$db->quoteName('events').' ON '.
 				$db->quoteName('days').'.'.$db->quoteName('conference_event_id').' = '.
-				$db->quoteName('events').'.'.$db->quoteName('conference_event_id'))
-			->where($db->quoteName('events.conference_event_id') . ' = ' . (int) $conference_event_id);
+				$db->quoteName('events').'.'.$db->quoteName('conference_event_id'));
+
+		switch ($field)
+		{
+			case 'level':
+				$query->where($db->quoteName('levels.conference_level_id') . ' = ' . (int) $filterId);
+				break;
+			default:
+				$query->where($db->quoteName('events.conference_event_id') . ' = ' . (int) $filterId);
+				break;
+		}
+
 		$db->setQuery($query);
 
 		return $db->loadResult();
