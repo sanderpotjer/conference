@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form cron="false">
+    <fieldset name="rule">
+        <field name="conference_event_id"
+               type="hidden"/>
+
+        <field name="title"
+               type="text"
+               label="COM_CONFERENCE_FIELD_TITLE"
+               required="true"
+               class="input-xlarge"/>
+
+        <field name="description"
+               type="editor"
+               label="COM_CONFERENCE_FIELD_DESCRIPTION"
+               class="input-xlarge"/>
+
+        <field name="enabled"
+               type="list"
+               label="JPUBLISHED"
+               size="1"
+               class="advancedSelect"
+               default="">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+        </field>
+
+        <field name="created_by"
+               type="user"
+               label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+               readonly="true"
+               class="input-xlarge"/>
+
+        <field name="created_on"
+               type="calendar"
+               label="JGLOBAL_FIELD_CREATED_LABEL"
+               class="input-xlarge"/>
+
+        <field name="modified_by"
+               type="user"
+               label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+               readonly="true"
+               class="input-xlarge"/>
+
+        <field name="modified_on"
+               type="calendar"
+               label="JGLOBAL_FIELD_MODIFIED_LABEL"
+               class="input-xlarge"/>
+
+        <field name="ordering"
+               type="text"
+               label="JFIELD_ORDERING_LABEL"
+               description="JFIELD_ORDERING_DESC"
+               class="input-mini"
+               size="6"
+               default="0"/>
+    </fieldset>
+</form>

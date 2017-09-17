@@ -11,7 +11,7 @@
 	<description>Conference Schedule Manager for Joomla</description>
 
 	<!-- Public front end files -->
-	<files folder="frontend">
+	<files folder="components/com_conference">
 		<filename>index.html</filename>
 		<filename>conference.php</filename>
 		<filename>dispatcher.php</filename>
@@ -19,14 +19,9 @@
 		
 		<folder>controllers</folder>
 		<folder>helpers</folder>
+		<folder>language</folder>
 		<folder>views</folder>
 	</files>
-
-	<!-- Front end translation files -->
-	<languages folder="language/frontend">
-		<language tag="en-GB">en-GB/en-GB.com_conference.ini</language>
-		<language tag="nl-NL">nl-NL/nl-NL.com_conference.ini</language>
-	</languages>
 
 	<!-- SQL query files to execute on installation -->
 	<install>
@@ -93,7 +88,7 @@
 			>COM_CONFERENCE_TITLE_SLOTS</menu>
 
 		<!-- Back-end files -->
-		<files folder="backend">
+		<files folder="administrator/components/com_conference">
 			<filename>access.xml</filename>
 			<filename>conference.php</filename>
 			<filename>config.xml</filename>
@@ -102,19 +97,12 @@
 			<filename>toolbar.php</filename>
 
 			<folder>helpers</folder>
+			<folder>language</folder>
 			<folder>models</folder>
 			<folder>sql</folder>
 			<folder>tables</folder>
 			<folder>views</folder>
 		</files>
-
-		<!-- Back-end translation files -->
-		<languages folder="language/backend">
-			<language tag="en-GB">en-GB/en-GB.com_conference.ini</language>
-			<language tag="en-GB">en-GB/en-GB.com_conference.sys.ini</language>
-			<language tag="nl-NL">nl-NL/nl-NL.com_conference.ini</language>
-			<language tag="nl-NL">nl-NL/nl-NL.com_conference.sys.ini</language>
-		</languages>
 
 	</administration>
 
