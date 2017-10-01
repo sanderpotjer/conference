@@ -24,14 +24,19 @@ require_once JPATH_ADMINISTRATOR . '/components/com_conference/helpers/conferenc
 JForm::addFieldPath(JPATH_ADMINISTRATOR . '/components/com_conference/models/fields');
 
 // Core Joomla views
-$views = ['events', 'event', 'days', 'day', 'slots', 'slot', 'levels', 'level', 'rooms', 'room'];
+$views = ['events', 'event', 'days', 'day', 'slots', 'slot', 'levels', 'level', 'rooms', 'room', 'sessions', 'session'];
 
 $jinput = JFactory::getApplication()->input;
 $view = $jinput->get('view');
 
 if (empty($view))
 {
-	list($view, $task) = explode('.', $jinput->get('task'));
+	$task = $jinput->get('task');
+
+	if (strpos($task, '.'))
+	{
+		list($view, $task) = explode('.', $task);
+	}
 }
 
 try

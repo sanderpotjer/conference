@@ -1,16 +1,38 @@
 <?php
-/*
- * @package		Conference Schedule Manager
- * @copyright	Copyright (c) 2013-2014 Sander Potjer / sanderpotjer.nl
- * @license		GNU General Public License version 3 or later
+/**
+ * @package     Conference
+ *
+ * @author      Stichting Sympathy <info@stichtingsympathy.nl>
+ * @copyright   Copyright (C) 2013 - @year@ Stichting Sympathy. All rights reserved.
+ * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link        https://joomladagen.nl
  */
 
-// No direct access.
 defined('_JEXEC') or die;
 
-class ConferenceTableSession extends FOFTable
+/**
+ * Session table.
+ *
+ * @package     Conference
+ * @since       1.0
+ */
+class TableSession extends JTable
 {
-	public function check() {
+	/**
+	 * Constructor.
+	 *
+	 * @param   JDatabaseDriver  $db  A database connector object.
+	 *
+	 * @since   1.0.0
+	 */
+	public function __construct($db)
+	{
+		parent::__construct('#__conference_sessions', 'conference_session_id', $db);
+
+		$this->setColumnAlias('published', 'enabled');
+	}
+
+	public function checkX() {
 	
 		$result = true;
 		

@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Slot View.
+ * Session View.
  *
  * @package     Conference
  * @since       1.0
  */
-class ConferenceViewSlot extends JViewLegacy
+class ConferenceViewSession extends JViewLegacy
 {
 	/**
 	 * The form with the field
@@ -88,48 +88,48 @@ class ConferenceViewSlot extends JViewLegacy
 	private function addToolbar()
 	{
 		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$isNew      = $this->item->conference_slot_id === 0;
+		$isNew      = $this->item->conference_session_id === 0;
 		$canDo      = $this->canDo;
 
-		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_SLOTS_EDIT'), 'list-view');
+		JToolbarHelper::title(JText::_('COM_CONFERENCE') . ' - ' . JText::_('COM_CONFERENCE_TITLE_SESSIONS_EDIT'), 'list-view');
 
 		// If a new item, can save the item.  Allow users with edit permissions to apply changes to prevent returning to grid.
 		if ($isNew && $canDo->get('core.create'))
 		{
 			if ($canDo->get('core.edit'))
 			{
-				JToolbarHelper::apply('slot.apply');
+				JToolbarHelper::apply('session.apply');
 			}
 
-			JToolbarHelper::save('slot.save');
+			JToolbarHelper::save('session.save');
 		}
 
 		// If not checked out, can save the item.
 		if (!$isNew && $canDo->get('core.edit'))
 		{
-			JToolbarHelper::apply('slot.apply');
-			JToolbarHelper::save('slot.save');
+			JToolbarHelper::apply('session.apply');
+			JToolbarHelper::save('session.save');
 		}
 
 		// If the user can create new items, allow them to see Save & New
 		if ($canDo->get('core.create'))
 		{
-			JToolbarHelper::save2new('slot.save2new');
+			JToolbarHelper::save2new('session.save2new');
 		}
 
 		// If an existing item, can save to a copy only if we have create rights.
 		if (!$isNew && $canDo->get('core.create'))
 		{
-			JToolbarHelper::save2copy('slot.save2copy');
+			JToolbarHelper::save2copy('session.save2copy');
 		}
 
 		if ($isNew)
 		{
-			JToolbarHelper::cancel('slot.cancel');
+			JToolbarHelper::cancel('session.cancel');
 		}
 		else
 		{
-			JToolbarHelper::cancel('slot.cancel', 'JTOOLBAR_CLOSE');
+			JToolbarHelper::cancel('session.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
 }
