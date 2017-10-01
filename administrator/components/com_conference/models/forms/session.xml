@@ -58,13 +58,13 @@
 
         <field name="slides"
                type="textarea"
-               label="COM_CONFERENCE_FIELD_DESCRIPTION"
+               label="COM_CONFERENCE_FIELD_SLIDES"
                rows="8"
                class="input-xlarge"/>
 
         <field name="video"
                type="textarea"
-               label="COM_CONFERENCE_FIELD_DESCRIPTION"
+               label="COM_CONFERENCE_FIELD_VIDEO"
                rows="8"
                class="input-xlarge"/>
 

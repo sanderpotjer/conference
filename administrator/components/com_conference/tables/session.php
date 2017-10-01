@@ -32,33 +32,56 @@ class TableSession extends JTable
 		$this->setColumnAlias('published', 'enabled');
 	}
 
-	public function checkX() {
-	
+	/**
+	 * Method to perform sanity checks on the Table instance properties to ensure they are safe to store in the database.
+	 *
+	 * Child classes should override this method to make sure the data they are storing in the database is safe and as expected before storage.
+	 *
+	 * @return  boolean  True if the instance is sane and able to be stored in the database.
+	 *
+	 * @since   1.0.0
+	 */
+	public function check()
+	{
 		$result = true;
 		
 		// Make sure assigned speaker really exists and normalize the list
-		if(!empty($this->conference_speaker_id)) {
-			if(is_array($this->conference_speaker_id)) {
-				$sprs = $this->conference_speaker_id;
-			} else {
-				$sprs = explode(',', $this->conference_speaker_id);
+		if (!empty($this->conference_speaker_id))
+		{
+			if (is_array($this->conference_speaker_id))
+			{
+				$speakerId = $this->conference_speaker_id;
 			}
-			if(empty($sprs)) {
+			else
+			{
+				$speakerId = explode(',', $this->conference_speaker_id);
+			}
+
+			if (empty($speakerId))
+			{
 				$this->conference_speaker_id = '';
-			} else {
+			}
+			else
+			{
 				$speakers = array();
-				foreach($sprs as $id) {
-					$subObject = FOFModel::getTmpInstance('Speakers','ConferenceModel')
-						->setId($id)
-						->getItem();
-					$id = null;
-					if(is_object($subObject)) {
-						if($subObject->conference_speaker_id > 0) {
-							$id = $subObject->conference_speaker_id;
-						}
+				$db       = $this->getDbo();
+				$query = $db->getQuery(true)
+					->select($db->quoteName('conference_speaker_id'))
+					->from($db->quoteName('#__conference_speakers'));
+
+				foreach ($speakerId as $id)
+				{
+					$query->clear('where')
+						->where($db->quoteName('conference_speaker_id') . ' = ' . (int) $id);
+
+					$conferenceSpeakerId = $db->loadResult();
+
+					if ($conferenceSpeakerId > 0)
+					{
+						$speakers[] = $id;
 					}
-					if(!is_null($id)) $speakers[] = $id;
 				}
+
 				$this->conference_speaker_id = implode(',', $speakers);
 			}
 		}

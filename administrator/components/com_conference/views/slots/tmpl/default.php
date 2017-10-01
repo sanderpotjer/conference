@@ -95,7 +95,7 @@ if ($saveOrder)
                     <tr>
                         <td class="center">
 		                    <?php if ($canEdit || $canChange) : ?>
-			                    <?php echo JHtml::_('grid.id', $i, $item->conference_slot_id); ?>
+			                    <?php echo JHtml::_('grid.id', $i, $item->conference_slot_id, $checkedOut); ?>
 		                    <?php endif; ?>
                         </td>
                         <td class="center">

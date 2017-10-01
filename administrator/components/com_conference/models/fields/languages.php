@@ -55,7 +55,6 @@ class ConferenceFormFieldLanguages extends JFormFieldList
 		}
 
 		$options   = array();
-		$options[] = JHtml::_('select.option', '', JText::_('COM_CONFERENCE_SELECT_LANGUAGE'));
 
 		foreach ($list as $item)
 		{

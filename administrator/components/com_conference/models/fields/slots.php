@@ -39,15 +39,48 @@ class ConferenceFormFieldSlots extends JFormFieldList
 	 */
 	protected function getOptions()
 	{
-		return array();
 		$db = JFactory::getDbo();
 
+		// Get the days
 		$query = $db->getQuery(true)
-			->select($db->quoteName('title', 'text'))
-			->select($db->quoteName('conference_slot_id', 'value'))
-			->from($db->quoteName('#__conference_slots'));
+			->select(
+				$db->quoteName(
+					array(
+						'conference_day_id',
+						'title',
+						'date',
+					)
+				)
+			)
+			->from($db->quoteName('#__conference_days'))
+			->where($db->quoteName('enabled') . ' = 1');
 		$db->setQuery($query);
-		$options = $db->loadObjectList();
+		$days = $db->loadObjectList();
+
+		$options = array();
+		$query->clear()
+			->select($db->quoteName(array('conference_slot_id', 'start_time', 'end_time')))
+			->from($db->quoteName('#__conference_slots'))
+			->order($db->quoteName('start_time') . ' ASC');
+
+		foreach ($days as $day)
+		{
+			$options[] = JHtml::_('select.optgroup', JHtml::_('date', $day->date, JText::_('l, j F Y')));
+
+			// Get the slots
+			$query->clear('where')
+				->where($db->quoteName('enabled') . ' = 1')
+				->where($db->quoteName('conference_day_id') . ' = ' . (int) $day->conference_day_id);
+			$db->setQuery($query);
+			$items = $db->loadObjectList();
+
+			if (count($items)) foreach($items as $item)
+			{
+				$options[] = JHtml::_('select.option', $item->conference_slot_id, $day->title . ': ' . JHtml::_('date', $item->start_time, 'H:i') . ' - ' . JHtml::_('date', $item->end_time, 'H:i'));
+			}
+
+			$options[] = JHtml::_('select.optgroup', $day->title);
+		}
 
 		return array_merge(parent::getOptions(), $options);
 	}

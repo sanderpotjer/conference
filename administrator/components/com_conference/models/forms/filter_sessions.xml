@@ -18,6 +18,31 @@
             <option value="0">JUNPUBLISHED</option>
         </field>
 
+        <field name="conference_speaker_id"
+               type="conference.speakers"
+               label="COM_CONFERENCE_FIELD_SPEAKER"
+               multiple="true"
+               class="input-xlarge advancedSelect"
+               default=""
+               onchange="this.form.submit();">
+        </field>
+
+        <field name="conference_level_id"
+               type="conference.levels"
+               label="COM_CONFERENCE_FIELD_LEVEL"
+               class="input-xlarge advancedSelect"
+               onchange="this.form.submit();">
+            <option value="">COM_CONFERENCE_SELECT_LEVEL</option>
+        </field>
+
+        <field name="conference_room_id"
+               type="conference.rooms"
+               label="COM_CONFERENCE_FIELD_ROOM"
+               class="input-xlarge advancedSelect"
+               onchange="this.form.submit();">
+            <option value="">COM_CONFERENCE_SELECT_ROOM</option>
+        </field>
+
         <field name="conference_day_id"
                type="conference.days"
                label="COM_CONFERENCE_FIELD_DAY"
