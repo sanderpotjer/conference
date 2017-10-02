@@ -44,7 +44,8 @@ class ConferenceFormFieldDays extends JFormFieldList
 		$query = $db->getQuery(true)
 			->select($db->quoteName('title', 'text'))
 			->select($db->quoteName('conference_day_id', 'value'))
-			->from($db->quoteName('#__conference_days'));
+			->from($db->quoteName('#__conference_days'))
+			->order($db->quoteName('date') . ' DESC');
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
 

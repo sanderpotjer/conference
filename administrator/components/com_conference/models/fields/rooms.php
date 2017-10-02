@@ -42,9 +42,20 @@ class ConferenceFormFieldRooms extends JFormFieldList
 		$db = JFactory::getDbo();
 
 		$query = $db->getQuery(true)
-			->select($db->quoteName('title', 'text'))
-			->select($db->quoteName('conference_room_id', 'value'))
-			->from($db->quoteName('#__conference_rooms'));
+			->select(
+				$db->quoteName(
+					array(
+						'title',
+						'conference_room_id'
+					),
+					array(
+						'text',
+						'value'
+					)
+				)
+			)
+			->from($db->quoteName('#__conference_rooms'))
+			->order($db->quoteName('title'));
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
 

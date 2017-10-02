@@ -31,7 +31,6 @@ class ConferenceModelSessions extends JModelList
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
-				'ordering', 'sessions.ordering',
 				'conference_session_id', 'sessions.conference_session_id',
 				'enabled', 'sessions.enabled',
 				'listview', 'sessions.listview',
@@ -39,6 +38,7 @@ class ConferenceModelSessions extends JModelList
 				'conference_speaker_id', 'sessions.conference_speaker_id',
 				'conference_level_id', 'sessions.conference_level_id',
 				'conference_room_id', 'sessions.conference_room_id',
+				'conference_event_id', 'sessions.conference_event_id',
 				'modified_on', 'sessions.modified_on',
 				'start_time', 'slots.start_time',
 				'events.title',
@@ -60,7 +60,7 @@ class ConferenceModelSessions extends JModelList
 	 *
 	 * @since   1.0.0
 	 */
-	protected function populateState($ordering = 'sessions.ordering', $direction = 'DESC')
+	protected function populateState($ordering = 'slots.start_time', $direction = 'DESC')
 	{
 		parent::populateState($ordering, $direction);
 	}
@@ -116,6 +116,7 @@ class ConferenceModelSessions extends JModelList
 				$db->quoteName(
 					array(
 						'sessions.conference_session_id',
+						'sessions.ordering',
 						'sessions.title',
 						'sessions.listview',
 						'sessions.enabled',
@@ -197,7 +198,14 @@ class ConferenceModelSessions extends JModelList
 
 		if ($search)
 		{
-			$query->where($db->quoteName('sessions.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where('sessions.conference_session_id = ' . (int) substr($search, 3));
+			}
+			else
+			{
+				$query->where($db->quoteName('sessions.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			}
 		}
 
 		// Filter by enabled
@@ -264,11 +272,19 @@ class ConferenceModelSessions extends JModelList
 			$query->where($db->quoteName('events.conference_event_id') . ' = ' . (int) $event);
 		}
 
-		// Add the list ordering clause.
+		// Add the list ordering clause
+		$dayOrder = '';
+
+		if ($this->getState('list.ordering', 'slots.start_time') === 'slots.start_time')
+		{
+			$dayOrder = $db->quoteName('days.date') . ' ' . $db->escape($this->getState('list.direction', 'DESC')) . ', ';
+		}
+
 		$query->order(
+			$dayOrder .
 			$db->quoteName(
 				$db->escape(
-					$this->getState('list.ordering', 'sessions.ordering')
+					$this->getState('list.ordering', 'slots.start_time')
 				)
 			)
 			. ' ' . $db->escape($this->getState('list.direction', 'DESC'))
@@ -297,10 +313,17 @@ class ConferenceModelSessions extends JModelList
 		// Load the speakers for each session
 		foreach ($items as $key => $item)
 		{
-			$query->clear('where')
-				->where($db->quoteName('conference_speaker_id') . ' IN (' . $item->conference_speaker_id . ')');
-			$db->setQuery($query);
-			$item->speakers = $db->loadObjectList();
+			$item->speakers = array();
+
+			if ($item->conference_speaker_id)
+			{
+				$query->clear('where')
+					->where($db->quoteName('conference_speaker_id') . ' IN (' . $item->conference_speaker_id . ')');
+				$db->setQuery($query);
+				$item->speakers = $db->loadObjectList();
+			}
+
+			$items[$key] = $item;
 		}
 
 		return $items;

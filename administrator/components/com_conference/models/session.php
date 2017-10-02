@@ -77,13 +77,27 @@ class ConferenceModelSession extends JModelAdmin
 		$item = parent::getItem($pk);
 		$db   = $this->getDbo();
 
-		// Get the speakers
-		$query = $db->getQuery(true)
-			->select($db->quoteName(array('conference_speaker_id', 'title'), array('value', 'text')))
-			->from($db->quoteName('#__conference_speakers'))
-			->where($db->quoteName('conference_speaker_id') . ' IN (' . $item->conference_speaker_id . ')');
-		$db->setQuery($query);
-		$item->conference_speaker_id = $db->loadObjectList();
+		// Get the speakers if available
+		if ($item->conference_speaker_id)
+		{
+			$query = $db->getQuery(true)
+				->select(
+					$db->quoteName(
+						array(
+							'conference_speaker_id',
+							'title'
+						),
+						array(
+							'value',
+							'text'
+						)
+					)
+				)
+				->from($db->quoteName('#__conference_speakers'))
+				->where($db->quoteName('conference_speaker_id') . ' IN (' . $item->conference_speaker_id . ')');
+			$db->setQuery($query);
+			$item->conference_speaker_id = $db->loadObjectList();
+		}
 
 		return $item;
 	}

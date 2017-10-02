@@ -85,7 +85,15 @@ class TableSession extends JTable
 				$this->conference_speaker_id = implode(',', $speakers);
 			}
 		}
-		
+
+		// Make sure we have a slug
+		if (trim($this->slug) == '')
+		{
+			$this->slug = $this->title;
+		}
+
+		$this->slug = JApplicationHelper::stringURLSafe($this->slug, $this->language);
+
 		return $result;
 	}
 }

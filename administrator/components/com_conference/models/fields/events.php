@@ -44,7 +44,8 @@ class ConferenceFormFieldEvents extends JFormFieldList
 		$query = $db->getQuery(true)
 			->select($db->quoteName('title', 'text'))
 			->select($db->quoteName('conference_event_id', 'value'))
-			->from($db->quoteName('#__conference_events'));
+			->from($db->quoteName('#__conference_events'))
+			->order($db->quoteName('title') . ' DESC');
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
 

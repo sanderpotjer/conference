@@ -42,9 +42,20 @@ class ConferenceFormFieldSpeakers extends JFormFieldList
 		$db = JFactory::getDbo();
 
 		$query = $db->getQuery(true)
-			->select($db->quoteName('title', 'text'))
-			->select($db->quoteName('conference_speaker_id', 'value'))
-			->from($db->quoteName('#__conference_speakers'));
+			->select(
+				$db->quoteName(
+					array(
+						'title',
+						'conference_speaker_id'
+					),
+					array(
+						'text',
+						'value'
+					)
+				)
+			)
+			->from($db->quoteName('#__conference_speakers'))
+			->order($db->quoteName('title'));
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
 

@@ -15,7 +15,6 @@ JHtml::_('formbehavior.chosen');
 $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
 $loggeduser = JFactory::getUser();
-
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_conference&view=sessions'); ?>" method="post" id="adminForm" name="adminForm" class="form-horizontal">
@@ -32,34 +31,34 @@ $loggeduser = JFactory::getUser();
 				<?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
             </div>
 		<?php else : ?>
-        <table class="adminlist table table-striped" id="sessionsList">
+        <table class="table table-striped" id="sessionsList">
             <thead>
             <tr>
                 <th width="20">
                     <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
                 </th>
                 <th width="20">
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_STATUS', 'sessions.enabled', $listOrder, $listDirn); ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_STATUS', 'sessions.enabled', $listDirn, $listOrder); ?>
                 </th>
                 <th width="20">
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_SHOW_LIST', 'sessions.listview', $listOrder, $listDirn); ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_SHOW_LIST', 'sessions.listview', $listDirn, $listOrder); ?>
                 </th>
                 <th>
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_TITLE', 'sessions.title', $listOrder, $listDirn) ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_TITLE', 'sessions.title', $listDirn, $listOrder); ?>
                     /
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_SPEAKER', 'sessions.conference_speaker_id', $listOrder, $listDirn) ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_SPEAKER', 'sessions.conference_speaker_id', $listDirn, $listOrder); ?>
                 </th>
                 <th width="8%">
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_LEVEL', 'sessions.conference_level_id', $listOrder, $listDirn) ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_LEVEL', 'sessions.conference_level_id', $listDirn, $listOrder); ?>
                 </th>
                 <th width="10%">
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_ROOM', 'sessions.conference_room_id', $listOrder, $listDirn) ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_ROOM', 'sessions.conference_room_id', $listDirn, $listOrder); ?>
                 </th>
                 <th width="10%">
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_SLOT', 'slots.start_time', $listOrder, $listDirn) ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_SLOT', 'slots.start_time', $listDirn, $listOrder); ?>
                 </th>
                 <th>
-					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_EVENT', 'events.title', $listOrder, $listDirn) ?>
+					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_EVENT', 'events.title', $listDirn, $listOrder); ?>
                 </th>
                 <th class="center" width="7%">
 					<?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION') ?>
@@ -71,7 +70,7 @@ $loggeduser = JFactory::getUser();
 					<?php echo JText::_('COM_CONFERENCE_FIELD_VIDEO') ?>
                 </th>
                 <th width="7%" class="nowrap">
-					<?php echo JHtml::_('searchtools.sort', 'JGLOBAL_FIELD_MODIFIED_LABEL', 'sessions.modified_on', $listOrder, $listDirn) ?>
+					<?php echo JHtml::_('searchtools.sort', 'JGLOBAL_FIELD_MODIFIED_LABEL', 'sessions.modified_on', $listDirn, $listOrder); ?>
                 </th>
             </tr>
             </thead>
@@ -94,11 +93,11 @@ $loggeduser = JFactory::getUser();
             <tbody>
                 <?php foreach ($this->items as $i => $item) : ?>
                     <?php
-                    $canEdit   = $this->canDo->get('core.edit');
-                    $canChange = $loggeduser->authorise('core.edit.state', 'com_conference');
-                    $checkedOut      = ($item->locked_by != 0);
-                    $ordering        = $listOrder == 'ordering';
-                    $item->published = $item->enabled;
+	                $canEdit         = $this->canDo->get('core.edit');
+	                $canChange       = $loggeduser->authorise('core.edit.state', 'com_conference');
+	                $checkedOut      = ($item->locked_by != 0);
+	                $ordering        = $listOrder == 'ordering';
+	                $item->published = $item->enabled;
                     ?>
                     <tr>
                         <td class="center">

@@ -39,10 +39,23 @@ class ConferenceFormFieldSlots extends JFormFieldList
 	 */
 	protected function getOptions()
 	{
-		$db = JFactory::getDbo();
+		$db      = JFactory::getDbo();
+		$query   = $db->getQuery(true);
+		$enabled = 1;
+
+		// Check if we have a value that is from an unpublished entry
+		if ($this->value)
+		{
+			$query->select($db->quoteName('enabled'))
+				->from($db->quoteName('#__conference_slots'))
+				->where($db->quoteName('conference_slot_id') . ' = ' . (int) $this->value);
+			$db->setQuery($query);
+
+			$enabled = $db->loadResult();
+		}
 
 		// Get the days
-		$query = $db->getQuery(true)
+		$query->clear()
 			->select(
 				$db->quoteName(
 					array(
@@ -53,7 +66,8 @@ class ConferenceFormFieldSlots extends JFormFieldList
 				)
 			)
 			->from($db->quoteName('#__conference_days'))
-			->where($db->quoteName('enabled') . ' = 1');
+			->where($db->quoteName('enabled') . ' = ' . (int) $enabled)
+			->order($db->quoteName('date') . ' DESC');
 		$db->setQuery($query);
 		$days = $db->loadObjectList();
 
@@ -69,14 +83,17 @@ class ConferenceFormFieldSlots extends JFormFieldList
 
 			// Get the slots
 			$query->clear('where')
-				->where($db->quoteName('enabled') . ' = 1')
+				->where($db->quoteName('enabled') . ' = ' . (int) $enabled)
 				->where($db->quoteName('conference_day_id') . ' = ' . (int) $day->conference_day_id);
 			$db->setQuery($query);
 			$items = $db->loadObjectList();
 
-			if (count($items)) foreach($items as $item)
+			if (count($items))
 			{
-				$options[] = JHtml::_('select.option', $item->conference_slot_id, $day->title . ': ' . JHtml::_('date', $item->start_time, 'H:i') . ' - ' . JHtml::_('date', $item->end_time, 'H:i'));
+				foreach ($items as $item)
+				{
+					$options[] = JHtml::_('select.option', $item->conference_slot_id, $day->title . ': ' . JHtml::_('date', $item->start_time, 'H:i') . ' - ' . JHtml::_('date', $item->end_time, 'H:i'));
+				}
 			}
 
 			$options[] = JHtml::_('select.optgroup', $day->title);

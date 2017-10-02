@@ -20,7 +20,6 @@
                label="COM_CONFERENCE_FIELD_SPEAKER"
                multiple="true"
                class="input-xlarge advancedSelect">
-            <option value="">COM_CONFERENCE_SELECT_SPEAKER</option>
         </field>
 
         <field name="conference_level_id"
