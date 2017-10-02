@@ -35,6 +35,7 @@ class ConferenceModelDays extends JModelList
 				'conference_day_id', 'days.conference_day_id',
 				'title', 'days.title',
 				'enabled', 'days.enabled',
+				'conference_event_id', 'days.conference_event_id',
 			);
 		}
 
@@ -125,7 +126,14 @@ class ConferenceModelDays extends JModelList
 
 		if ($search)
 		{
-			$query->where($db->quoteName('days.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where($db->quoteName('days.conference_day_id') . ' = ' . (int) substr($search, 3));
+			}
+			else
+			{
+				$query->where($db->quoteName('days.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			}
 		}
 
 		// Filter by enabled
@@ -137,7 +145,7 @@ class ConferenceModelDays extends JModelList
 		}
 
 		// Filter by event
-		$event = $this->getState('filter.event');
+		$event = $this->getState('filter.conference_event_id');
 
 		if ('' !== $event && null !== $event)
 		{
@@ -181,7 +189,7 @@ class ConferenceModelDays extends JModelList
 		// Get the sessions for each item
 		foreach ($items as $index => $item)
 		{
-			$item->sessions = $model->getSessionCount($item->conference_event_id);
+			$item->sessions = $model->getSessionCount($item->conference_day_id, 'day');
 			$items[$index] = $item;
 		}
 

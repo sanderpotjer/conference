@@ -115,7 +115,14 @@ class ConferenceModelEvents extends JModelList
 
 		if ($search)
 		{
-			$query->where($db->quoteName('events.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where($db->quoteName('events.conference_event_id') . ' = ' . (int) substr($search, 3));
+			}
+			else
+			{
+				$query->where($db->quoteName('events.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			}
 		}
 
 		// Filter by enabled
@@ -179,22 +186,22 @@ class ConferenceModelEvents extends JModelList
 		$query = $db->getQuery(true)
 			->select('COUNT(' . $db->quoteName('conference_session_id') . ')')
 			->from($db->quoteName('#__conference_sessions', 'sessions'))
-			->join('LEFT OUTER', $db->quoteName('#__conference_speakers').' AS '.$db->quoteName('speakers').' ON '.
+			->join('LEFT OUTER', $db->quoteName('#__conference_speakers','speakers').' ON '.
 				$db->quoteName('speakers').'.'.$db->quoteName('conference_speaker_id').' = '.
 				$db->quoteName('sessions').'.'.$db->quoteName('conference_speaker_id'))
-			->join('LEFT OUTER', $db->quoteName('#__conference_levels').' AS '.$db->quoteName('levels').' ON '.
+			->join('LEFT OUTER', $db->quoteName('#__conference_levels','levels').' ON '.
 				$db->quoteName('levels').'.'.$db->quoteName('conference_level_id').' = '.
 				$db->quoteName('sessions').'.'.$db->quoteName('conference_level_id'))
-			->join('LEFT OUTER', $db->quoteName('#__conference_rooms').' AS '.$db->quoteName('rooms').' ON '.
+			->join('LEFT OUTER', $db->quoteName('#__conference_rooms','rooms').' ON '.
 				$db->quoteName('rooms').'.'.$db->quoteName('conference_room_id').' = '.
 				$db->quoteName('sessions').'.'.$db->quoteName('conference_room_id'))
-			->join('LEFT OUTER', $db->quoteName('#__conference_slots').' AS '.$db->quoteName('slots').' ON '.
+			->join('LEFT OUTER', $db->quoteName('#__conference_slots','slots').' ON '.
 				$db->quoteName('slots').'.'.$db->quoteName('conference_slot_id').' = '.
 				$db->quoteName('sessions').'.'.$db->quoteName('conference_slot_id'))
-			->join('LEFT OUTER', $db->quoteName('#__conference_days').' AS '.$db->quoteName('days').' ON '.
+			->join('LEFT OUTER', $db->quoteName('#__conference_days','days').' ON '.
 				$db->quoteName('days').'.'.$db->quoteName('conference_day_id').' = '.
 				$db->quoteName('slots').'.'.$db->quoteName('conference_day_id'))
-			->join('LEFT OUTER', $db->quoteName('#__conference_events').' AS '.$db->quoteName('events').' ON '.
+			->join('LEFT OUTER', $db->quoteName('#__conference_events','events').' ON '.
 				$db->quoteName('days').'.'.$db->quoteName('conference_event_id').' = '.
 				$db->quoteName('events').'.'.$db->quoteName('conference_event_id'));
 
@@ -205,6 +212,12 @@ class ConferenceModelEvents extends JModelList
 				break;
 			case 'room':
 				$query->where($db->quoteName('rooms.conference_room_id') . ' = ' . (int) $filterId);
+				break;
+			case 'day':
+				$query->where($db->quoteName('days.conference_day_id') . ' = ' . (int) $filterId);
+				break;
+			case 'slot':
+				$query->where($db->quoteName('slots.conference_slot_id') . ' = ' . (int) $filterId);
 				break;
 			default:
 				$query->where($db->quoteName('events.conference_event_id') . ' = ' . (int) $filterId);

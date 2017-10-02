@@ -120,7 +120,14 @@ class ConferenceModelRooms extends JModelList
 
 		if ($search)
 		{
-			$query->where($db->quoteName('rooms.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where($db->quoteName('rooms.conference_room_id') . ' = ' . (int) substr($search, 3));
+			}
+			else
+			{
+				$query->where($db->quoteName('rooms.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			}
 		}
 
 		// Filter by enabled

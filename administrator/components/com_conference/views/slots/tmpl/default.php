@@ -86,11 +86,10 @@ if ($saveOrder)
             <tbody>
 			    <?php foreach ($this->items as $i => $item) : ?>
 				    <?php
-				    $canEdit   = $this->canDo->get('core.edit');
-				    $canChange = $loggeduser->authorise('core.edit.state', 'com_conference');
+				    $canEdit         = $this->canDo->get('core.edit');
+				    $canChange       = $loggeduser->authorise('core.edit.state', 'com_conference');
 				    $checkedOut      = ($item->locked_by != 0);
 				    $ordering        = $listOrder == 'ordering';
-				    $item->published = $item->enabled;
 				    ?>
                     <tr>
                         <td class="center">
@@ -144,15 +143,9 @@ if ($saveOrder)
 						    <?php if ($item->general): ?>General<?php endif; ?>
                         </td>
                         <td class="center">
-		                    <?php if ($canEdit)
-		                    {
-			                    $url = JRoute::_('index.php?option=com_conference&task=sessions.edit&speaker=&level=&room=&slot=&day=' . $item->conference_day_id);
+                            <?php
+			                    $url = JRoute::_('index.php?option=com_conference&view=sessions&filter[conference_slot_id]=' . $item->conference_slot_id);
 			                    echo JHtml::_('link', $url, $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS'));
-		                    }
-		                    else
-		                    {
-			                    echo $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS');
-		                    }
 		                    ?>
                         </td>
                     </tr>

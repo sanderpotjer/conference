@@ -35,6 +35,7 @@ class ConferenceModelSessions extends JModelList
 				'enabled', 'sessions.enabled',
 				'listview', 'sessions.listview',
 				'title', 'sessions.title',
+				'conference_day_id', 'sessions.conference_day_id',
 				'conference_speaker_id', 'sessions.conference_speaker_id',
 				'conference_level_id', 'sessions.conference_level_id',
 				'conference_room_id', 'sessions.conference_room_id',
@@ -200,7 +201,7 @@ class ConferenceModelSessions extends JModelList
 		{
 			if (stripos($search, 'id:') === 0)
 			{
-				$query->where('sessions.conference_session_id = ' . (int) substr($search, 3));
+				$query->where($db->quoteName('sessions.conference_session_id') . ' = ' . (int) substr($search, 3));
 			}
 			else
 			{

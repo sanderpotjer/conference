@@ -154,15 +154,9 @@ if ($saveOrder)
 	                        <?php echo JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC')); ?>
                         </td>
                         <td>
-	                        <?php if ($canEdit)
-	                        {
-		                        $url = JRoute::_('index.php?option=com_conference&task=sessions.edit&speaker=&level=&room=&slot=&day=' . $item->conference_day_id);
-		                        echo JHtml::_('link', $url, $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS'));
-	                        }
-	                        else
-                            {
-                                echo $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS');
-	                        }
+	                        <?php
+	                        $url = JRoute::_('index.php?option=com_conference&view=sessions&filter[conference_day_id]=' . $item->conference_day_id);
+	                        echo JHtml::_('link', $url, $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS'));
 	                        ?>
                         </td>
                     </tr>

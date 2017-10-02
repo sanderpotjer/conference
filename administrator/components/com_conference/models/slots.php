@@ -33,6 +33,7 @@ class ConferenceModelSlots extends JModelList
 			$config['filter_fields'] = array(
 				'ordering', 'slots.ordering',
 				'conference_slot_id', 'slots.conference_slot_id',
+				'conference_day_id', 'slots.conference_day_id',
 				'start_time', 'slots.start_time',
 				'end_time', 'slots.end_time',
 				'enabled', 'slots.enabled',
@@ -137,7 +138,14 @@ class ConferenceModelSlots extends JModelList
 
 		if ($search)
 		{
-			$query->where($db->quoteName('days.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where($db->quoteName('slots.conference_slot_id') . ' = ' . (int) substr($search, 3));
+			}
+			else
+			{
+				$query->where($db->quoteName('days.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			}
 		}
 
 		// Filter by enabled
@@ -201,7 +209,7 @@ class ConferenceModelSlots extends JModelList
 		// Get the sessions for each item
 		foreach ($items as $index => $item)
 		{
-			$item->sessions = $model->getSessionCount($item->conference_event_id);
+			$item->sessions = $model->getSessionCount($item->conference_slot_id, 'slot');
 			$items[$index] = $item;
 		}
 

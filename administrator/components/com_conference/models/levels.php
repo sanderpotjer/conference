@@ -118,7 +118,14 @@ class ConferenceModelLevels extends JModelList
 
 		if ($search)
 		{
-			$query->where($db->quoteName('levels.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			if (stripos($search, 'id:') === 0)
+			{
+				$query->where($db->quoteName('levels.conference_level_id') . ' = ' . (int) substr($search, 3));
+			}
+			else
+			{
+				$query->where($db->quoteName('levels.title') . ' LIKE ' . $db->quote('%' . $search . '%'));
+			}
 		}
 
 		// Filter by enabled

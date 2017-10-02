@@ -114,16 +114,10 @@ $loggeduser = JFactory::getUser();
 		                    } ?>
                         </td>
                         <td class="center">
-							<?php if ($canEdit)
-							{
-								$url = JRoute::_('index.php?option=com_conference&task=sessions.edit&speaker=&level=&day=&slot=&room=' . $item->conference_room_id);
-								echo JHtml::_('link', $url, $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS'));
-							}
-							else
-							{
-								echo $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS');
-							}
-							?>
+	                        <?php
+	                        $url = JRoute::_('index.php?option=com_conference&view=sessions&filter[conference_room_id]=' . $item->conference_room_id);
+	                        echo JHtml::_('link', $url, $item->sessions . ' ' . JText::_('COM_CONFERENCE_TABLE_SESSIONS'));
+	                        ?>
                         </td>
                     </tr>
 				<?php endforeach; ?>
