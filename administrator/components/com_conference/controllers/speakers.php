@@ -21,7 +21,7 @@ class ConferenceControllerSpeakers extends JControllerAdmin
 	 * The prefix to use with controller messages.
 	 *
 	 * @var    string
-	 * @since  1.6
+	 * @since  1.0
 	 */
 	protected $text_prefix = 'COM_CONFERENCE_SPEAKER';
 
