@@ -54,7 +54,7 @@ class ConferenceModelRooms extends JModelList
 	 *
 	 * @since   1.0.0
 	 */
-	protected function populateState($ordering = 'rooms.ordering', $direction = 'DESC')
+	protected function populateState($ordering = 'rooms.title', $direction = 'ASC')
 	{
 		parent::populateState($ordering, $direction);
 	}
@@ -150,10 +150,10 @@ class ConferenceModelRooms extends JModelList
 		$query->order(
 			$db->quoteName(
 				$db->escape(
-					$this->getState('list.ordering', 'rooms.ordering')
+					$this->getState('list.ordering', 'rooms.title')
 				)
 			)
-			. ' ' . $db->escape($this->getState('list.direction', 'DESC'))
+			. ' ' . $db->escape($this->getState('list.direction', 'ASC'))
 		);
 
 		return $query;

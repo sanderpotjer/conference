@@ -26,4 +26,22 @@ class ConferenceController extends JControllerLegacy
 	 * @since  1.6
 	 */
 	protected $default_view = 'sessions';
+
+	/**
+	 * Execute a task by triggering a method in the derived class.
+	 *
+	 * @param   string  $task  The task to perform. If no matching task is found, the '__default' task is executed, if defined.
+	 *
+	 * @return  mixed   The value returned by the called method.
+	 *
+	 * @since   3.0
+	 * @throws  \Exception
+	 */
+	public function execute($task)
+	{
+		JHtml::_('stylesheet', 'com_conference/frontend.css', array('version' => 'auto', 'relative' => true));
+		JHtml::_('stylesheet', 'com_conference/backend.css', array('version' => 'auto', 'relative' => true));
+
+		return parent::execute($task);
+	}
 }

@@ -54,7 +54,7 @@ if ($saveOrder)
 						<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_TITLE', 'days.title', $listDirn, $listOrder); ?>
                     </th>
                     <th width="20%">
-		                <?php echo JHTML::_('searchtools.sort', 'COM_CONFERENCE_FIELD_EVENT', 'days.conference_event_id', $listDirn, $listOrder) ?>
+		                <?php echo JHTML::_('searchtools.sort', 'COM_CONFERENCE_FIELD_EVENT', 'events.title', $listDirn, $listOrder) ?>
                     </th>
                     <th width="20%">
 		                <?php echo JHTML::_('searchtools.sort', 'JDATE', 'date', $listDirn, $listOrder) ?>

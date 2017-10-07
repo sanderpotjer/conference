@@ -37,7 +37,7 @@ class ConferenceModelSlots extends JModelList
 				'start_time', 'slots.start_time',
 				'end_time', 'slots.end_time',
 				'enabled', 'slots.enabled',
-				'conference_event_id', 'events.conference_event_id',
+				'events.title',
 				'days.title',
 			);
 		}
@@ -57,7 +57,7 @@ class ConferenceModelSlots extends JModelList
 	 *
 	 * @since   1.0.0
 	 */
-	protected function populateState($ordering = 'slots.ordering', $direction = 'DESC')
+	protected function populateState($ordering = 'slots.conference_slot_id', $direction = 'DESC')
 	{
 		parent::populateState($ordering, $direction);
 	}
@@ -176,7 +176,7 @@ class ConferenceModelSlots extends JModelList
 		$query->order(
 			$db->quoteName(
 				$db->escape(
-					$this->getState('list.ordering', 'slots.ordering')
+					$this->getState('list.ordering', 'slots.conference_slot_id')
 				)
 			)
 			. ' ' . $db->escape($this->getState('list.direction', 'DESC'))

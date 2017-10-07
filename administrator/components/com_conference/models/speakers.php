@@ -56,7 +56,7 @@ class ConferenceModelSpeakers extends JModelList
 	 *
 	 * @since   1.0.0
 	 */
-	protected function populateState($ordering = 'conference_speaker_id', $direction = 'DESC')
+	protected function populateState($ordering = 'speakers.title', $direction = 'ASC')
 	{
 		parent::populateState($ordering, $direction);
 	}
@@ -173,10 +173,10 @@ class ConferenceModelSpeakers extends JModelList
 		$query->order(
 			$db->quoteName(
 				$db->escape(
-					$this->getState('list.ordering', 'speakers.conference_speaker_id')
+					$this->getState('list.ordering', 'speakers.title')
 				)
 			)
-			. ' ' . $db->escape($this->getState('list.direction', 'DESC'))
+			. ' ' . $db->escape($this->getState('list.direction', 'ASC'))
 		);
 
 		return $query;

@@ -35,7 +35,7 @@ class ConferenceModelDays extends JModelList
 				'conference_day_id', 'days.conference_day_id',
 				'title', 'days.title',
 				'enabled', 'days.enabled',
-				'conference_event_id', 'days.conference_event_id',
+				'events.title',
 			);
 		}
 
@@ -54,7 +54,7 @@ class ConferenceModelDays extends JModelList
 	 *
 	 * @since   1.0.0
 	 */
-	protected function populateState($ordering = 'days.ordering', $direction = 'DESC')
+	protected function populateState($ordering = 'events.title', $direction = 'DESC')
 	{
 		parent::populateState($ordering, $direction);
 	}
@@ -156,7 +156,7 @@ class ConferenceModelDays extends JModelList
 		$query->order(
 			$db->quoteName(
 				$db->escape(
-					$this->getState('list.ordering', 'days.ordering')
+					$this->getState('list.ordering', 'events.title')
 				)
 			)
 			. ' ' . $db->escape($this->getState('list.direction', 'DESC'))
