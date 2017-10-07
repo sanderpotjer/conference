@@ -15,6 +15,7 @@ JHtml::_('formbehavior.chosen');
 $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
 $loggeduser = JFactory::getUser();
+$db         = JFactory::getDbo();
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_conference&view=sessions'); ?>" method="post" id="adminForm" name="adminForm" class="form-horizontal">
@@ -61,13 +62,13 @@ $loggeduser = JFactory::getUser();
 					<?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_EVENT', 'events.title', $listDirn, $listOrder); ?>
                 </th>
                 <th class="center" width="7%">
-					<?php echo JText::_('COM_CONFERENCE_FIELD_DESCRIPTION') ?>
+	                <?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_DESCRIPTION', 'sessions.description', $listDirn, $listOrder); ?>
                 </th>
                 <th class="center" width="7%">
-					<?php echo JText::_('COM_CONFERENCE_FIELD_SLIDES') ?>
+	                <?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_SLIDES', 'sessions.slides', $listDirn, $listOrder); ?>
                 </th>
                 <th class="center" width="7%">
-					<?php echo JText::_('COM_CONFERENCE_FIELD_VIDEO') ?>
+	                <?php echo JHtml::_('searchtools.sort', 'COM_CONFERENCE_FIELD_VIDEO', 'sessions.video', $listDirn, $listOrder); ?>
                 </th>
                 <th width="7%" class="nowrap">
 					<?php echo JHtml::_('searchtools.sort', 'JGLOBAL_FIELD_MODIFIED_LABEL', 'sessions.modified_on', $listDirn, $listOrder); ?>
@@ -171,28 +172,28 @@ $loggeduser = JFactory::getUser();
                             </a>
                         </td>
                         <td class="center">
-							<?php if($item->description): ?>
+							<?php if ($item->description): ?>
                                 <span class="badge badge-success"><span class="icon-checkmark"></span></span>
 							<?php else:?>
                                 <span class="badge badge-important"><span class="icon-delete"></span></span>
 							<?php endif;?>
                         </td>
                         <td class="center">
-							<?php if($item->slides): ?>
+							<?php if ($item->slides): ?>
                                 <span class="badge badge-success"><span class="icon-checkmark"></span></span>
 							<?php else:?>
                                 <span class="badge badge-important"><span class="icon-delete"></span></span>
 							<?php endif;?>
                         </td>
                         <td class="center">
-							<?php if($item->video): ?>
+							<?php if ($item->video): ?>
                                 <span class="badge badge-success"><span class="icon-checkmark"></span></span>
 							<?php else:?>
                                 <span class="badge badge-important"><span class="icon-delete"></span></span>
 							<?php endif;?>
                         </td>
                         <td class="nowrap">
-							<?php if($item->modified_on == '0000-00-00 00:00:00'): ?>
+							<?php if ($item->modified_on == $db->getNullDate()): ?>
                                 &mdash;
 							<?php else: ?>
 								<?php echo JHtml::_('date',$item->modified_on, JText::_('DATE_FORMAT_LC4')); ?>

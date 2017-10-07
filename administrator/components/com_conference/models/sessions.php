@@ -43,6 +43,9 @@ class ConferenceModelSessions extends JModelList
 				'modified_on', 'sessions.modified_on',
 				'start_time', 'slots.start_time',
 				'events.title',
+				'sessions.description',
+				'sessions.slides',
+				'sessions.video',
 			);
 		}
 
@@ -274,22 +277,42 @@ class ConferenceModelSessions extends JModelList
 		}
 
 		// Add the list ordering clause
-		$dayOrder = '';
+		$listOrder = $this->getState('list.ordering', 'slots.start_time');
 
-		if ($this->getState('list.ordering', 'slots.start_time') === 'slots.start_time')
+		switch ($listOrder)
 		{
-			$dayOrder = $db->quoteName('days.date') . ' ' . $db->escape($this->getState('list.direction', 'DESC')) . ', ';
+			case 'sessions.description':
+				$sortOrder = 'LENGTH(' . $db->quoteName('sessions.description') . ')';
+				break;
+			case 'sessions.slides':
+				$sortOrder = 'LENGTH(' . $db->quoteName('sessions.slides') . ')';
+				break;
+			case 'sessions.video':
+				$sortOrder = 'LENGTH(' . $db->quoteName('sessions.video') . ')';
+				break;
+			case 'slots.start_time':
+				$sortOrder = $db->quoteName('days.date') . ' ' . $db->escape($this->getState('list.direction', 'DESC')) . ', ' .
+				$db->quoteName(
+					$db->escape(
+						$this->getState('list.ordering', 'slots.start_time')
+					)
+				);
+				break;
+			default:
+				$sortOrder = $db->quoteName(
+					$db->escape(
+						$this->getState('list.ordering', 'slots.start_time')
+					)
+				);
+				break;
 		}
 
-		$query->order(
-			$dayOrder .
-			$db->quoteName(
-				$db->escape(
-					$this->getState('list.ordering', 'slots.start_time')
-				)
-			)
-			. ' ' . $db->escape($this->getState('list.direction', 'DESC'))
-		);
+		if ($sortOrder)
+		{
+			$query->order(
+				$sortOrder . ' ' . $db->escape($this->getState('list.direction', 'DESC'))
+			);
+		}
 
 		return $query;
 	}
