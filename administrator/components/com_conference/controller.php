@@ -19,4 +19,11 @@ defined('_JEXEC') or die;
  */
 class ConferenceController extends JControllerLegacy
 {
+	/**
+	 * The default view.
+	 *
+	 * @var    string
+	 * @since  1.6
+	 */
+	protected $default_view = 'sessions';
 }

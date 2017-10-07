@@ -10,12 +10,10 @@
 
 defined('_JEXEC') or die;
 
-// Load FOF
-include_once JPATH_LIBRARIES.'/fof/include.php';
-if(!defined('FOF_INCLUDED')) {
-	JError::raiseError ('500', 'FOF is not installed');
-
-	return;
+// Access check.
+if (!JFactory::getUser()->authorise('core.manage', 'com_conference'))
+{
+	throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'), 404);
 }
 
 // Load the helper class for the submenu
@@ -23,39 +21,15 @@ require_once JPATH_ADMINISTRATOR . '/components/com_conference/helpers/conferenc
 
 JForm::addFieldPath(JPATH_ADMINISTRATOR . '/components/com_conference/models/fields');
 
-// Core Joomla views
-$views = ['events', 'event', 'days', 'day', 'slots', 'slot', 'levels', 'level', 'rooms', 'room', 'sessions', 'session', 'speakers', 'speaker'];
-
-$jinput = JFactory::getApplication()->input;
-$view = $jinput->get('view');
-
-if (empty($view))
-{
-	$task = $jinput->get('task');
-
-	if (strpos($task, '.'))
-	{
-		list($view, $task) = explode('.', $task);
-	}
-}
-
 try
 {
-	if (in_array($view, $views))
-	{
-		$controller = JControllerLegacy::getInstance('conference');
-		$controller->execute($jinput->get('task'));
-		$controller->redirect();
-	}
-	else
-	{
-		// Dispatch
-		FOFDispatcher::getAnInstance('com_conference')->dispatch();
-	}
+	$input      = JFactory::getApplication()->input;
+	$controller = JControllerLegacy::getInstance('conference');
+	$controller->execute($input->get('task'));
+	$controller->redirect();
+
 }
 catch (Exception $e)
 {
-	$oldUrl = JUri::getInstance($_SERVER['HTTP_REFERER']);
-	//JFactory::getApplication()->redirect('index.php?option=com_conference&view=' . $oldUrl->getVar('view', ''), $e->getMessage(), 'error');
 	echo $e->getMessage();
 }

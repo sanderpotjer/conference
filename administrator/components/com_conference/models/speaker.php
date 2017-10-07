@@ -11,12 +11,12 @@
 defined('_JEXEC') or die;
 
 /**
- * Slot model.
+ * Speaker model.
  *
  * @package     Conference
  * @since       1.0
  */
-class ConferenceModelSlot extends JModelAdmin
+class ConferenceModelSpeaker extends JModelAdmin
 {
 	/**
 	 * Get the form.
@@ -31,7 +31,7 @@ class ConferenceModelSlot extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		$form = $this->loadForm('com_conference.slot', 'slot', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_conference.speaker', 'speaker', array('control' => 'jform', 'load_data' => $loadData));
 
 		if (0 === count($form))
 		{
@@ -53,7 +53,7 @@ class ConferenceModelSlot extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_conference.edit.slot.data', array());
+		$data = JFactory::getApplication()->getUserState('com_conference.edit.speaker.data', array());
 
 		if (0 === count($data))
 		{
@@ -76,17 +76,7 @@ class ConferenceModelSlot extends JModelAdmin
 	{
 		$item = parent::getItem($pk);
 
-		// Get the user
-		$user = JFactory::getUser();
-
-		// Date conversion based on timezone
-		$date = JFactory::getDate($item->start_time, 'UTC');
-		$date->setTimezone($user->getTimezone());
-		$item->start_time = $date->format('H:i', true);
-
-		$date = JFactory::getDate($item->end_time, 'UTC');
-		$date->setTimezone($user->getTimezone());
-		$item->end_time = $date->format('H:i', true);
+		$item->conference_event_id = explode(',', $item->conference_event_id);
 
 		return $item;
 	}
@@ -103,25 +93,9 @@ class ConferenceModelSlot extends JModelAdmin
 	 */
 	public function save($data)
 	{
-		// Get the user
-		$user = JFactory::getUser();
-
-		// Date conversion based on timezone
-		$date = JFactory::getDate($data['start_time'], $user->getTimezone());
-		$data['start_time'] = $date->format('H:i');
-
-		$date = JFactory::getDate($data['end_time'], $user->getTimezone());
-		$data['end_time'] = $date->format('H:i');
-
-		if ($data['conference_slot_id'] === 0)
+		if (!array_key_exists('conference_event_id', $data))
 		{
-			$data['created_by'] = $user->id;
-			$data['created_on'] = JFactory::getDate()->toSql();
-		}
-		else
-		{
-			$data['modified_by'] = $user->id;
-			$data['modified_on'] = JFactory::getDate()->toSql();
+			$data['conference_event_id'] = '';
 		}
 
 		return parent::save($data);

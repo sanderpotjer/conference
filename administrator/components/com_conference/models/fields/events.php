@@ -47,6 +47,7 @@ class ConferenceFormFieldEvents extends JFormFieldList
 			->from($db->quoteName('#__conference_events'))
 			->order($db->quoteName('title') . ' DESC');
 		$db->setQuery($query);
+
 		$options = $db->loadObjectList();
 
 		return array_merge(parent::getOptions(), $options);

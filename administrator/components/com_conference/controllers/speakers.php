@@ -18,6 +18,14 @@ defined('_JEXEC') or die;
 class ConferenceControllerSpeakers extends JControllerAdmin
 {
 	/**
+	 * The prefix to use with controller messages.
+	 *
+	 * @var    string
+	 * @since  1.6
+	 */
+	protected $text_prefix = 'COM_CONFERENCE_SPEAKER';
+
+	/**
 	 * Proxy for getModel.
 	 *
 	 * @param   string  $name    The model name. Optional.

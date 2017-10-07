@@ -178,4 +178,7 @@ $loggeduser = JFactory::getUser();
 		</table>
         <?php endif; ?>
     </div>
+    <input type="hidden" name="task" id="task" value=""/>
+    <input type="hidden" name="boxchecked" id="boxchecked" value="0"/>
+	<?php echo JHtml::_('form.token'); ?>
 </form>
