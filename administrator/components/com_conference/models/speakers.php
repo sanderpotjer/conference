@@ -169,6 +169,44 @@ class ConferenceModelSpeakers extends JModelList
 			);
 		}
 
+		// Add the list ordering clause
+		$listOrder = $this->getState('list.ordering', 'slots.start_time');
+
+		switch ($listOrder)
+		{
+			case 'sessions.description':
+				$sortOrder = 'LENGTH(' . $db->quoteName('sessions.description') . ')';
+				break;
+			case 'sessions.slides':
+				$sortOrder = 'LENGTH(' . $db->quoteName('sessions.slides') . ')';
+				break;
+			case 'sessions.video':
+				$sortOrder = 'LENGTH(' . $db->quoteName('sessions.video') . ')';
+				break;
+			case 'slots.start_time':
+				$sortOrder = $db->quoteName('days.date') . ' ' . $db->escape($this->getState('list.direction', 'DESC')) . ', ' .
+					$db->quoteName(
+						$db->escape(
+							$this->getState('list.ordering', 'slots.start_time')
+						)
+					);
+				break;
+			default:
+				$sortOrder = $db->quoteName(
+					$db->escape(
+						$this->getState('list.ordering', 'slots.start_time')
+					)
+				);
+				break;
+		}
+
+		if ($sortOrder)
+		{
+			$query->order(
+				$sortOrder . ' ' . $db->escape($this->getState('list.direction', 'DESC'))
+			);
+		}
+
 		// Add the list ordering clause.
 		$query->order(
 			$db->quoteName(
