@@ -1,17 +1,16 @@
 <?php
-/*
- * @package		Conference Schedule Manager
- * @copyright	Copyright (c) 2013-2014 Sander Potjer / sanderpotjer.nl
- * @license		GNU General Public License version 3 or later
+/**
+ * @package     Conference
+ *
+ * @author      Stichting Sympathy <info@stichtingsympathy.nl>
+ * @copyright   Copyright (C) 2013 - [year] Stichting Sympathy. All rights reserved.
+ * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link        https://joomladagen.nl
  */
 
-// No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('params');
-$this->loadHelper('format');
-$this->loadHelper('message');
-$this->loadHelper('levels');
+$params = JComponentHelper::getParams('com_conference');
 ?>
 
 <div class="conference levels">
@@ -19,15 +18,13 @@ $this->loadHelper('levels');
 		<h1><?php echo JText::_('COM_CONFERENCE_LEVELS_TITLE')?></h1>
 	</div>
 	
-	<?php if(!empty($this->items)) foreach($this->items as $item):?>
+	<?php if (!empty($this->items)) foreach ($this->items as $item):?>
 	<div class="well well-small">
 		<div class="row-fluid">
 			<div class="span12">
 				<span class="label <?php echo $item->label ?>"><?php echo $this->escape($item->title)?></span>
 				<?php echo($item->description);?>
-				<?php $sessions = ConferenceHelperLevels::sessions($item->conference_level_id);?>
-				
-				<?php if(!empty($sessions)) :?>
+				<?php if (!empty($item->sessions)) :?>
 				<table class="table table-bordered table-striped">
 					<thead>
 						<tr>
@@ -37,32 +34,36 @@ $this->loadHelper('levels');
 						</tr>
 					</thead>
 					<tbody>
-					<?php foreach($sessions as $session):?>
+					<?php foreach ($item->sessions as $session) : ?>
 						<tr>
 							<td>
-								<?php if($session->listview): ?>
+								<?php if ($session->listview): ?>
 									<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo($session->title)?></a>
 								<?php else:?>
 									<?php echo($session->title)?>
 								<?php endif;?>
-								<?php if(ConferenceHelperParams::getParam('language',0)): ?>
-									<?php if($session->language == 'en'): ?>
+								<?php if ($params->get('language',0)): ?>
+									<?php if ($session->language == 'en'): ?>
 										<img class="lang" src="media/mod_languages/images/<?php echo($session->language)?>.gif"/>
 									<?php endif; ?>
 								<?php endif; ?>
 							</td>
 							<td>
-								<?php $speakers = ConferenceHelperFormat::speakers($session->conference_speaker_id); ?>
-								<?php if(!empty($speakers)):?>
+								<?php if (!empty($session->speakers)):?>
 								<?php 
 									$sessionspeakers = array();
-									foreach($speakers as $speaker) :
-										if($speaker->enabled) {
-											$sessionspeakers[] = '<a href="index.php?option=com_conference&view=speaker&id='.$speaker->conference_speaker_id.'">'.trim($speaker->title).'</a>';
-										} else {
+
+									foreach ($session->speakers as $speaker)
+									{
+										if ($speaker->enabled)
+										{
+											$sessionspeakers[] = '<a href="index.php?option=com_conference&view=speaker&id=' . $speaker->conference_speaker_id . '">' . trim($speaker->title) . '</a>';
+										}
+										else
+										{
 											$sessionspeakers[] = trim($speaker->title);
 										}
-									endforeach;
+									}
 									?>
 									<div class="speaker">
 										<?php echo implode(', ', $sessionspeakers); ?>
@@ -70,7 +71,7 @@ $this->loadHelper('levels');
 								<?php endif;?>
 							</td>
 							<td>
-								<?php echo($session->day)?>
+								<?php echo JHtml::_('date', $session->date, 'l j F'); ?>
 								<br/>
 								<span aria-hidden="true" class="icon-clock"></span> 
 								<?php echo JHtml::_('date', $session->start_time,'H:i')?> - <?php echo JHtml::_('date', $session->end_time, 'H:i')?>

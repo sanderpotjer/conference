@@ -11,11 +11,11 @@
 defined('_JEXEC') or die;
 
 /**
- * Days controller.
+ * Levels controller.
  *
  * @package  Conference
  * @since    1.0
  */
-class ConferenceControllerDays extends JControllerLegacy
+class ConferenceControllerLevels extends JControllerLegacy
 {
 }

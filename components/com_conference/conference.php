@@ -21,7 +21,7 @@ if(!defined('FOF_INCLUDED')) {
 JHtml::_('stylesheet', 'com_conference/frontend.css', array('version' => 'auto', 'relative' => true));
 
 // Core Joomla views
-$views = ['days', 'day'];
+$views = ['days', 'day', 'levels'];
 
 $jinput = JFactory::getApplication()->input;
 $view = $jinput->get('view');

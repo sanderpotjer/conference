@@ -10,6 +10,13 @@
 
 defined('_JEXEC') or die;
 
+/**
+ * Days model.
+ *
+ * @package     CSVI
+ * @subpackage
+ * @since       6.0
+ */
 class ConferenceModelDays extends JModelList
 {
 	/**
