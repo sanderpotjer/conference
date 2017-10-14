@@ -1,16 +1,24 @@
 <?php
-/*
- * @package		Conference Schedule Manager
- * @copyright	Copyright (c) 2013-2014 Sander Potjer / sanderpotjer.nl
- * @license		GNU General Public License version 3 or later
+/**
+ * @package     Conference
+ *
+ * @author      Stichting Sympathy <info@stichtingsympathy.nl>
+ * @copyright   Copyright (C) 2013 - [year] Stichting Sympathy. All rights reserved.
+ * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link        https://joomladagen.nl
  */
 
-// No direct access.
 defined('_JEXEC') or die;
 
-class ConferenceControllerDays extends FOFController
+/**
+ * Days controller.
+ *
+ * @package  Conference
+ * @since    1.0
+ */
+class ConferenceControllerDays extends JControllerLegacy
 {
-	public function onBeforeRead() {			
+	public function onBeforeRead() {
 		$params = JFactory::getApplication()->getPageParameters('com_conference');
 		$this->getThisView()->assign('pageparams',		$params);
 					

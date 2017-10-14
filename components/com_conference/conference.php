@@ -1,11 +1,13 @@
 <?php
-/*
- * @package		Conference Schedule Manager
- * @copyright	Copyright (c) 2013-2014 Sander Potjer / sanderpotjer.nl
- * @license		GNU General Public License version 3 or later
+/**
+ * @package     Conference
+ *
+ * @author      Stichting Sympathy <info@stichtingsympathy.nl>
+ * @copyright   Copyright (C) 2013 - [year] Stichting Sympathy. All rights reserved.
+ * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link        https://joomladagen.nl
  */
 
-// No direct access.
 defined('_JEXEC') or die;
 
 // Load FOF
@@ -16,4 +18,42 @@ if(!defined('FOF_INCLUDED')) {
 	return;
 }
 
-FOFDispatcher::getTmpInstance('com_conference')->dispatch();
+JHtml::_('stylesheet', 'com_conference/frontend.css', array('version' => 'auto', 'relative' => true));
+
+// Core Joomla views
+$views = ['days', 'day'];
+
+$jinput = JFactory::getApplication()->input;
+$view = $jinput->get('view');
+
+if (empty($view))
+{
+	$task = $jinput->get('task');
+
+	if (strpos($task, '.'))
+	{
+		list($view, $task) = explode('.', $task);
+	}
+}
+
+try
+{
+	if (in_array($view, $views))
+	{
+		$controller = JControllerLegacy::getInstance('conference');
+		$controller->execute($jinput->get('task'));
+		$controller->redirect();
+	}
+	else
+	{
+		// Dispatch
+		FOFDispatcher::getAnInstance('com_conference')->dispatch();
+	}
+}
+catch (Exception $e)
+{
+	$oldUrl = JUri::getInstance($_SERVER['HTTP_REFERER']);
+	//JFactory::getApplication()->redirect('index.php?option=com_conference&view=' . $oldUrl->getVar('view', ''), $e->getMessage(), 'error');
+	echo $e->getMessage();
+}
+

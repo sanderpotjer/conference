@@ -23,7 +23,7 @@ class ConferenceController extends JControllerLegacy
 	 * The default view.
 	 *
 	 * @var    string
-	 * @since  1.6
+	 * @since  1.0
 	 */
 	protected $default_view = 'sessions';
 
