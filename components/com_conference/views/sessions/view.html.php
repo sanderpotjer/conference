@@ -13,12 +13,12 @@ use Joomla\CMS\MVC\View\HtmlView;
 defined('_JEXEC') or die;
 
 /**
- * Levels view.
+ * Sessions view.
  *
  * @package  Conference
  * @since    1.0
  */
-class ConferenceViewLevels extends HtmlView
+class ConferenceViewSessions extends HtmlView
 {
 	/**
 	 * The items to display.
@@ -29,6 +29,22 @@ class ConferenceViewLevels extends HtmlView
 	protected $items;
 
 	/**
+	 * The pagination object
+	 *
+	 * @var    JPagination
+	 * @since  1.0.0
+	 */
+	protected $pagination;
+
+	/**
+	 * Page parameters
+	 *
+	 * @var    \Joomla\Registry\Registry
+	 * @since  1.0.0
+	 */
+	protected $pageparams;
+
+	/**
 	 * Executes before rendering the page for the Browse task.
 	 *
 	 * @param   string $tpl Subtemplate to use
@@ -36,11 +52,15 @@ class ConferenceViewLevels extends HtmlView
 	 * @return  boolean  Return true to allow rendering of the page
 	 *
 	 * @since   6.0
+	 *
+	 * @throws  Exception
 	 */
 	public function display($tpl = null)
 	{
 		// Load the data
-		$this->items = $this->get('Items');
+		$this->items      = $this->get('Items');
+		$this->pagination = $this->get('Pagination');
+		$this->pageparams = JFactory::getApplication()->getPageParameters('com_conference');
 
 		// Display it all
 		return parent::display($tpl);

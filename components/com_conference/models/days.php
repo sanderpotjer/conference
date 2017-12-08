@@ -8,16 +8,18 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\MVC\Model\ListModel;
+
 defined('_JEXEC') or die;
 
 /**
  * Days model.
  *
- * @package     CSVI
- * @subpackage
+ * @package     Conference
+ *
  * @since       6.0
  */
-class ConferenceModelDays extends JModelList
+class ConferenceModelDays extends ListModel
 {
 	/**
 	 * Build an SQL query to load the list data.

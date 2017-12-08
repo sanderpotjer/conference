@@ -8,6 +8,11 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\Application\ApplicationHelper;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Table;
+
 defined('_JEXEC') or die;
 
 /**
@@ -16,7 +21,7 @@ defined('_JEXEC') or die;
  * @package     Conference
  * @since       1.0
  */
-class TableSpeaker extends JTable
+class TableSpeaker extends Table
 {
 	/**
 	 * Constructor.
@@ -87,25 +92,26 @@ class TableSpeaker extends JTable
 		}
 
 		// Make sure we have a slug
-		if (trim($this->slug) == '')
+		if (trim($this->get('slug')) == '')
 		{
-			$this->slug = $this->title;
+			$this->set('slug', $this->get('title'));
 		}
 
-		$this->slug = JApplicationHelper::stringURLSafe($this->slug, $this->language);
+		$this->set('slug', ApplicationHelper::stringURLSafe($this->get('slug'), $this->get('language')));
 
 		// Get the user
-		$user = JFactory::getUser();
+		$userId = Factory::getUser()->get('id');
 
-		if ($this->conference_speaker_id === 0)
+		if ((int) $this->get('conference_session_id') === 0)
 		{
-			$this->created_by = $user->id;
-			$this->created_on = JFactory::getDate()->toSql();
+			$this->set('created_by', $userId);
+			$this->set('created_on', (new Date())->toSql());
+			$this->set('user_id', $userId);
 		}
 		else
 		{
-			$this->modified_by = $user->id;
-			$this->modified_on = JFactory::getDate()->toSql();
+			$this->set('modified_by', $userId);
+			$this->set('modified_on', (new Date())->toSql());
 		}
 
 		return $result;

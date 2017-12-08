@@ -8,52 +8,25 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die;
-
-// Load FOF
-include_once JPATH_LIBRARIES.'/fof/include.php';
-if(!defined('FOF_INCLUDED')) {
-	JError::raiseError ('500', 'FOF is not installed');
-
-	return;
-}
 
 JHtml::_('stylesheet', 'com_conference/frontend.css', array('version' => 'auto', 'relative' => true));
 
-// Core Joomla views
-$views = ['days', 'day', 'levels'];
-
-$jinput = JFactory::getApplication()->input;
-$view = $jinput->get('view');
-
-if (empty($view))
-{
-	$task = $jinput->get('task');
-
-	if (strpos($task, '.'))
-	{
-		list($view, $task) = explode('.', $task);
-	}
-}
+// Load the admin language file
+$language = Factory::getLanguage();
+$language->load('com_conference', JPATH_ADMINISTRATOR . '/components/com_conference');
 
 try
 {
-	if (in_array($view, $views))
-	{
-		$controller = JControllerLegacy::getInstance('conference');
-		$controller->execute($jinput->get('task'));
-		$controller->redirect();
-	}
-	else
-	{
-		// Dispatch
-		FOFDispatcher::getAnInstance('com_conference')->dispatch();
-	}
+	$controller = JControllerLegacy::getInstance('conference');
+	$controller->execute($jinput->get('task'));
+	$controller->redirect();
 }
 catch (Exception $e)
 {
-	$oldUrl = JUri::getInstance($_SERVER['HTTP_REFERER']);
+	//$oldUrl = JUri::getInstance($_SERVER['HTTP_REFERER']);
 	//JFactory::getApplication()->redirect('index.php?option=com_conference&view=' . $oldUrl->getVar('view', ''), $e->getMessage(), 'error');
 	echo $e->getMessage();
 }
-

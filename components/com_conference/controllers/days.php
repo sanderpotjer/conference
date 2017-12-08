@@ -8,6 +8,8 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\MVC\Controller\BaseController;
+
 defined('_JEXEC') or die;
 
 /**
@@ -16,6 +18,6 @@ defined('_JEXEC') or die;
  * @package  Conference
  * @since    1.0
  */
-class ConferenceControllerDays extends JControllerLegacy
+class ConferenceControllerDays extends BaseController
 {
 }

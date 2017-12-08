@@ -8,6 +8,11 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\Application\ApplicationHelper;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Table;
+
 defined('_JEXEC') or die;
 
 /**
@@ -16,7 +21,7 @@ defined('_JEXEC') or die;
  * @package     Conference
  * @since       1.0
  */
-class TableSession extends JTable
+class TableSession extends Table
 {
 	/**
 	 * Constructor.
@@ -48,11 +53,9 @@ class TableSession extends JTable
 		// Make sure assigned speaker really exists and normalize the list
 		if (!empty($this->conference_speaker_id))
 		{
-			if (is_array($this->conference_speaker_id))
-			{
-				$speakerId = $this->conference_speaker_id;
-			}
-			else
+			$speakerId = $this->conference_speaker_id;
+
+			if (!is_array($this->conference_speaker_id))
 			{
 				$speakerId = explode(',', $this->conference_speaker_id);
 			}
@@ -87,12 +90,35 @@ class TableSession extends JTable
 		}
 
 		// Make sure we have a slug
-		if (trim($this->slug) == '')
+		if (trim($this->get('slug')) == '')
 		{
-			$this->slug = $this->title;
+			$this->set('slug', $this->get('title'));
 		}
 
-		$this->slug = JApplicationHelper::stringURLSafe($this->slug, $this->language);
+		$this->set('slug', ApplicationHelper::stringURLSafe($this->get('slug'), $this->get('language')));
+
+		// Add some basic data for new entries or updated entries
+		$userId = Factory::getUser()->get('id');
+
+		if ((int) $this->get('conference_session_id') === 0)
+		{
+			$this->set('created_by', $userId);
+			$this->set('created_on', (new Date())->toSql());
+
+			// Get the speaker ID for the logged in user
+			$db = $this->getDbo();
+			$query = $db->getQuery(true)
+				->select($db->quoteName('conference_speaker_id'))
+				->from($db->quoteName('#__conference_speakers'))
+				->where($db->quoteName('user_id') . ' = ' . (int) $userId);
+			$db->setQuery($query);
+			$this->set('conference_speaker_id', $db->loadResult());
+		}
+		else
+		{
+			$this->set('modified_by', $userId);
+			$this->set('modified_on', (new Date())->toSql());
+		}
 
 		return $result;
 	}

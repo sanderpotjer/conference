@@ -8,14 +8,19 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
 defined('_JEXEC') or die;
 
-$params = JComponentHelper::getParams('com_conference');
+$params = ComponentHelper::getParams('com_conference');
 ?>
 
 <div class="conference levels">
 	<div class="row-fluid">
-		<h1><?php echo JText::_('COM_CONFERENCE_LEVELS_TITLE')?></h1>
+		<h1><?php echo Text::_('COM_CONFERENCE_LEVELS_TITLE')?></h1>
 	</div>
 	
 	<?php if (!empty($this->items)) foreach ($this->items as $item):?>
@@ -29,8 +34,8 @@ $params = JComponentHelper::getParams('com_conference');
 					<thead>
 						<tr>
 							<th><?php echo JText::_('COM_CONFERENCE_FIELD_SESSION')?></th>
-							<th width="30%"><?php echo JText::_('COM_CONFERENCE_FIELD_SPEAKER')?></th>
-							<th width="25%"><?php echo JText::_('COM_CONFERENCE_FIELD_SLOT')?></th>
+							<th width="30%"><?php echo Text::_('COM_CONFERENCE_FIELD_SPEAKER')?></th>
+							<th width="25%"><?php echo Text::_('COM_CONFERENCE_FIELD_SLOT')?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -38,7 +43,7 @@ $params = JComponentHelper::getParams('com_conference');
 						<tr>
 							<td>
 								<?php if ($session->listview): ?>
-									<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo($session->title)?></a>
+									<a href="<?php echo Route::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo($session->title)?></a>
 								<?php else:?>
 									<?php echo($session->title)?>
 								<?php endif;?>
@@ -71,10 +76,10 @@ $params = JComponentHelper::getParams('com_conference');
 								<?php endif;?>
 							</td>
 							<td>
-								<?php echo JHtml::_('date', $session->date, 'l j F'); ?>
+								<?php echo HTMLHelper::_('date', $session->date, 'l j F'); ?>
 								<br/>
 								<span aria-hidden="true" class="icon-clock"></span> 
-								<?php echo JHtml::_('date', $session->start_time,'H:i')?> - <?php echo JHtml::_('date', $session->end_time, 'H:i')?>
+								<?php echo HTMLHelper::_('date', $session->start_time,'H:i')?> - <?php echo HTMLHelper::_('date', $session->end_time, 'H:i')?>
 							</td>
 						</tr>
 					<?php endforeach;?>

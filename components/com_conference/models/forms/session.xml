@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="session" addfieldpath="administrator/components/com_conference/models/fields">
+        <field name="conference_session_id"
+               type="hidden"/>
+
+        <field name="title"
+               type="text"
+               label="COM_CONFERENCE_FIELD_TITLE"
+               required="true"
+               class="input-xlarge"/>
+
+        <field name="conference_level_id"
+               type="conference.levels"
+               label="COM_CONFERENCE_FIELD_LEVEL"
+               class="input-xlarge advancedSelect">
+            <option value="">COM_CONFERENCE_SELECT_LEVEL</option>
+        </field>
+
+        <field name="language"
+               type="conference.languages"
+               label="COM_CONFERENCE_FIELD_LANGUAGE"
+               class="input-xlarge advancedSelect">
+            <option value="">COM_CONFERENCE_SELECT_LANGUAGE</option>
+        </field>
+
+        <field name="description"
+               type="editor"
+               label="COM_CONFERENCE_FIELD_DESCRIPTION"
+               class="input-xlarge"/>
+
+        <field name="slides"
+               type="textarea"
+               label="COM_CONFERENCE_FIELD_SLIDES"
+               rows="8"
+               class="input-xlarge"/>
+
+        <field name="enabled"
+               type="hidden"
+               default="0"/>
+    </fieldset>
+</form>

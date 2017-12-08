@@ -8,9 +8,18 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\MVC\Model\ListModel;
+
 defined('_JEXEC') or die;
 
-class ConferenceModelLevels extends JModelList
+/**
+ * Levels model.
+ *
+ * @package     Conference
+ *
+ * @since       1.0.0
+ */
+class ConferenceModelLevels extends ListModel
 {
 	/**
 	 * Build an SQL query to load the list data.
@@ -60,7 +69,7 @@ class ConferenceModelLevels extends JModelList
 	 *
 	 * @since   1.0.0
 	 *
-	 * @throws  RuntimeException
+	 * @throws  Exception
 	 */
 	public function getItems()
 	{

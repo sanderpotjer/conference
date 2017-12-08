@@ -13,12 +13,12 @@ use Joomla\CMS\MVC\View\HtmlView;
 defined('_JEXEC') or die;
 
 /**
- * Levels view.
+ * Speakers view.
  *
  * @package  Conference
  * @since    1.0
  */
-class ConferenceViewLevels extends HtmlView
+class ConferenceViewSpeakers extends HtmlView
 {
 	/**
 	 * The items to display.
@@ -27,6 +27,14 @@ class ConferenceViewLevels extends HtmlView
 	 * @since  1.0.0
 	 */
 	protected $items;
+
+	/**
+	 * Pagination object
+	 *
+	 * @var    \Joomla\CMS\Pagination\Pagination
+	 * @since  1.0.0
+	 */
+	protected $pagination;
 
 	/**
 	 * Executes before rendering the page for the Browse task.
@@ -40,7 +48,8 @@ class ConferenceViewLevels extends HtmlView
 	public function display($tpl = null)
 	{
 		// Load the data
-		$this->items = $this->get('Items');
+		$this->items      = $this->get('Items');
+		$this->pagination = $this->get('Pagination');
 
 		// Display it all
 		return parent::display($tpl);

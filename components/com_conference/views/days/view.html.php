@@ -8,6 +8,8 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\MVC\View\HtmlView;
+
 defined('_JEXEC') or die;
 
 /**
@@ -16,7 +18,7 @@ defined('_JEXEC') or die;
  * @package  Conference
  * @since    1.0
  */
-class ConferenceViewDays extends JViewLegacy
+class ConferenceViewDays extends HtmlView
 {
 	/**
 	 * The items to display.

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="speaker">
+        <field name="conference_speaker_id"
+               type="hidden"/>
+
+        <field name="title"
+               type="text"
+               label="COM_CONFERENCE_FIELD_TITLE"
+               required="true"
+               class="input-xlarge"/>
+
+        <field name="email"
+               type="email"
+               label="COM_CONFERENCE_FIELD_EMAIL"
+               description="COM_CONFERENCE_FIELD_EMAIL_DESC"
+               hint="mail@website.com"
+               class="input-xlarge"/>
+
+        <field name="speakernotes"
+               type="textarea"
+               label="COM_CONFERENCE_FIELD_NOTES"
+               description="COM_CONFERENCE_FIELD_NOTES_DESC"
+               rows="4"
+               class="input-xlarge"/>
+
+        <field name="twitter"
+               type="text"
+               label="COM_CONFERENCE_FIELD_TWITTER"
+               hint="username"/>
+
+        <field name="facebook"
+               type="text"
+               label="COM_CONFERENCE_FIELD_FACEBOOK"
+               hint="username"/>
+
+        <field name="googleplus"
+               type="text"
+               label="COM_CONFERENCE_FIELD_GOOGLEPLUS"
+               hint="username" />
+
+        <field name="linkedin"
+               type="text"
+               label="COM_CONFERENCE_FIELD_LINKEDIN"
+               hint="username" />
+
+        <field name="website"
+               type="text"
+               label="COM_CONFERENCE_FIELD_WEBSITE"
+               hint="www.website.com" />
+
+        <field name="bio"
+               type="editor"
+               label="COM_CONFERENCE_FIELD_BIO"
+               buttons="false"
+               class="input-xlarge" />
+
+        <field name="image"
+               type="file"
+               label="COM_CONFERENCE_FIELD_IMAGE"
+               class="input-xlarge"
+               preview="true"/>
+
+        <field name="enabled"
+               type="hidden"
+               default="0"/>
+    </fieldset>
+</form>

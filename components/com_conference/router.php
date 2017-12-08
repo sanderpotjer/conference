@@ -1,14 +1,15 @@
 <?php
-/*
- * @package		Conference Schedule Manager
- * @copyright	Copyright (c) 2013-2014 Sander Potjer / sanderpotjer.nl
- * @license		GNU General Public License version 3 or later
+/**
+ * @package     Conference
+ *
+ * @author      Stichting Sympathy <info@stichtingsympathy.nl>
+ * @copyright   Copyright (C) 2013 - [year] Stichting Sympathy. All rights reserved.
+ * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link        https://joomladagen.nl
  */
 
-// No direct access.
 defined('_JEXEC') or die;
 
-include_once JPATH_LIBRARIES.'/fof/include.php';
 require_once JPATH_SITE.'/components/com_conference/helpers/router.php';
 
 /**
@@ -16,7 +17,7 @@ require_once JPATH_SITE.'/components/com_conference/helpers/router.php';
  */
 global $conferenceHandleViews;
 $conferenceHandleViews = array(
-	'my', 'session', 'sessions', 'speaker', 'speakers', 'levels', 'days'
+	'profile', 'session', 'sessions', 'speaker', 'speakers', 'levels', 'days'
 );
 
 function ConferenceBuildRoute(&$query)
@@ -57,7 +58,6 @@ function ConferenceBuildRoute(&$query)
 	// @todo Build the URL
 	switch($newView)
 	{
-			
 		case 'speaker':
 			$speakerID = ConferenceHelperRouter::getAndPop($query, 'id', 0);
 			if($speakerID) {
@@ -129,13 +129,13 @@ function ConferenceBuildRoute(&$query)
 			}
 			
 			break;
-		case 'my':
+		case 'profile':
 			// Do I have to look for a new Item ID?
 			$found = false;
 			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
 			$qoptions = array(
 				'option'	=> 'com_conference',
-				'view'		=> 'my',
+				'view'		=> 'profile',
 			);
 			
 			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
@@ -248,7 +248,7 @@ function ConferenceParseRoute(&$segments)
 	
 	// If we have segments and we're in a no-parameters view, we have to deal
 	// with a different view than the one listed in the menu.
-	if(in_array($view, array('my'))) {
+	if(in_array($view, array('profile'))) {
 		$view = array_shift($segments);
 	}
 

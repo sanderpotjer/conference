@@ -1,24 +1,16 @@
 <?php
-/*
- * @package		Conference Schedule Manager
- * @copyright	Copyright (c) 2013-2014 Sander Potjer / sanderpotjer.nl
- * @license		GNU General Public License version 3 or later
+/**
+ * @package     Conference
+ *
+ * @author      Stichting Sympathy <info@stichtingsympathy.nl>
+ * @copyright   Copyright (C) 2013 - [year] Stichting Sympathy. All rights reserved.
+ * @license     GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link        https://joomladagen.nl
  */
 
-// No direct access.
 defined('_JEXEC') or die;
 
-$this->loadHelper('format');
-$this->loadHelper('message');
-$this->loadHelper('session');
-
-// Get the Itemid
-$itemId = FOFInput::getInt('Itemid',0,$this->input);
-if($itemId != 0) {
-	$actionURL = 'index.php?Itemid='.$itemId;
-} else {
-	$actionURL = 'index.php';
-}
+$params = JComponentHelper::getParams('com_conference');
 ?>
 
 <div class="conference levels">
@@ -38,19 +30,20 @@ if($itemId != 0) {
 					</tr>
 				</thead>
 				<tbody>
-				<?php foreach($this->items as $session):?>
+				<?php foreach($this->items as $item):?>
 					<tr>
 						<td>
-							<?php echo($session->title)?>
+							<?php echo($item->title)?>
 						</td>
 						<td>
-							<?php $speakers = ConferenceHelperFormat::speakers($session->conference_speaker_id); ?>
-							<?php if(!empty($speakers)):?>
+							<?php if(!empty($item->speakers)):?>
 							<?php 
 								$sessionspeakers = array();
-								foreach($speakers as $speaker) :
+
+								foreach($item->speakers as $speaker)
+								{
 									$sessionspeakers[] = trim($speaker->title);
-								endforeach;
+								}
 								?>
 								<div class="speaker">
 									<?php echo implode(', ', $sessionspeakers); ?>
@@ -58,17 +51,17 @@ if($itemId != 0) {
 							<?php endif;?>
 						</td>
 						<td>
-							<?php if($session->slides):?>
-							<a href="#slides<?php echo($session->conference_session_id)?>" role="button" class="btn" data-toggle="modal">Slides</a>
+							<?php if($item->slides):?>
+							<a href="#slides<?php echo($item->conference_session_id)?>" role="button" class="btn" data-toggle="modal">Slides</a>
 							
 							<!-- Start Modal -->
-							<div id="slides<?php echo($session->conference_session_id)?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div id="slides<?php echo($item->conference_session_id)?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							  <div class="modal-header">
 							    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							    <h3 id="myModalLabel"><?php echo($session->title)?></h3>
+							    <h3 id="myModalLabel"><?php echo($item->title)?></h3>
 							  </div>
 							  <div class="modal-body">
-							    <?php echo($session->slides)?>
+							    <?php echo($item->slides)?>
 							  </div>
 							  <div class="modal-footer">
 							    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -86,7 +79,7 @@ if($itemId != 0) {
 	</div>
 
 	<div class="row-fluid">
-		<form id="conference-pagination" name="conference-pagination" action="<?php echo $actionURL ?>" method="post">
+		<form id="conference-pagination" name="conference-pagination" action="<?php echo JRoute::_('index.php?option=com_conference&view=sessions'); ?>" method="post">
 			<input type="hidden" name="option" value="com_conference" />
 			<input type="hidden" name="view" value="speakers" />
 			<?php if ($this->pageparams->get('show_pagination',1)) : ?>

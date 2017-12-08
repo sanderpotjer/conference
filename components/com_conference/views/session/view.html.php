@@ -13,20 +13,28 @@ use Joomla\CMS\MVC\View\HtmlView;
 defined('_JEXEC') or die;
 
 /**
- * Levels view.
+ * Session display and edit view.
  *
  * @package  Conference
  * @since    1.0
  */
-class ConferenceViewLevels extends HtmlView
+class ConferenceViewSession extends HtmlView
 {
 	/**
-	 * The items to display.
+	 * The session details
 	 *
-	 * @var    array
+	 * @var    object
+	 * @since  1.0
+	 */
+	protected $item;
+
+	/**
+	 * The session to display.
+	 *
+	 * @var    JForm
 	 * @since  1.0.0
 	 */
-	protected $items;
+	protected $form;
 
 	/**
 	 * Executes before rendering the page for the Browse task.
@@ -39,8 +47,17 @@ class ConferenceViewLevels extends HtmlView
 	 */
 	public function display($tpl = null)
 	{
-		// Load the data
-		$this->items = $this->get('Items');
+		/** @var ConferenceModelSession $model */
+		$model = $this->getModel();
+
+		if ($this->getLayout() === 'edit')
+		{
+			$this->form = $model->getForm();
+		}
+		else
+		{
+			$this->item = $model->getItem();
+		}
 
 		// Display it all
 		return parent::display($tpl);

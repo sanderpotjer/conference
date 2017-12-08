@@ -26,7 +26,7 @@ class ConferenceModelLevel extends JModelAdmin
 	 *
 	 * @return  mixed  A JForm object on success | False on failure.
 	 *
-	 * @since   4.0
+	 * @since   1.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{

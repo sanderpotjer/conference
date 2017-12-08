@@ -13,11 +13,11 @@ use Joomla\CMS\MVC\Controller\BaseController;
 defined('_JEXEC') or die;
 
 /**
- * Levels controller.
+ * Profile controller.
  *
  * @package  Conference
  * @since    1.0
  */
-class ConferenceControllerLevels extends BaseController
+class ConferenceControllerProfile extends BaseController
 {
 }
