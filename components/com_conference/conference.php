@@ -21,7 +21,7 @@ $language->load('com_conference', JPATH_ADMINISTRATOR . '/components/com_confere
 try
 {
 	$controller = JControllerLegacy::getInstance('conference');
-	$controller->execute($jinput->get('task'));
+	$controller->execute(Factory::getApplication()->input->get('task'));
 	$controller->redirect();
 }
 catch (Exception $e)
