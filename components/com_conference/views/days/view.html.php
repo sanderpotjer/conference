@@ -59,7 +59,7 @@ class ConferenceViewDays extends HtmlView
 	 *
 	 * @return  boolean  Return true to allow rendering of the page
 	 *
-	 * @since   6.0
+	 * @since   1.0.0
 	 */
 	public function display($tpl = null)
 	{

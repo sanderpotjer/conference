@@ -85,7 +85,7 @@ class ConferenceModelSession extends JModelAdmin
 					$db->quoteName(
 						array(
 							'conference_speaker_id',
-							'title'
+							'title',
 						),
 						array(
 							'value',

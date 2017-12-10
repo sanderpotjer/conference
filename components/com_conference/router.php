@@ -8,295 +8,232 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\Component\Router\RouterBase;
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\ItemModel;
+
 defined('_JEXEC') or die;
 
-require_once JPATH_SITE.'/components/com_conference/helpers/router.php';
-
 /**
- * Which views does this router handle?
+ * Routing class from com_banners
+ *
+ * @since  1.0.0
  */
-global $conferenceHandleViews;
-$conferenceHandleViews = array(
-	'profile', 'session', 'sessions', 'speaker', 'speakers', 'levels', 'days'
-);
-
-function ConferenceBuildRoute(&$query)
+class ConferenceRouter extends RouterBase
 {
-	global $conferenceHandleViews;
-	$segments = array();
-	
-	// We need to find out if the menu item link has a view param
-	$menuQuery = array();
-	$menuView = 'categories';
-	$Itemid = ConferenceHelperRouter::getAndPop($query, 'Itemid', 0);
-
-	// Get the menu view, if an Item ID exists
-	if($Itemid) {
-		$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-		if(is_object($menu)) {
-			parse_str(str_replace('index.php?',  '',$menu->link), $menuQuery); // remove "index.php?" and parse
-			if(array_key_exists('view', $menuQuery)) {
-				$menuView = $menuQuery['view'];
-			}
-		}
-		
-		$query['Itemid'] = $Itemid;
-	}
-	
-	// Add the view
-	$newView = array_key_exists('view', $query) ? $query['view'] : $menuView;
-	
-	// We can only handle specific views. Is it one of them?
-	if(!in_array($newView, $conferenceHandleViews)) {
-		if($Itemid) $query['Itemid'] = $Itemid;
-		return array();
-	}
-	
-	// Remove the option and view from the query
-	ConferenceHelperRouter::getAndPop($query, 'view');
-	
-	// @todo Build the URL
-	switch($newView)
+	/**
+	 * Build the route for the com_conference component
+	 *
+	 * @param   array  &$query  An array of URL arguments
+	 *
+	 * @return  array  The URL arguments to use to assemble the subsequent URL.
+	 *
+	 * @since   1.0.0
+	 *
+	 * @throws  Exception
+	 */
+	public function build(&$query)
 	{
-		case 'speaker':
-			$speakerID = ConferenceHelperRouter::getAndPop($query, 'id', 0);
-			if($speakerID) {
-				$speaker = FOFModel::getTmpInstance('Speakers', 'ConferenceModel')
-					->setId($speakerID)
-					->getItem();
-				// Append the Speaker slug
-				$segments[] = $speaker->slug;
-				
-				// Do I have to look for a new Item ID?
-				$found = false;
-				$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-				$qoptions = array(
-					'option'	=> 'com_conference',
-					'view'		=> 'speakers',
-				);
-			} else {
-				// Do I have to look for a new Item ID?
-				$found = false;
-				$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-				$qoptions = array(
-					'option'	=> 'com_conference',
-					'view'		=> 'speakers',
-					'layout'	=> 'form',
-				);
-			}			
-			
-			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
-			if(!$found) {
-				// Try to find a menu item ID directly for this category
-				$item = ConferenceHelperRouter::findMenu($qoptions);
-				
-				if(!is_null($item)) {
-					$Itemid = $item->id;
-					$found = true;
-				}
-			}
-			
-			break;
-		case 'session':
-			$sessionID = ConferenceHelperRouter::getAndPop($query, 'id', 0);
-			if($sessionID) {
-				$session = FOFModel::getTmpInstance('Sessions', 'ConferenceModel')
-					->setId($sessionID)
-					->getItem();
-				// Append the Session slug
-				$segments[] = $session->slug;
-			} else {
-				$segments[] = 'new';
-			}
-			
-			// Do I have to look for a new Item ID?
-			$found = false;
-			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-			$qoptions = array(
-				'option'	=> 'com_conference',
-				'view'		=> 'sessions',
-			);
-			
-			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
-			if(!$found) {
-				// Try to find a menu item ID directly for this category
-				$item = ConferenceHelperRouter::findMenu($qoptions);
-				
-				if(!is_null($item)) {
-					$Itemid = $item->id;
-					$found = true;
-				}
-			}
-			
-			break;
-		case 'profile':
-			// Do I have to look for a new Item ID?
-			$found = false;
-			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-			$qoptions = array(
-				'option'	=> 'com_conference',
-				'view'		=> 'profile',
-			);
-			
-			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
-			if(!$found) {
-				// Try to find a menu item ID directly for this category
-				$item = ConferenceHelperRouter::findMenu($qoptions);
-				
-				if(!is_null($item)) {
-					$Itemid = $item->id;
-					$found = true;
-				}
-			}
-			
-			break;
-			
-		case 'levels':
-			// Do I have to look for a new Item ID?
-			$found = false;
-			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-			$qoptions = array(
-				'option'	=> 'com_conference',
-				'view'		=> 'levels',
-			);
-			
-			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
-			if(!$found) {
-				// Try to find a menu item ID directly for this category
-				$item = ConferenceHelperRouter::findMenu($qoptions);
-				
-				if(!is_null($item)) {
-					$Itemid = $item->id;
-					$found = true;
-				}
-			}
-			
-			break;
-		
-		case 'days':
-			// Do I have to look for a new Item ID?
-			$found = false;
-			$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-			$qoptions = array(
-				'option'	=> 'com_conference',
-				'view'		=> 'days',
-			);
-			
-			$found = ConferenceHelperRouter::checkMenu($menu, $qoptions);
-			if(!$found) {
-				// Try to find a menu item ID directly for this category
-				$item = ConferenceHelperRouter::findMenu($qoptions);
-				
-				if(!is_null($item)) {
-					$Itemid = $item->id;
-					$found = true;
-				}
-			}
-			
-			break;
-	}
-	
-	// Process the Itemid
-	$menuView = null;
-	if($Itemid) {
-		$menu = JFactory::getApplication()->getMenu()->getItem($Itemid);
-		if(is_object($menu)) {
-			parse_str(str_replace('index.php?',  '',$menu->link), $menuQuery); // remove "index.php?" and parse
-			if(array_key_exists('view', $menuQuery)) {
-				$menuView = $menuQuery['view'];
-			}
+		$segments = array();
+
+		// index.php?option=com_conference&view=session&id=' . $session->conference_session_id
+
+		// Check for view
+		if (!isset($query['view']) && !isset($query['Itemid']))
+		{
+			// No view and no Itemid is gonna be hard ;)
+			return $segments;
 		}
-		
-		$query['Itemid'] = $Itemid;
-	}
-	
-	// If the menu's view is different to the new view, add the view name to the URL
-	if(!empty($newView) && ($newView != $menuView)) {
-		if((($menuView != 'speakers') && ($menuView != 'sessions')) || empty($menuView) ) {
-			array_unshift($segments, $newView);
-		} elseif(!in_array($newView, array('speaker','speakers','session','sessions','levels','days'))) {
-			array_unshift($segments, $newView);
+
+		if (!isset($query['view']))
+		{
+			// Get the view from the Itemid.
+			$link = Factory::getApplication()->getMenu()->getItem($query['Itemid'])->link;
+
+			$matches = array();
+			preg_match("/view=([a-z,A-z,0-9]*)/", $link, $matches);
+
+			$view = count($matches) ? $matches[1] : null;
 		}
+		else
+		{
+			// Easy mode
+			$view = $query['view'];
+			unset($query['view']);
+		}
+
+		// Get the ID of the item being displayed
+		$id = 0;
+
+		if (isset($query['id']))
+		{
+			$id = $query['id'];
+			unset($query['id']);
+		}
+
+		switch ($view)
+		{
+			case 'days':
+				break;
+			case 'levels':
+				// Get the Itemid
+				$query['Itemid'] = $this->getItemid('levels');
+				break;
+			case 'profile':
+				if (isset($query['task']))
+				{
+					list ($view, $task) = explode('.', $query['task']);
+					$segments[] = $view;
+					$segments[] = $task;
+					unset($query['task']);
+					unset($query['layout']);
+				}
+
+				if (isset($query['layout']))
+				{
+					$segments[] = $query['layout'];
+					unset($query['layout']);
+				}
+				break;
+			case 'session':
+				// Get the Itemid
+				$query['Itemid'] = $this->getItemid('sessions');
+
+				if ($id)
+				{
+					/** @var ConferenceModelSession $sessionModel */
+					$sessionModel = ItemModel::getInstance('Session', 'ConferenceModel', array('ignore_request' => true));
+					$sessionModel->setState('session.id', $id);
+					$session    = $sessionModel->getItem();
+					$segments[] = $session->slug;
+				}
+				break;
+			case 'speaker':
+				// Get the Itemid
+				$query['Itemid'] = $this->getItemid('speakers');
+
+				if ($id)
+				{
+					/** @var ConferenceModelSpeaker $speakerModel */
+					$speakerModel = ItemModel::getInstance('Speaker', 'ConferenceModel', array('ignore_request' => true));
+					$speakerModel->setState('speaker.id', $id);
+					$speaker    = $speakerModel->getItem();
+					$segments[] = $speaker->slug;
+				}
+				break;
+		}
+
+		return $segments;
 	}
 
-	return $segments;
-	//@ob_end_clean();var_dump($query);die();
+	/**
+	 * Parse the segments of a URL.
+	 *
+	 * @param   array  &$segments  The segments of the URL to parse.
+	 *
+	 * @return  array  The URL attributes to be used by the application.
+	 *
+	 * @since   1.0.0
+	 */
+	public function parse(&$segments)
+	{
+		$vars = array();
+
+		// Get the view from the active menu
+		$activeMenu = Factory::getApplication()->getMenu()->getActive();
+		$view = $activeMenu->query['view'];
+		$db = Factory::getDbo();
+
+		switch ($view)
+		{
+			case 'days':
+				break;
+			case 'levels':
+				$vars['view'] = 'level';
+				break;
+			case 'profile':
+				break;
+			case 'sessions':
+				$vars['view'] = 'session';
+				$query = $db->getQuery(true)
+					->select($db->quoteName('conference_session_id'))
+					->from($db->quoteName('#__conference_sessions'))
+					->where($db->quoteName('slug') . ' = ' . $db->quote($segments[0]));
+				$db->setQuery($query);
+				$vars['id'] = $db->loadResult();
+				break;
+			case 'speakers':
+				$vars['view'] = 'speaker';
+				$query = $db->getQuery(true)
+					->select($db->quoteName('conference_speaker_id'))
+					->from($db->quoteName('#__conference_speakers'))
+					->where($db->quoteName('slug') . ' = ' . $db->quote($segments[0]));
+				$db->setQuery($query);
+				$vars['id'] = $db->loadResult();
+				break;
+		}
+
+		return $vars;
+	}
+
+	/**
+	 * Find the item ID for a given view.
+	 *
+	 * @param   string  $view  The name of the view to find the item ID for
+	 * @param   int     $id    The id of an item
+	 *
+	 * @return  mixed  The item ID or null if not found.
+	 *
+	 * @since   4.3.1
+	 */
+	private function getItemid($view, $id = null)
+	{
+		// Get all relevant menu items.
+		$items = $this->menu->getItems('component', 'com_conference');
+
+		// ItemId
+		$itemId = null;
+
+		if ($id)
+		{
+			foreach ($items as $item)
+			{
+				if (
+					(isset($item->query['view']) && $item->query['view'] == $view) &&
+					(isset($item->query['id']) && $item->query['id'] == $id))
+				{
+					$itemId = $item->id;
+					break;
+				}
+			}
+		}
+
+		if (!$itemId)
+		{
+			foreach ($items as $item)
+			{
+				if (isset($item->query['view']) && $item->query['view'] == $view)
+				{
+					$itemId = $query['Itemid'] = $item->id;
+					break;
+				}
+			}
+		}
+
+		return $itemId;
+	}
+}
+
+function conferenceBuildRoute(&$query)
+{
+	$router = new ConferenceRouter;
+
+	return $router->build($query);
 }
 
 function ConferenceParseRoute(&$segments)
 {
-	$query = array();
-	
-	global $conferenceHandleViews;
-	
-	// Fetch the default query from the active menu item
-	$mObject = JFactory::getApplication()->getMenu()->getActive();
-	$query = is_object($mObject) ? $mObject->query : array();
-	
-	if(!array_key_exists('option', $query)) $query['option'] = 'com_conference';
-	if(!array_key_exists('view', $query)) $query['view'] = 'sessions';
-	$view = $query['view'];
-	
-	// Replace : with - in segments
-	$segments = ConferenceHelperRouter::preconditionSegments($segments);
-	
-	// Do not process an empty segment list (just in case...)
-	if(empty($segments)) return $query;
-	
-	// Do not process a view I know jack shit about
-	if(!in_array($view, $conferenceHandleViews)) return $query;
-	
-	// If we have segments and we're in a no-parameters view, we have to deal
-	// with a different view than the one listed in the menu.
-	if(in_array($view, array('profile'))) {
-		$view = array_shift($segments);
-	}
+	$router = new ConferenceRouter;
 
-	else {
-		$lastSegment = array_pop($segments);
-		if($lastSegment == 'new') {
-			$view = 'speaker';
-		} else {
-			$segments[] = $lastSegment;
-		}
-	}
-	
-	if(in_array($view, array('sessions','session','speakers','speaker','levels','days'))) {
-		
-		switch($view)
-		{
-			case 'speakers':
-				// Speaker view
-				$query['view'] = 'speaker';
-				
-				$db = JFactory::getDBO();
-				$dbquery = $db->getQuery(true)
-					->select('conference_speaker_id')
-					->from($db->qn('#__conference_speakers'))
-					->where($db->qn('slug').' = '.$db->q($segments[0]));
-				$db->setQuery($dbquery);
-				$id = $db->loadResult();
-				$query['id'] = $id;
-				break;
-		
-
-			
-			case 'sessions':
-				// Speaker view
-				$query['view'] = 'session';
-				
-				$db = JFactory::getDBO();
-				$dbquery = $db->getQuery(true)
-					->select('conference_session_id')
-					->from($db->qn('#__conference_sessions'))
-					->where($db->qn('slug').' = '.$db->q($segments[0]));
-				$db->setQuery($dbquery);
-				$id = $db->loadResult();
-				$query['id'] = $id;
-				break;
-		}
-
-	}
-
-	return $query;
+	return $router->parse($segments);
 }

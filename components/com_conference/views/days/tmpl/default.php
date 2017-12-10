@@ -8,6 +8,10 @@
  * @link        https://joomladagen.nl
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
 defined('_JEXEC') or die;
 
 $params = JComponentHelper::getParams('com_conference');
@@ -15,7 +19,7 @@ $params = JComponentHelper::getParams('com_conference');
 
 <div class="conference schedule">
 	<div class="row-fluid">
-		<h1><?php echo JText::_('COM_CONFERENCE_DAYS_TITLE')?></h1>
+		<h1><?php echo Text::_('COM_CONFERENCE_DAYS_TITLE')?></h1>
 	</div>
 	
 	<div class="row-fluid">
@@ -43,15 +47,15 @@ $params = JComponentHelper::getParams('com_conference');
 						<?php if (!empty($item->slots)) foreach ($item->slots as $slot) : ?>
 						<?php if ($slot->general):?>
 						<tr class="info">
-							<td class="hidden-phone"><?php echo JHtml::_('date', $slot->start_time ,'H:i'); ?></td>
+							<td class="hidden-phone"><?php echo HTMLHelper::_('date', $slot->start_time ,'H:i'); ?></td>
 							<td colspan="<?php echo(count($this->rooms));?>">
 								<span class="visible-phone">
-									<?php echo JHtml::_('date', $slot->start_time ,'H:i'); ?>: 
+									<?php echo HTMLHelper::_('date', $slot->start_time ,'H:i'); ?>: 
 								</span>
 								<?php if (isset($this->sessions[$slot->conference_slot_id][$this->generalRoom])) :?>
 								<?php $session = $this->sessions[$slot->conference_slot_id][$this->generalRoom];?>
 								<?php if ($session->listview): ?>
-									<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
+									<a href="<?php echo Route::_('index.php?option=com_conference&view=session&id=' . $session->conference_session_id); ?>"><?php echo $session->title; ?></a>
 								<?php else:?>
 									<?php echo $session->title ?>
 								<?php endif;?>
@@ -61,7 +65,7 @@ $params = JComponentHelper::getParams('com_conference');
 						</tr>
 						<?php else:?>
 						<tr>
-							<td><?php echo JHtml::_('date', $slot->start_time ,'H:i'); ?></td>
+							<td><?php echo HTMLHelper::_('date', $slot->start_time ,'H:i'); ?></td>
 							<?php if (!empty($this->rooms)) foreach ($this->rooms as $room):?>
 							<?php if (isset($this->sessions[$slot->conference_slot_id][$room->conference_room_id])) :?>
 								<td>
@@ -70,16 +74,16 @@ $params = JComponentHelper::getParams('com_conference');
 										<?php echo $session->room ?>
 									</span>
 									<?php if ($session->level):?>
-									<a href="<?php echo JRoute::_('index.php?option=com_conference&view=levels')?>"><span class="label <?php echo $session->level_label ?>">
+									<a href="<?php echo Route::_('index.php?option=com_conference&view=levels')?>"><span class="label <?php echo $session->level_label ?>">
 										<?php echo $session->level ?>
 									</span></a><br/>
 									<?php endif;?>
 								<div class="session">
 									<?php if ($session->listview): ?>
 										<?php if ($session->slides): ?>
-											<span class="icon-grid-view" rel="tooltip"  data-original-title="<?php echo JText::_('COM_CONFERENCE_SLIDES_AVAILABLE')?>"></span>
+											<span class="icon-grid-view" rel="tooltip"  data-original-title="<?php echo Text::_('COM_CONFERENCE_SLIDES_AVAILABLE')?>"></span>
 										<?php endif;?>
-										<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id=' . $session->conference_session_id)?>"><?php echo $session->title ?></a>
+										<a href="<?php echo Route::_('index.php?option=com_conference&view=session&id=' . $session->conference_session_id)?>"><?php echo $session->title ?></a>
 									<?php else:?>
 										<?php echo $session->title ?>
 									<?php endif;?>
