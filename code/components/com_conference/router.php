@@ -35,8 +35,7 @@ class ConferenceRouter extends RouterBase
 	public function build(&$query)
 	{
 		$segments = array();
-
-		// index.php?option=com_conference&view=session&id=' . $session->conference_session_id
+		$layout   = '';
 
 		// Check for view
 		if (!isset($query['view']) && !isset($query['Itemid']))
@@ -47,13 +46,11 @@ class ConferenceRouter extends RouterBase
 
 		if (!isset($query['view']))
 		{
-			// Get the view from the Itemid.
-			$link = Factory::getApplication()->getMenu()->getItem($query['Itemid'])->link;
-
-			$matches = array();
-			preg_match("/view=([a-z,A-z,0-9]*)/", $link, $matches);
-
-			$view = count($matches) ? $matches[1] : null;
+			// Get the view and layout from the Itemid.
+			$link   = Factory::getApplication()->getMenu()->getItem($query['Itemid'])->link;
+			$uri    = \Joomla\CMS\Uri\Uri::getInstance($link);
+			$view   = $uri->getVar('view');
+			$layout = $uri->getVar('layout');
 		}
 		else
 		{
@@ -61,6 +58,15 @@ class ConferenceRouter extends RouterBase
 			$view = $query['view'];
 			unset($query['view']);
 		}
+		?>
+		<pre><?php
+		echo __FILE__ . '::' . __LINE__ . ':: ';
+		echo 'view: ';
+		echo '<div style="font-size: 1.5em;">';
+		print_r($view);
+		print_r($layout);
+		echo '</div>';
+		?></pre><?php
 
 		// Get the ID of the item being displayed
 		$id = 0;
@@ -73,11 +79,45 @@ class ConferenceRouter extends RouterBase
 
 		switch ($view)
 		{
+			// Singular views
+			case 'session':
+				if (!isset($query['Itemid']))
+				{
+					$segments[] = 'session';
+
+					if ($layout === 'edit')
+					{
+						$segments[] = 'edit';
+					}
+				}
+				break;
+			case 'speaker':
+				if (!isset($query['Itemid']))
+				{
+					$segments[] = 'speaker';
+
+					if ($layout === 'edit')
+					{
+						$segments[] = 'edit';
+					}
+				}
+				break;
+
+			// Plural views
 			case 'days':
+				if (!isset($query['Itemid']))
+				{
+					$segments[] = 'schedule';
+				}
 				break;
 			case 'levels':
-				// Get the Itemid
-				$query['Itemid'] = $this->getItemid('levels');
+				if (!isset($query['Itemid']))
+				{
+					// Get the Itemid
+					$query['Itemid'] = $this->getItemid('levels');
+
+					$segments[] = 'levels';
+				}
 				break;
 			case 'profile':
 				if (isset($query['task']))
@@ -95,7 +135,8 @@ class ConferenceRouter extends RouterBase
 					unset($query['layout']);
 				}
 				break;
-			case 'session':
+
+			case 'sessions':
 				// Get the Itemid
 				$query['Itemid'] = $this->getItemid('sessions');
 
@@ -108,7 +149,8 @@ class ConferenceRouter extends RouterBase
 					$segments[] = $session->slug;
 				}
 				break;
-			case 'speaker':
+
+			case 'speakers':
 				// Get the Itemid
 				$query['Itemid'] = $this->getItemid('speakers');
 

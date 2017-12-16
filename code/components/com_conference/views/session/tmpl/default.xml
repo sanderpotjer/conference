@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_CONFERENCE_VIEW_PROFILE">
+	<layout title="COM_CONFERENCE_VIEW_SESSION">
 		<message>
-				<![CDATA[COM_CONFERENCE_VIEW_PROFILE_DESC]]>
+				<![CDATA[COM_CONFERENCE_VIEW_SESSION_DESC]]>
 		</message>
 	</layout>
 </metadata>
