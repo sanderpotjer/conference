@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension version="3.8" type="package" method="upgrade">
+    <name>Conference - Package</name>
+    <packagename>conference</packagename>
+    <author>Stichting Sympathy</author>
+    <creationDate>[date]</creationDate>
+    <copyright>Copyright (C) 2011 - [year] Stichting Sympathy</copyright>
+    <license>GPLv3 http://www.gnu.org/licenses/gpl.html</license>
+    <authorEmail>info@stichtingsympathy.nl</authorEmail>
+    <authorUrl>https://stichtingsympathy.nl</authorUrl>
+    <version>[version]</version>
+    <description>Conference Package</description>
+
+    <scriptfile>script.php</scriptfile>
+
+    <files folder="packages">
+        <file type="component" id="com_conference">com_conference_[version].zip</file>
+    </files>
+</extension>

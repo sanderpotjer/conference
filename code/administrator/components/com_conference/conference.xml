@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.8" type="component" method="upgrade">
+	<name>COM_CONFERENCE</name>
+	<author>Stichting Sympathy</author>
+	<creationDate>[date]</creationDate>
+	<copyright>Copyright (C) 2011 - [year] Stichting Sympathy</copyright>
+	<license>GPLv3 http://www.gnu.org/licenses/gpl.html</license>
+	<authorEmail>info@stichtingsympathy.nl</authorEmail>
+	<authorUrl>https://stichtingsympathy.nl</authorUrl>
+	<version>[version]</version>
+	<description>COM_CONFERENCE_XML_DESCRIPTION</description>
+
+	<!-- Script file -->
+	<scriptfile>script.php</scriptfile>
+
+	<!-- Runs on install -->
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install/install.sql</file>
+		</sql>
+	</install>
+
+	<!-- Runs on update -->
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates</schemapath>
+		</schemas>
+	</update>
+
+	<!-- Public front end files -->
+	<files folder="components/com_conference">
+		<filename>conference.php</filename>
+		<filename>controller.php</filename>
+		<filename>router.php</filename>
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>layouts</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+
+	<!-- Media files -->
+	<media destination="com_conference" folder="media/com_conference">
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+	</media>
+
+	<!-- Administrator back-end section -->
+	<administration>
+		<!-- Administration menu -->
+		<menu>COM_CONFERENCE</menu>
+		<menu 
+			link="option=com_conference&amp;view=sessions" 
+			view="sessions" 
+			>COM_CONFERENCE_TITLE_SESSIONS</menu>
+		<menu 
+			link="option=com_conference&amp;view=speakers" 
+			view="speakers"
+			>COM_CONFERENCE_TITLE_SPEAKERS</menu>
+		<menu 
+			link="option=com_conference&amp;view=levels" 
+			view="levels"
+			>COM_CONFERENCE_TITLE_LEVELS</menu>
+		<menu 
+			link="option=com_conference&amp;view=rooms" 
+			view="rooms"
+			>COM_CONFERENCE_TITLE_ROOMS</menu>
+		<menu 
+			link="option=com_conference&amp;view=days" 
+			view="days"
+			>COM_CONFERENCE_TITLE_DAYS</menu>
+		<menu 
+			link="option=com_conference&amp;view=slots" 
+			view="slots"
+			>COM_CONFERENCE_TITLE_SLOTS</menu>
+
+		<!-- Back-end files -->
+		<files folder="administrator/components/com_conference">
+			<filename>access.xml</filename>
+			<filename>conference.php</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>language</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+
+	</administration>
+</extension>
