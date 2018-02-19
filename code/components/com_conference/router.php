@@ -58,15 +58,6 @@ class ConferenceRouter extends RouterBase
 			$view = $query['view'];
 			unset($query['view']);
 		}
-		?>
-		<pre><?php
-		echo __FILE__ . '::' . __LINE__ . ':: ';
-		echo 'view: ';
-		echo '<div style="font-size: 1.5em;">';
-		print_r($view);
-		print_r($layout);
-		echo '</div>';
-		?></pre><?php
 
 		// Get the ID of the item being displayed
 		$id = 0;
