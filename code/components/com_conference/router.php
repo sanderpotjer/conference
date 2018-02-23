@@ -94,22 +94,6 @@ class ConferenceRouter extends RouterBase
 				}
 				break;
 
-			// Plural views
-			case 'days':
-				if (!isset($query['Itemid']))
-				{
-					$segments[] = 'schedule';
-				}
-				break;
-			case 'levels':
-				if (!isset($query['Itemid']))
-				{
-					// Get the Itemid
-					$query['Itemid'] = $this->getItemid('levels');
-
-					$segments[] = 'levels';
-				}
-				break;
 			case 'profile':
 				if (isset($query['task']))
 				{
@@ -154,6 +138,10 @@ class ConferenceRouter extends RouterBase
 					$segments[] = $speaker->slug;
 				}
 				break;
+
+			default:
+				$query['Itemid'] = $this->getItemid($view);
+				break;
 		}
 
 		return $segments;
@@ -162,7 +150,7 @@ class ConferenceRouter extends RouterBase
 	/**
 	 * Parse the segments of a URL.
 	 *
-	 * @param   array  &$segments  The segments of the URL to parse.
+	 * @param   array &$segments The segments of the URL to parse.
 	 *
 	 * @return  array  The URL attributes to be used by the application.
 	 *
@@ -174,8 +162,8 @@ class ConferenceRouter extends RouterBase
 
 		// Get the view from the active menu
 		$activeMenu = Factory::getApplication()->getMenu()->getActive();
-		$view = $activeMenu->query['view'];
-		$db = Factory::getDbo();
+		$view       = $activeMenu->query['view'];
+		$db         = Factory::getDbo();
 
 		switch ($view)
 		{
@@ -188,7 +176,7 @@ class ConferenceRouter extends RouterBase
 				break;
 			case 'sessions':
 				$vars['view'] = 'session';
-				$query = $db->getQuery(true)
+				$query        = $db->getQuery(true)
 					->select($db->quoteName('conference_session_id'))
 					->from($db->quoteName('#__conference_sessions'))
 					->where($db->quoteName('slug') . ' = ' . $db->quote($segments[0]));
@@ -197,7 +185,7 @@ class ConferenceRouter extends RouterBase
 				break;
 			case 'speakers':
 				$vars['view'] = 'speaker';
-				$query = $db->getQuery(true)
+				$query        = $db->getQuery(true)
 					->select($db->quoteName('conference_speaker_id'))
 					->from($db->quoteName('#__conference_speakers'))
 					->where($db->quoteName('slug') . ' = ' . $db->quote($segments[0]));
@@ -212,8 +200,8 @@ class ConferenceRouter extends RouterBase
 	/**
 	 * Find the item ID for a given view.
 	 *
-	 * @param   string  $view  The name of the view to find the item ID for
-	 * @param   int     $id    The id of an item
+	 * @param   string $view The name of the view to find the item ID for
+	 * @param   int    $id   The id of an item
 	 *
 	 * @return  mixed  The item ID or null if not found.
 	 *
