@@ -210,7 +210,7 @@ class ConferenceModelDays extends ListModel
 			)
 			->from($db->quoteName('#__conference_sessions', 'sessions'))
 			->join('inner', $db->quoteName('#__conference_levels', 'levels')
-			. ' ON ' . $db->quoteName('levels.conference_level_id') . ' = ' . $db->quoteName('sessions.conference_level_id'))
+				. ' ON ' . $db->quoteName('levels.conference_level_id') . ' = ' . $db->quoteName('sessions.conference_level_id'))
 			->where($db->quoteName('sessions.enabled') . ' = 1');
 
 		$db->setQuery($query);
@@ -224,12 +224,16 @@ class ConferenceModelDays extends ListModel
 
 		foreach ($sessions as $session)
 		{
-			// Load the speakers
-			$query->clear('where')
-				->where($db->quoteName('conference_speaker_id') . ' = ' . (int) $session->conference_speaker_id);
-			$db->setQuery($query);
-			$session->speakers = $db->loadObjectList();
-			$ordered[$session->conference_slot_id][$session->conference_room_id] = $session;
+			if ($session->conference_speaker_id)
+			{
+				// Load the speakers
+				$query->clear('where')
+					->where($db->quoteName('conference_speaker_id') . ' IN (' . $session->conference_speaker_id . ')');
+				$db->setQuery($query);
+
+				$session->speakers = $db->loadObjectList();
+				$ordered[$session->conference_slot_id][$session->conference_room_id] = $session;
+			}
 		}
 
 		return $ordered;
