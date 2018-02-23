@@ -89,7 +89,7 @@ class ConferenceModelDays extends ListModel
 			return $items;
 		}
 
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true)
 			->select(
 				$db->quoteName(
@@ -113,7 +113,7 @@ class ConferenceModelDays extends ListModel
 				->where($db->quoteName('enabled') . ' = 1');
 			$db->setQuery($query);
 
-			$item->slots = $db->loadObjectList();
+			$item->slots   = $db->loadObjectList();
 			$items[$index] = $item;
 		}
 
@@ -224,6 +224,8 @@ class ConferenceModelDays extends ListModel
 
 		foreach ($sessions as $session)
 		{
+			$session->speakers = new stdClass();
+
 			if ($session->conference_speaker_id)
 			{
 				// Load the speakers
@@ -232,8 +234,9 @@ class ConferenceModelDays extends ListModel
 				$db->setQuery($query);
 
 				$session->speakers = $db->loadObjectList();
-				$ordered[$session->conference_slot_id][$session->conference_room_id] = $session;
 			}
+
+			$ordered[$session->conference_slot_id][$session->conference_room_id] = $session;
 		}
 
 		return $ordered;
