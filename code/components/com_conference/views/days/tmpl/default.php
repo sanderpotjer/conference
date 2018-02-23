@@ -71,7 +71,7 @@ $params = JComponentHelper::getParams('com_conference');
 								<td>
 								<?php $session = $this->sessions[$slot->conference_slot_id][$room->conference_room_id];?>
 									<span class="visible-phone roomname">
-										<?php echo $session->room ?>
+										 <?php echo $room->title ?>
 									</span>
 									<?php if ($session->level):?>
 									<a href="<?php echo Route::_('index.php?option=com_conference&view=levels')?>"><span class="label <?php echo $session->level_label ?>">
