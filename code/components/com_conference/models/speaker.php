@@ -119,10 +119,14 @@ class ConferenceModelSpeaker extends FormModel
 				)
 			)
 			->from($db->quoteName('#__conference_sessions'))
-			->where($db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote($id), 'OR')
-			->where($db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote($id . ',%'))
-			->where($db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote('%,' . $id . ',%'))
-			->where($db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote('%,' . $id));
+			->where(
+				'(' . $db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote($id)
+				. ' OR ' . $db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote($id . ',%')
+				. ' OR ' . $db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote('%,' . $id . ',%')
+				. ' OR ' . $db->quoteName('conference_speaker_id') . ' LIKE ' . $db->quote('%,' . $id) . ')'
+			)
+			->where($db->quoteName('enabled') . ' = 1')
+			->order($db->quoteName('ordering'));
 		$db->setQuery($query);
 
 		$item->sessions = $db->loadObjectList();
