@@ -21,10 +21,10 @@ $params = JComponentHelper::getParams('com_conference');
 	<div class="row-fluid">
 		<h1><?php echo Text::_('COM_CONFERENCE_DAYS_TITLE')?></h1>
 	</div>
-	
+
 	<div class="row-fluid">
 		<ul class="nav nav-tabs">
-		<?php if (!empty($this->items)) foreach ($this->items as $i=>$item):?>
+		<?php if (!empty($this->items)) foreach ($this->items as $i => $item):?>
 			<li class="<?php if ($i==0):?>active<?php endif;?>">
 				<a href="#<?php echo $item->slug ?>" data-toggle="tab"><?php echo $item->title ?></a>
 			</li>
@@ -42,7 +42,7 @@ $params = JComponentHelper::getParams('com_conference');
 							<?php endforeach;?>
 						</tr>
 					</thead>
-					
+
 					<tbody>
 						<?php if (!empty($item->slots)) foreach ($item->slots as $slot) : ?>
 						<?php if ($slot->general):?>
@@ -50,7 +50,7 @@ $params = JComponentHelper::getParams('com_conference');
 							<td class="hidden-phone"><?php echo HTMLHelper::_('date', $slot->start_time ,'H:i'); ?></td>
 							<td colspan="<?php echo(count($this->rooms));?>">
 								<span class="visible-phone">
-									<?php echo HTMLHelper::_('date', $slot->start_time ,'H:i'); ?>: 
+									<?php echo HTMLHelper::_('date', $slot->start_time ,'H:i'); ?>:
 								</span>
 								<?php if (isset($this->sessions[$slot->conference_slot_id][$this->generalRoom])) :?>
 								<?php $session = $this->sessions[$slot->conference_slot_id][$this->generalRoom];?>
@@ -59,7 +59,7 @@ $params = JComponentHelper::getParams('com_conference');
 								<?php else:?>
 									<?php echo $session->title ?>
 								<?php endif;?>
-								
+
 								<?php endif;?>
 							</td>
 						</tr>
