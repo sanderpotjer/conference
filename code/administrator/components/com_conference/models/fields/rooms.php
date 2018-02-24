@@ -55,6 +55,7 @@ class ConferenceFormFieldRooms extends JFormFieldList
 				)
 			)
 			->from($db->quoteName('#__conference_rooms'))
+			->where($db->quoteName('enabled') . ' = 1')
 			->order($db->quoteName('title'));
 		$db->setQuery($query);
 		$options = $db->loadObjectList();
