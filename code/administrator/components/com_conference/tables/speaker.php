@@ -102,11 +102,10 @@ class TableSpeaker extends Table
 		// Get the user
 		$userId = Factory::getUser()->get('id');
 
-		if ((int) $this->get('conference_session_id') === 0)
+		if ((int) $this->get('conference_speaker_id') === 0)
 		{
 			$this->set('created_by', $userId);
 			$this->set('created_on', (new Date())->toSql());
-			$this->set('user_id', $userId);
 		}
 		else
 		{
