@@ -51,7 +51,8 @@ class ConferenceModelSessions extends ListModel
 						'sessions.slug',
 						'sessions.slides',
 						'sessions.enabled',
-						'sessions.ordering'
+						'sessions.ordering',
+						'sessions.listview'
 					)
 				)
 			)
