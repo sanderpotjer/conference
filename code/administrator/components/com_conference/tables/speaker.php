@@ -44,6 +44,8 @@ class TableSpeaker extends Table
 	 *
 	 * @return  boolean  True if the instance is sane and able to be stored in the database.
 	 *
+	 * @throws  Exception
+	 *
 	 * @since   1.0.0
 	 */
 	public function check()
@@ -105,12 +107,17 @@ class TableSpeaker extends Table
 		if ((int) $this->get('conference_speaker_id') === 0)
 		{
 			$this->set('created_by', $userId);
-			$this->set('created_on', (new Date())->toSql());
+			$this->set('created_on', (new Date)->toSql());
+
+			if (Factory::getApplication()->isClient('site'))
+			{
+				$this->set('user_id', $userId);
+			}
 		}
 		else
 		{
 			$this->set('modified_by', $userId);
-			$this->set('modified_on', (new Date())->toSql());
+			$this->set('modified_on', (new Date)->toSql());
 		}
 
 		return $result;

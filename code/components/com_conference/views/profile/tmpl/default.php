@@ -20,7 +20,7 @@ defined('_JEXEC') or die;
 $params         = ComponentHelper::getParams('com_conference');
 $profile        = $this->profile;
 $returnUrl      = base64_encode(Uri::root() . Route::_('index.php?option=com_conference&view=profile', false));
-$editprofileURL = 'index.php?option=com_conference&layout=edit&id=' . $profile->conference_speaker_id . '&return=' . $returnUrl;
+$editprofileURL = 'index.php?option=com_conference&conference_speaker_id=' . $profile->conference_speaker_id . '&return=' . $returnUrl;
 $task           = '&task=speaker.edit';
 
 // @todo Check if we need to entertain the add task
@@ -55,19 +55,19 @@ $editprofileURL .= $task;
 				</span>
 				<div class="speakersocial">
 					<?php if (($profile->twitter) && ($params->get('twitter'))):?>
-						<a class="btn btn-small btn-block" target="_blank" href="http://twitter.com/<?php echo $profile->twitter?>"><span class="icon conference-twitter"></span> <?php echo $profile->twitter?></a>
+						<a class="btn btn-small btn-block" target="_blank" href="https://twitter.com/<?php echo $profile->twitter?>"><span class="icon conference-twitter"></span> <?php echo $profile->twitter?></a>
 					<?php endif;?>
 					<?php if (($profile->facebook) && ($params->get('facebook'))):?>
-						<a class="btn btn-small btn-block" target="_blank" href="http://facebook.com/<?php echo $profile->facebook?>"><span class="icon conference-facebook"></span> <?php echo $profile->facebook?></a>
+						<a class="btn btn-small btn-block" target="_blank" href="https://facebook.com/<?php echo $profile->facebook?>"><span class="icon conference-facebook"></span> <?php echo $profile->facebook?></a>
 					<?php endif;?>
 					<?php if (($profile->googleplus) && ($params->get('googleplus'))):?>
-						<a class="btn btn-small btn-block" target="_blank" href="http://plus.google.com/<?php echo $profile->googleplus?>"><span class="icon conference-google-plus"></span> <?php echo $profile->title?></a>
+						<a class="btn btn-small btn-block" target="_blank" href="https://plus.google.com/<?php echo $profile->googleplus?>"><span class="icon conference-google-plus"></span> <?php echo $profile->title?></a>
 					<?php endif;?>
 					<?php if (($profile->linkedin) && ($params->get('linkedin'))):?>
-						<a class="btn btn-small btn-block" target="_blank" href="http://www.linkedin.com/in/<?php echo $profile->linkedin?>"><span class="icon conference-linkedin"></span> <?php echo $profile->linkedin?></a>
+						<a class="btn btn-small btn-block" target="_blank" href="https://www.linkedin.com/in/<?php echo $profile->linkedin?>"><span class="icon conference-linkedin"></span> <?php echo $profile->linkedin?></a>
 					<?php endif;?>
-					<?php if (($profile->website) && ($params->get('twitter'))):?>
-						<a class="btn btn-small btn-block" target="_blank" href="http://<?php echo $profile->website?>"><span class="icon conference-earth"></span> <?php echo $profile->website?></a>
+					<?php if (($profile->website) && ($params->get('website'))):?>
+						<a class="btn btn-small btn-block" target="_blank" href="https://<?php echo $profile->website?>"><span class="icon conference-earth"></span> <?php echo $profile->website?></a>
 					<?php endif;?>
 				</div>
 			</div>

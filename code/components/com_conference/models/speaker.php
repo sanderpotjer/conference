@@ -86,8 +86,12 @@ class ConferenceModelSpeaker extends FormModel
 	protected function populateState()
 	{
 		$app = Factory::getApplication();
+		$ids = $app->getUserState('com_conference.edit.speaker.id');
 
-		$this->setState('speaker.id', $app->input->getInt('id'));
+		if (count($ids) === 1)
+		{
+			$this->setState('speaker.id', $ids[0]);
+		}
 	}
 
 	/**

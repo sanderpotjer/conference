@@ -92,6 +92,24 @@ class ConferenceRouter extends RouterBase
 						$segments[] = 'edit';
 					}
 				}
+				// This handles the Joomla redirect from the task speaker.edit to the view=speaker&layout=edit
+				elseif (!isset($query['task']))
+				{
+					unset($query['Itemid']);
+					$segments[] = 'speaker';
+
+					if (array_key_exists('layout', $query))
+					{
+						$segments[] = 'edit';
+						unset($query['layout']);
+					}
+
+					if (array_key_exists('conference_speaker_id', $query))
+					{
+						$segments[] = $query['conference_speaker_id'];
+						unset($query['conference_speaker_id']);
+					}
+				}
 				break;
 
 			case 'profile':
@@ -102,12 +120,24 @@ class ConferenceRouter extends RouterBase
 					$segments[] = $task;
 					unset($query['task']);
 					unset($query['layout']);
+
+					if (array_key_exists('conference_speaker_id', $query))
+					{
+						$segments[] = $query['conference_speaker_id'];
+						unset($query['conference_speaker_id']);
+					}
 				}
 
 				if (isset($query['layout']))
 				{
 					$segments[] = $query['layout'];
 					unset($query['layout']);
+				}
+
+				// This handles the cancel URL when the user clicks cancel on the edit profile page
+				if (count($segments) === 0)
+				{
+					$query['Itemid'] = $this->getItemid($view);
 				}
 				break;
 
@@ -161,8 +191,19 @@ class ConferenceRouter extends RouterBase
 		$vars = array();
 
 		// Get the view from the active menu
-		$activeMenu = Factory::getApplication()->getMenu()->getActive();
-		$view       = $activeMenu->query['view'];
+		$app = Factory::getApplication();
+		$activeMenu = $app->getMenu()->getActive();
+
+		// The Edit profile page may not have an Itemid, so we take the first segment element
+		if ($activeMenu)
+		{
+			$view = $activeMenu->query['view'];
+		}
+		else
+		{
+			$view = $segments[0];
+		}
+
 		$db         = Factory::getDbo();
 
 		switch ($view)
@@ -173,6 +214,26 @@ class ConferenceRouter extends RouterBase
 				$vars['view'] = 'level';
 				break;
 			case 'profile':
+				if ($segments[0] === 'speaker')
+				{
+					$vars['task']   = 'speaker.edit';
+					$vars['layout'] = 'edit';
+
+					if (array_key_exists(2, $segments))
+					{
+						$vars['conference_speaker_id'] = $segments[2];
+					}
+				}
+				break;
+			case 'speaker':
+				// This handles the view=speaker&layout=edit URL
+				$vars['view'] = 'speaker';
+				$vars['layout'] = 'edit';
+
+				if (array_key_exists(2, $segments))
+				{
+					$vars['conference_speaker_id'] = $segments[2];
+				}
 				break;
 			case 'sessions':
 				$vars['view'] = 'session';
