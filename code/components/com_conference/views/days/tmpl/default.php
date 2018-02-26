@@ -101,7 +101,7 @@ $params = JComponentHelper::getParams('com_conference');
 										{
 											if ($speaker->enabled)
 											{
-												$sessionspeakers[] = '<span class="icon-user"></span> <a href="index.php?option=com_conference&view=speaker&id=' . $speaker->conference_speaker_id . '">' . trim($speaker->title) . '</a>';
+												$sessionspeakers[] = '<span class="icon-user"></span> <a href="' . Route::_('index.php?option=com_conference&view=speaker&conference_speaker_id=' . $speaker->conference_speaker_id) . '">' . trim($speaker->title) . '</a>';
 											}
 											else
 											{
