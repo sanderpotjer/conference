@@ -24,7 +24,7 @@ class ConferenceRouter extends RouterBase
 	/**
 	 * Build the route for the com_conference component
 	 *
-	 * @param   array  &$query  An array of URL arguments
+	 * @param   array  $query  An array of URL arguments
 	 *
 	 * @return  array  The URL arguments to use to assemble the subsequent URL.
 	 *
@@ -89,18 +89,31 @@ class ConferenceRouter extends RouterBase
 				// This handles the Joomla redirect from the task session.edit to the view=session&layout=edit
 				elseif (!isset($query['task']))
 				{
-					unset($query['Itemid']);
-					$segments[] = 'session';
-
 					if ($layout)
 					{
+						unset($query['Itemid']);
+						$segments[] = 'session';
 						$segments[] = $layout;
-					}
 
-					if (array_key_exists('conference_session_id', $query))
+						if (array_key_exists('conference_session_id', $query))
+						{
+							$segments[] = $query['conference_session_id'];
+							unset($query['conference_session_id']);
+						}
+					}
+					else
 					{
-						$segments[] = $query['conference_session_id'];
-						unset($query['conference_session_id']);
+						if (array_key_exists('conference_session_id', $query))
+						{
+							$db    = Factory::getDbo();
+							$speakerQuery = $db->getQuery(true)
+								->select($db->quoteName('slug'))
+								->from($db->quoteName('#__conference_sessions'))
+								->where($db->quoteName('conference_session_id') . ' = ' . (int) $query['conference_session_id']);
+							$db->setQuery($speakerQuery);
+							$segments[] = $db->loadResult();
+							unset($query['conference_session_id']);
+						}
 					}
 				}
 				break;
@@ -302,7 +315,7 @@ class ConferenceRouter extends RouterBase
 					->from($db->quoteName('#__conference_sessions'))
 					->where($db->quoteName('slug') . ' = ' . $db->quote($segments[0]));
 				$db->setQuery($query);
-				$vars['id'] = $db->loadResult();
+				$vars['conference_session_id'] = $db->loadResult();
 				break;
 			case 'speakers':
 				$vars['view'] = 'speaker';

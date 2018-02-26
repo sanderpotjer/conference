@@ -119,11 +119,17 @@ class ConferenceModelSession extends FormModel
 	{
 		$app = JFactory::getApplication();
 
-		$ids = $app->getUserState('com_conference.edit.session.id');
+		$layout = $app->input->getCmd('layout', null);
+		$this->setState('session.id', $app->input->getInt('conference_session_id'));
 
-		if (count($ids) === 1)
+		if ($layout)
 		{
-			$this->setState('session.id', $ids[0]);
+			$ids = $app->getUserState('com_conference.edit.session.id');
+
+			if (count($ids) === 1)
+			{
+				$this->setState('session.id', $ids[0]);
+			}
 		}
 	}
 
