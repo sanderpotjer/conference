@@ -76,7 +76,7 @@ class TableSession extends Table
 				{
 					$query->clear('where')
 						->where($db->quoteName('conference_speaker_id') . ' = ' . (int) $id);
-
+					$db->setQuery($query);
 					$conferenceSpeakerId = $db->loadResult();
 
 					if ($conferenceSpeakerId > 0)
