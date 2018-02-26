@@ -7,22 +7,23 @@
         <field name="title"
                type="text"
                label="COM_CONFERENCE_FIELD_TITLE"
-               required="true"
-               class="input-xlarge"/>
+               hint="COM_CONFERENCE_FIELD_TITLE"
+               class="form__input"
+               required="true"/>
 
         <field name="email"
                type="email"
                label="COM_CONFERENCE_FIELD_EMAIL"
                description="COM_CONFERENCE_FIELD_EMAIL_DESC"
                hint="mail@website.com"
-               class="input-xlarge"/>
+               class="form__input"/>
 
         <field name="speakernotes"
                type="textarea"
                label="COM_CONFERENCE_FIELD_NOTES"
                description="COM_CONFERENCE_FIELD_NOTES_DESC"
                rows="4"
-               class="input-xlarge"/>
+               class="form__input"/>
 
         <field name="twitter"
                type="text"
