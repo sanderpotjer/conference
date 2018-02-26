@@ -200,7 +200,7 @@ class ConferenceRouter extends RouterBase
 				// Get the Itemid
 				$query['Itemid'] = $this->getItemid('sessions');
 
-				if (isset($query['conference_session_id']))
+				if ($id)
 				{
 					/** @var ConferenceModelSession $sessionModel */
 					$sessionModel = ItemModel::getInstance('Session', 'ConferenceModel', array('ignore_request' => true));
@@ -214,7 +214,7 @@ class ConferenceRouter extends RouterBase
 				// Get the Itemid
 				$query['Itemid'] = $this->getItemid('speakers');
 
-				if (isset($query['conference_speaker_id']))
+				if ($id)
 				{
 					/** @var ConferenceModelSpeaker $speakerModel */
 					$speakerModel = ItemModel::getInstance('Speaker', 'ConferenceModel', array('ignore_request' => true));
