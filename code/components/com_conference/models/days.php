@@ -209,7 +209,7 @@ class ConferenceModelDays extends ListModel
 				)
 			)
 			->from($db->quoteName('#__conference_sessions', 'sessions'))
-			->join('inner', $db->quoteName('#__conference_levels', 'levels')
+			->leftJoin($db->quoteName('#__conference_levels', 'levels')
 				. ' ON ' . $db->quoteName('levels.conference_level_id') . ' = ' . $db->quoteName('sessions.conference_level_id'))
 			->where($db->quoteName('sessions.enabled') . ' = 1');
 
