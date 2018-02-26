@@ -53,7 +53,7 @@ class ConferenceModelLevels extends ListModel
 		$query->order(
 			$db->quoteName(
 				$db->escape(
-					$this->getState('list.ordering', 'levels.title')
+					$this->getState('list.ordering', 'levels.conference_level_id')
 				)
 			)
 			. ' ' . $db->escape($this->getState('list.direction', 'ASC'))
