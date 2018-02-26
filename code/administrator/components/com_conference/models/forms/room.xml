@@ -13,7 +13,7 @@
         <field name="subtitle"
                type="text"
                label="COM_CONFERENCE_FIELD_SUBTITLE"
-               required="true"
+               required="false"
                class="input-xlarge"/>
 
         <field name="type"
