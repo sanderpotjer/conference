@@ -46,7 +46,8 @@ class ConferenceModelDays extends ListModel
 						'days.date',
 						'days.enabled',
 						'days.ordering',
-						'events.conference_event_id'
+						'events.conference_event_id',
+						'events.description',
 					)
 				)
 			)
