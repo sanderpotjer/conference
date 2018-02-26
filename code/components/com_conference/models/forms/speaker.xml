@@ -53,7 +53,8 @@
                type="editor"
                label="COM_CONFERENCE_FIELD_BIO"
                buttons="false"
-               class="input-xlarge" />
+               class="input-xlarge"
+               filter="JComponentHelper::filterText" />
 
         <field name="image"
                type="file"

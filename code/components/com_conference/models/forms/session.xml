@@ -27,7 +27,8 @@
         <field name="description"
                type="editor"
                label="COM_CONFERENCE_FIELD_DESCRIPTION"
-               class="input-xlarge"/>
+               class="input-xlarge"
+               filter="JComponentHelper::filterText" />
 
         <field name="slides"
                type="textarea"
