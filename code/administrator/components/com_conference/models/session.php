@@ -42,6 +42,25 @@ class ConferenceModelSession extends JModelAdmin
 	}
 
 	/**
+	 * Method to save the form data.
+	 *
+	 * @param   array $data The form data.
+	 *
+	 * @return  boolean  True on success, False on error.
+	 *
+	 * @since   1.6
+	 */
+	public function save($data)
+	{
+		if (empty($data['conference_speaker_id']))
+		{
+			$data['conference_speaker_id'] = 0;
+		}
+
+		return parent::save($data);
+	}
+
+	/**
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return  array  The data for the form..
