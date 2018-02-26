@@ -8,6 +8,8 @@
  * @link        https://stichtingsympathy.nl
  */
 
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.formvalidator');
@@ -35,10 +37,10 @@ JHtml::_('formbehavior.chosen');
 				<?php echo $this->form->renderField('description'); ?>
 				<hr>
 				<?php echo $this->form->renderField('slides'); ?>
-                <span class="help-block"><?php echo JText::_('COM_CONFERENCE_FIELD_SLIDES_DESC')?></span>
+                <span class="help-block"><?php echo Text::_('COM_CONFERENCE_FIELD_SLIDES_DESC')?></span>
 				<hr>
 				<?php echo $this->form->renderField('video'); ?>
-                <span class="help-block"><?php echo JText::_('COM_CONFERENCE_FIELD_VIDEO_DESC')?></span>
+                <span class="help-block"><?php echo Text::_('COM_CONFERENCE_FIELD_VIDEO_DESC')?></span>
 			</div>
 			<!-- End left -->
 			
@@ -55,7 +57,7 @@ JHtml::_('formbehavior.chosen');
 				
 				<div class="well iteminfo">
 					<?php echo $this->form->renderField('notes'); ?>
-                    <span class="help-block"><?php echo JText::_('COM_CONFERENCE_FIELD_NOTES_INTERNAL_DESC')?></span>
+                    <span class="help-block"><?php echo Text::_('COM_CONFERENCE_FIELD_NOTES_INTERNAL_DESC')?></span>
 				</div>
 			</div>
 			<!-- End right -->

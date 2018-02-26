@@ -26,7 +26,7 @@ class TableSession extends Table
 	/**
 	 * Constructor.
 	 *
-	 * @param   JDatabaseDriver  $db  A database connector object.
+	 * @param   JDatabaseDriver $db A database connector object.
 	 *
 	 * @since   1.0.0
 	 */
@@ -49,7 +49,7 @@ class TableSession extends Table
 	public function check()
 	{
 		$result = true;
-		
+
 		// Make sure assigned speaker really exists and normalize the list
 		if (!empty($this->conference_speaker_id))
 		{
@@ -68,7 +68,7 @@ class TableSession extends Table
 			{
 				$speakers = array();
 				$db       = $this->getDbo();
-				$query = $db->getQuery(true)
+				$query    = $db->getQuery(true)
 					->select($db->quoteName('conference_speaker_id'))
 					->from($db->quoteName('#__conference_speakers'));
 
@@ -105,14 +105,17 @@ class TableSession extends Table
 			$this->set('created_by', $userId);
 			$this->set('created_on', (new Date())->toSql());
 
-			// Get the speaker ID for the logged in user
-			$db = $this->getDbo();
-			$query = $db->getQuery(true)
-				->select($db->quoteName('conference_speaker_id'))
-				->from($db->quoteName('#__conference_speakers'))
-				->where($db->quoteName('user_id') . ' = ' . (int) $userId);
-			$db->setQuery($query);
-			$this->set('conference_speaker_id', $db->loadResult());
+			// Get the speaker ID for the logged in user in the frontend
+			if (Factory::getApplication()->isClient('site'))
+			{
+				$db    = $this->getDbo();
+				$query = $db->getQuery(true)
+					->select($db->quoteName('conference_speaker_id'))
+					->from($db->quoteName('#__conference_speakers'))
+					->where($db->quoteName('user_id') . ' = ' . (int) $userId);
+				$db->setQuery($query);
+				$this->set('conference_speaker_id', $db->loadResult());
+			}
 		}
 		else
 		{
