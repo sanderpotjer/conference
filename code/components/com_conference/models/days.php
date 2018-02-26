@@ -137,7 +137,8 @@ class ConferenceModelDays extends ListModel
 				$db->quoteName(
 					array(
 						'conference_room_id',
-						'title'
+						'title',
+						'subtitle'
 					)
 				)
 			)

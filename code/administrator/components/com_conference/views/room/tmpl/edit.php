@@ -8,6 +8,8 @@
  * @link        https://stichtingsympathy.nl
  */
 
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.formvalidator');
@@ -17,13 +19,14 @@ JHtml::_('formbehavior.chosen');
     <form action="index.php?option=com_conference&view=room" method="post" name="adminForm" id="adminForm" class="form form-horizontal">
         <input type="hidden" name="task" value="" />
         <input type="hidden" name="conference_room_id" value="<?php echo $this->item->conference_room_id ?>" />
-        <input type="hidden" name="<?php echo JFactory::getSession()->getFormToken();?>" value="1" />
+        <input type="hidden" name="<?php echo Factory::getSession()->getFormToken();?>" value="1" />
 
         <!-- Start row -->
         <div class="row-fluid">
             <!-- Start left -->
             <div class="span7">
                 <?php echo $this->form->renderField('title'); ?>
+                <?php echo $this->form->renderField('subtitle'); ?>
                 <?php echo $this->form->renderField('type'); ?>
                 <?php echo $this->form->renderField('description'); ?>
             </div>

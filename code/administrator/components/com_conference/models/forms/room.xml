@@ -10,6 +10,12 @@
                required="true"
                class="input-xlarge"/>
 
+        <field name="subtitle"
+               type="text"
+               label="COM_CONFERENCE_FIELD_SUBTITLE"
+               required="true"
+               class="input-xlarge"/>
+
         <field name="type"
                type="list"
                label="COM_CONFERENCE_FIELD_TYPE"
