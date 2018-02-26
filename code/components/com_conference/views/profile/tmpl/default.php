@@ -19,8 +19,7 @@ defined('_JEXEC') or die;
 
 $params         = ComponentHelper::getParams('com_conference');
 $profile        = $this->profile;
-$returnUrl      = base64_encode(Uri::root() . Route::_('index.php?option=com_conference&view=profile', false));
-$editprofileURL = 'index.php?option=com_conference&conference_speaker_id=' . $profile->conference_speaker_id . '&return=' . $returnUrl;
+$editprofileURL = 'index.php?option=com_conference&conference_speaker_id=' . $profile->conference_speaker_id;
 $task           = '&task=speaker.edit';
 
 // @todo Check if we need to entertain the add task
@@ -82,7 +81,7 @@ $editprofileURL .= $task;
 		<div class="span12">
 			<h2 class="pull-left"><?php echo Text::_('COM_CONFERENCE_TITLE_SESSIONS') ?></h2>
 			<?php if ($this->canDo->get('core.create')) :?>
-			<a class="btn pull-right btn-success" href="<?php echo Route::_('index.php?option=com_conference&view=session&task=edit&layout=edit')?>">
+			<a class="btn pull-right btn-success" href="<?php echo Route::_('index.php?option=com_conference&task=session.add&layout=edit')?>">
 				<span class="icon-plus"></span>  <?php echo Text::_('COM_CONFERENCE_MY_ADD_SESSION') ?>
 			</a>
 			<?php endif;?>
@@ -121,7 +120,7 @@ $editprofileURL .= $task;
 					</td>
 					<td>
 						<?php if ($this->canDo->get('core.edit.own')) :?>
-							<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&task=edit&layout=edit&id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
+							<a href="<?php echo Route::_('index.php?option=com_conference&task=session.edit&layout=edit&conference_session_id='.$session->conference_session_id)?>"><?php echo $session->title ?></a>
 						<?php else:?>
 							<?php echo $session->title ?>
 						<?php endif;?>

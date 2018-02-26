@@ -59,6 +59,12 @@ class ConferenceModelSession extends FormModel
 	protected function loadFormData()
 	{
 		$id    = $this->getState('session.id');
+
+		if (empty($id))
+		{
+			return new stdClass;
+		}
+
 		$table = $this->getTable('Session');
 		$table->load($id);
 		$item = $table->getProperties();
@@ -113,7 +119,12 @@ class ConferenceModelSession extends FormModel
 	{
 		$app = JFactory::getApplication();
 
-		$this->setState('session.id', $app->input->getInt('id'));
+		$ids = $app->getUserState('com_conference.edit.session.id');
+
+		if (count($ids) === 1)
+		{
+			$this->setState('session.id', $ids[0]);
+		}
 	}
 
 	/**

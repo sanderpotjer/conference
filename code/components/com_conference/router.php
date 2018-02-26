@@ -35,7 +35,12 @@ class ConferenceRouter extends RouterBase
 	public function build(&$query)
 	{
 		$segments = array();
-		$layout   = '';
+		$layout   = isset($query['layout']) ? $query['layout'] : '';
+
+		if ($layout)
+		{
+			unset($query['layout']);
+		}
 
 		// Check for view
 		if (!isset($query['view']) && !isset($query['Itemid']))
@@ -81,6 +86,23 @@ class ConferenceRouter extends RouterBase
 						$segments[] = 'edit';
 					}
 				}
+				// This handles the Joomla redirect from the task session.edit to the view=session&layout=edit
+				elseif (!isset($query['task']))
+				{
+					unset($query['Itemid']);
+					$segments[] = 'session';
+
+					if ($layout)
+					{
+						$segments[] = $layout;
+					}
+
+					if (array_key_exists('conference_session_id', $query))
+					{
+						$segments[] = $query['conference_session_id'];
+						unset($query['conference_session_id']);
+					}
+				}
 				break;
 			case 'speaker':
 				if (!isset($query['Itemid']))
@@ -98,10 +120,9 @@ class ConferenceRouter extends RouterBase
 					unset($query['Itemid']);
 					$segments[] = 'speaker';
 
-					if (array_key_exists('layout', $query))
+					if ($layout)
 					{
-						$segments[] = 'edit';
-						unset($query['layout']);
+						$segments[] = $layout;
 					}
 
 					if (array_key_exists('conference_speaker_id', $query))
@@ -126,12 +147,17 @@ class ConferenceRouter extends RouterBase
 						$segments[] = $query['conference_speaker_id'];
 						unset($query['conference_speaker_id']);
 					}
+
+					if (array_key_exists('conference_session_id', $query))
+					{
+						$segments[] = $query['conference_session_id'];
+						unset($query['conference_session_id']);
+					}
 				}
 
-				if (isset($query['layout']))
+				if ($layout)
 				{
-					$segments[] = $query['layout'];
-					unset($query['layout']);
+					$segments[] = $layout;
 				}
 
 				// This handles the cancel URL when the user clicks cancel on the edit profile page
@@ -191,7 +217,7 @@ class ConferenceRouter extends RouterBase
 		$vars = array();
 
 		// Get the view from the active menu
-		$app = Factory::getApplication();
+		$app        = Factory::getApplication();
 		$activeMenu = $app->getMenu()->getActive();
 
 		// The Edit profile page may not have an Itemid, so we take the first segment element
@@ -214,15 +240,26 @@ class ConferenceRouter extends RouterBase
 				$vars['view'] = 'level';
 				break;
 			case 'profile':
-				if ($segments[0] === 'speaker')
+				switch ($segments[0])
 				{
-					$vars['task']   = 'speaker.edit';
-					$vars['layout'] = 'edit';
+					case 'speaker':
+						$vars['task']   = 'speaker.edit';
+						$vars['layout'] = 'edit';
 
-					if (array_key_exists(2, $segments))
-					{
-						$vars['conference_speaker_id'] = $segments[2];
-					}
+						if (array_key_exists(2, $segments))
+						{
+							$vars['conference_speaker_id'] = $segments[2];
+						}
+						break;
+					case 'session':
+						$vars['task'] = 'session.' . $segments[1];
+						$vars['layout'] = 'edit';
+
+						if (array_key_exists(2, $segments))
+						{
+							$vars['conference_session_id'] = $segments[2];
+						}
+						break;
 				}
 				break;
 			case 'speaker':
@@ -233,6 +270,16 @@ class ConferenceRouter extends RouterBase
 				if (array_key_exists(2, $segments))
 				{
 					$vars['conference_speaker_id'] = $segments[2];
+				}
+				break;
+			case 'session':
+				// This handles the view=session&layout=edit URL
+				$vars['view'] = 'session';
+				$vars['layout'] = 'edit';
+
+				if (array_key_exists(2, $segments))
+				{
+					$vars['conference_session_id'] = $segments[2];
 				}
 				break;
 			case 'sessions':
