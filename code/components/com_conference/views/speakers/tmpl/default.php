@@ -33,9 +33,9 @@ $params = JComponentHelper::getParams('com_conference');
 				</a>
 			</div>
 			<div class="span8">
-				<h3><a href="<?php echo Route::_('index.php?option=com_conference&view=speaker&id=' . $item->conference_speaker_id)?>"><?php echo $this->escape($item->title)?></a></h3>
+				<h3><a href="<?php echo Route::_('index.php?option=com_conference&view=speaker&conference_speaker_id=' . $item->conference_speaker_id)?>"><?php echo $this->escape($item->title)?></a></h3>
 				<?php echo(substr($item->bio,0, strpos($item->bio, "</p>") + 4));?>
-				<a class="btn btn-small pull-right" href="<?php echo Route::_('index.php?option=com_conference&view=speaker&id=' . $item->conference_speaker_id)?>">
+				<a class="btn btn-small pull-right" href="<?php echo Route::_('index.php?option=com_conference&view=speaker&conference_speaker_id=' . $item->conference_speaker_id)?>">
 					<?php echo Text::_('COM_CONFERENCE_READ_MORE') ?> <?php echo $this->escape($item->title)?>
 				</a>
 			</div>

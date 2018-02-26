@@ -117,18 +117,31 @@ class ConferenceRouter extends RouterBase
 				// This handles the Joomla redirect from the task speaker.edit to the view=speaker&layout=edit
 				elseif (!isset($query['task']))
 				{
-					unset($query['Itemid']);
-					$segments[] = 'speaker';
-
 					if ($layout)
 					{
+						unset($query['Itemid']);
+						$segments[] = 'speaker';
 						$segments[] = $layout;
-					}
 
-					if (array_key_exists('conference_speaker_id', $query))
+						if (array_key_exists('conference_speaker_id', $query))
+						{
+							$segments[] = $query['conference_speaker_id'];
+							unset($query['conference_speaker_id']);
+						}
+					}
+					else
 					{
-						$segments[] = $query['conference_speaker_id'];
-						unset($query['conference_speaker_id']);
+						if (array_key_exists('conference_speaker_id', $query))
+						{
+							$db    = Factory::getDbo();
+							$speakerQuery = $db->getQuery(true)
+								->select($db->quoteName('slug'))
+								->from($db->quoteName('#__conference_speakers'))
+								->where($db->quoteName('conference_speaker_id') . ' = ' . (int) $query['conference_speaker_id']);
+							$db->setQuery($speakerQuery);
+							$segments[] = $db->loadResult();
+							unset($query['conference_speaker_id']);
+						}
 					}
 				}
 				break;
@@ -298,7 +311,7 @@ class ConferenceRouter extends RouterBase
 					->from($db->quoteName('#__conference_speakers'))
 					->where($db->quoteName('slug') . ' = ' . $db->quote($segments[0]));
 				$db->setQuery($query);
-				$vars['id'] = $db->loadResult();
+				$vars['conference_speaker_id'] = $db->loadResult();
 				break;
 		}
 
