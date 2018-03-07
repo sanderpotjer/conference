@@ -64,7 +64,8 @@
         <field name="bio"
                type="editor"
                label="COM_CONFERENCE_FIELD_BIO"
-               class="input-xlarge" />
+               class="input-xlarge"
+               filter="JComponentHelper::filterText"/>
 
         <field name="image"
                type="media"
