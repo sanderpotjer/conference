@@ -22,7 +22,7 @@ $params = JComponentHelper::getParams('com_conference');
 	<div class="well well-small spreker">
 		<div class="row-fluid">
 			<div class="span4">
-				<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id=' . $item->conference_session_id)?>" class="thumbnail">
+				<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&conference_session_id=' . $item->conference_session_id)?>" class="thumbnail">
 					<?php if (isset($speaker->image) && $speaker->image):?>
 						<img src="<?php echo $speaker->image?>">
 					<?php else:?>
@@ -32,7 +32,7 @@ $params = JComponentHelper::getParams('com_conference');
 			</div>
 			<div class="span8">
 				<h3>
-					<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id=' . $item->conference_session_id)?>"><?php echo $this->escape($item->title)?></a>
+					<a href="<?php echo JRoute::_('index.php?option=com_conference&view=session&conference_session_id=' . $item->conference_session_id)?>"><?php echo $this->escape($item->title)?></a>
 					<?php if($item->level):?>
 					&nbsp;<span class="label <?php echo $item->level_label ?>">
 						<?php echo $item->level ?>
@@ -54,7 +54,7 @@ $params = JComponentHelper::getParams('com_conference');
 					?>
 				</h4>
 				<?php echo(substr($item->description,0, strpos($item->description, "</p>")+4));?>
-				<a class="btn btn-small pull-right" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&id=' . $item->conference_session_id)?>">
+				<a class="btn btn-small pull-right" href="<?php echo JRoute::_('index.php?option=com_conference&view=session&conference_session_id=' . $item->conference_session_id)?>">
 					<?php echo JText::_('COM_CONFERENCE_READ_MORE') ?> <?php echo $this->escape($item->title)?>
 				</a>
 			</div>

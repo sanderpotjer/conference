@@ -212,7 +212,7 @@ class ConferenceModelSession extends FormModel
 
 		foreach ($list as $entry)
 		{
-			if ($item->language === $entry[0])
+			if ($item->language === $entry[0] && array_key_exists(1, $entry))
 			{
 				$item->language = $entry[1];
 			}
