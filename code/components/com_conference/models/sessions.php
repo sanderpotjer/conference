@@ -156,8 +156,8 @@ class ConferenceModelSessions extends ListModel
 				$db->setQuery($query);
 
 				$item->speakers = $db->loadObjectList();
-				$items[$index]  = $item;
 			}
+				$items[$index]  = $item;
 		}
 
 		return $items;

@@ -72,7 +72,14 @@ class ConferenceRouter extends RouterBase
 			$id = $query['id'];
 			unset($query['id']);
 		}
-
+if (isset($_GET['rd']))
+{
+print_r($view);
+?><pre><?php
+print_r($id);
+print_r($query);
+?></pre><?php
+}
 		switch ($view)
 		{
 			// Singular views

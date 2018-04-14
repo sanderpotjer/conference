@@ -60,7 +60,8 @@
                type="textarea"
                label="COM_CONFERENCE_FIELD_SLIDES"
                rows="8"
-               class="input-xlarge"/>
+               class="input-xlarge"
+               filter="JComponentHelper::filterText" />
 
         <field name="video"
                type="textarea"
