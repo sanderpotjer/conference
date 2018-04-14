@@ -55,7 +55,7 @@ $params = JComponentHelper::getParams('com_conference');
 								<?php if (isset($this->sessions[$slot->conference_slot_id][$this->generalRoom])) :?>
 								<?php $session = $this->sessions[$slot->conference_slot_id][$this->generalRoom];?>
 								<?php if ($session->listview): ?>
-									<a href="<?php echo Route::_('index.php?option=com_conference&view=session&id=' . $session->conference_session_id); ?>"><?php echo $session->title; ?></a>
+									<a href="<?php echo Route::_('index.php?option=com_conference&view=session&conference_session_id=' . $session->conference_session_id); ?>"><?php echo $session->title; ?></a>
 								<?php else:?>
 									<?php echo $session->title ?>
 								<?php endif;?>
@@ -83,7 +83,7 @@ $params = JComponentHelper::getParams('com_conference');
 										<?php if ($session->slides): ?>
 											<span class="icon-grid-view" rel="tooltip"  data-original-title="<?php echo Text::_('COM_CONFERENCE_SLIDES_AVAILABLE')?>"></span>
 										<?php endif;?>
-										<a href="<?php echo Route::_('index.php?option=com_conference&view=session&id=' . $session->conference_session_id)?>"><?php echo $session->title ?></a>
+										<a href="<?php echo Route::_('index.php?option=com_conference&view=session&conference_session_id=' . $session->conference_session_id)?>"><?php echo $session->title ?></a>
 									<?php else:?>
 										<?php echo $session->title ?>
 									<?php endif;?>

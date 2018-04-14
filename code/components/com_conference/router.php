@@ -96,9 +96,11 @@ print_r($query);
 				// This handles the Joomla redirect from the task session.edit to the view=session&layout=edit
 				elseif (!isset($query['task']))
 				{
+					// Get the correct Itemid
+					$query['Itemid'] = $this->getItemid('session');
+
 					if ($layout)
 					{
-						unset($query['Itemid']);
 						$segments[] = 'session';
 						$segments[] = $layout;
 
@@ -311,10 +313,20 @@ print_r($query);
 			case 'session':
 				// This handles the view=session&layout=edit URL
 				$vars['view'] = 'session';
-				$vars['layout'] = 'edit';
+
+				if (count($segments) === 1)
+				{
+					$query = $db->getQuery(true)
+						->select($db->quoteName('conference_session_id'))
+						->from($db->quoteName('#__conference_sessions'))
+						->where($db->quoteName('slug') . ' = ' . $db->quote($segments[0]));
+					$db->setQuery($query);
+					$vars['conference_session_id'] = $db->loadResult();
+				}
 
 				if (array_key_exists(2, $segments))
 				{
+					$vars['layout'] = 'edit';
 					$vars['conference_session_id'] = $segments[2];
 				}
 				break;
